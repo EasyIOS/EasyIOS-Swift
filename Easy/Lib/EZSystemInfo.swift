@@ -9,43 +9,49 @@
 import Foundation
 
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
-var IOS8_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("8.0") != NSComparisonResult.OrderedAscending)
-var IOS7_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("7.0") != NSComparisonResult.OrderedAscending)
-var IOS6_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("6.0") != NSComparisonResult.OrderedAscending)
-var IOS5_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("5.0") != NSComparisonResult.OrderedAscending)
-var IOS4_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("4.0") != NSComparisonResult.OrderedAscending)
-var IOS3_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("3.0") != NSComparisonResult.OrderedAscending)
+let IOS10_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("10.0") != NSComparisonResult.OrderedAscending)
+let IOS9_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("9.0") != NSComparisonResult.OrderedAscending)
+let IOS8_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("8.0") != NSComparisonResult.OrderedAscending)
+let IOS7_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("7.0") != NSComparisonResult.OrderedAscending)
+let IOS6_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("6.0") != NSComparisonResult.OrderedAscending)
+let IOS5_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("5.0") != NSComparisonResult.OrderedAscending)
+let IOS4_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("4.0") != NSComparisonResult.OrderedAscending)
+let IOS3_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("3.0") != NSComparisonResult.OrderedAscending)
 
-var IOS7_OR_EARLIER = !IOS8_OR_LATER
-var IOS6_OR_EARLIER = !IOS7_OR_LATER
-var IOS5_OR_EARLIER = !IOS6_OR_LATER
-var IOS4_OR_EARLIER = !IOS5_OR_LATER
-var IOS3_OR_EARLIER = !IOS4_OR_LATER
+let IOS9_OR_EARLIER = !IOS10_OR_LATER
+let IOS8_OR_EARLIER = !IOS9_OR_LATER
+let IOS7_OR_EARLIER = !IOS8_OR_LATER
+let IOS6_OR_EARLIER = !IOS7_OR_LATER
+let IOS5_OR_EARLIER = !IOS6_OR_LATER
+let IOS4_OR_EARLIER = !IOS5_OR_LATER
+let IOS3_OR_EARLIER = !IOS4_OR_LATER
 
-var IS_SCREEN_4_INCH = CGSizeEqualToSize(CGSizeMake(640, 1136), UIScreen.mainScreen().currentMode?.size)
-var IS_SCREEN_35_INCH = CGSizeEqualToSize(CGSizeMake(640, 960), UIScreen.mainScreen().currentMode?.size)
-var IS_SCREEN_47_INCH = CGSizeEqualToSize(CGSizeMake(750, 1334), UIScreen.mainScreen().currentMode?.size)
-var IS_SCREEN_55_INCH = CGSizeEqualToSize(CGSizeMake(1242, 2208), UIScreen.mainScreen().currentMode?.size)
+let IS_SCREEN_4_INCH = CGSizeEqualToSize(CGSizeMake(640, 1136), UIScreen.mainScreen().currentMode?.size)
+let IS_SCREEN_35_INCH = CGSizeEqualToSize(CGSizeMake(640, 960), UIScreen.mainScreen().currentMode?.size)
+let IS_SCREEN_47_INCH = CGSizeEqualToSize(CGSizeMake(750, 1334), UIScreen.mainScreen().currentMode?.size)
+let IS_SCREEN_55_INCH = CGSizeEqualToSize(CGSizeMake(1242, 2208), UIScreen.mainScreen().currentMode?.size)
 
 #else
+let IOS9_OR_LATER = false
+let IOS8_OR_LATER = false
+let IOS7_OR_LATER = false
+let IOS6_OR_LATER = false
+let IOS5_OR_LATER = false
+let IOS4_OR_LATER = false
+let IOS3_OR_LATER = false
     
-var IOS8_OR_LATER = false
-var IOS7_OR_LATER = false
-var IOS6_OR_LATER = false
-var IOS5_OR_LATER = false
-var IOS4_OR_LATER = false
-var IOS3_OR_LATER = false
+let IOS9_OR_EARLIER = false
+let IOS8_OR_EARLIER = false
+let IOS7_OR_EARLIER = false
+let IOS6_OR_EARLIER = false
+let IOS5_OR_EARLIER = false
+let IOS4_OR_EARLIER = false
+let IOS3_OR_EARLIER = false
     
-var IOS7_OR_EARLIER = false
-var IOS6_OR_EARLIER = false
-var IOS5_OR_EARLIER = false
-var IOS4_OR_EARLIER = false
-var IOS3_OR_EARLIER = false
-    
-var IS_SCREEN_4_INCH = false
-var IS_SCREEN_35_INCH = false
-var IS_SCREEN_47_INCH = false
-var IS_SCREEN_55_INCH = false
+let IS_SCREEN_4_INCH = false
+let IS_SCREEN_35_INCH = false
+let IS_SCREEN_47_INCH = false
+let IS_SCREEN_55_INCH = false
 #endif
 
 
