@@ -1,9 +1,9 @@
 //
-//  CEMKit.swift
-//  CEMKit-Swift
+//  EZKit.swift
+//  EasyIOS
 //
-//  Created by Cem Olcay on 05/11/14.
-//  Copyright (c) 2014 Cem Olcay. All rights reserved.
+//  Created by zhuchao on 15/4/25.
+//  Copyright (c) 2015年 zhuchao. All rights reserved.
 //
 
 import Foundation
