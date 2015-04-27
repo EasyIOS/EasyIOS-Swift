@@ -19,7 +19,7 @@ enum RequestState : Int {
     case Suspend
     
 }
- 
+private var enabledDynamicHandleRequest: UInt8 = 0;
 class EZRequest: NSObject {
     var output = Dictionary<String,AnyObject>() // 序列化后的数据
     var params = Dictionary<String,AnyObject>() //使用字典参数
@@ -51,25 +51,38 @@ class EZRequest: NSObject {
     var needCheckCode = true  //是否需要检查错误码
     
     var acceptableContentTypes = ["application/json"]  //可接受的序列化返回数据的格式
-    var requestNeedActive = InternalDynamic<Bool>(false)  //是否启动发送请求(为MVVM设计)
+//    var requestNeedActive =  InternalDynamic<Bool>(false) //是否启动发送请求(为MVVM设计)
     var requestInActiveBlock:Void->()
     var isFirstRequest = false
     var op:Request?
+    
     
     init(block:Void->()) {
         self.requestInActiveBlock = block
         super.init()
         self.loadRequest()
     }
+
+    var requestNeedActive: Dynamic<Bool> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &enabledDynamicHandleRequest) {
+            return (d as? Dynamic<Bool>)!
+        } else {
+            let d = InternalDynamic<Bool>(false)
+            let bond = Bond<Bool>() { [weak self] v in if let s = self {
+                if v {
+                    d.value = false
+                    s.requestInActiveBlock()
+                }
+            }}
+            d.bindTo(bond, fire: false, strongly: false)
+            d.retain(bond)
+            objc_setAssociatedObject(self, &enabledDynamicHandleRequest, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return d
+        }
+    }
     
     func loadRequest (){
-        let myBond = Bond<Bool>() {  [unowned self] value in
-            self.requestNeedActive.value = false
-            self.requestInActiveBlock()
-        }
-        self.requestNeedActive.filter{$0 == true} ->> myBond
-        self.requestNeedActive.retain(myBond)
-        
+
     }
     
     var useCache = false
