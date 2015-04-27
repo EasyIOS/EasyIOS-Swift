@@ -17,15 +17,16 @@ enum RequestState : Int {
     case Error
     case Cancle
     case Suspend
-    
+    case SuccessFromCache
 }
 private var enabledDynamicHandleRequest: UInt8 = 0;
+private var stateDynamicHandleRequest: UInt8 = 1;
 class EZRequest: NSObject {
     var output = Dictionary<String,AnyObject>() // 序列化后的数据
     var params = Dictionary<String,AnyObject>() //使用字典参数
     var responseString = "" // 获取的字符串数据
     var error:NSError? //请求的错误
-    var state:RequestState? //Request状态
+    var state = InternalDynamic<RequestState>(.Cancle) //Request状态
     var url:NSURL? //请求的链接
     var message = "" //错误消息或者服务器返回的MSG
     var codeKey = 0  // 错误码返回
@@ -52,15 +53,13 @@ class EZRequest: NSObject {
     
     var acceptableContentTypes = ["application/json"]  //可接受的序列化返回数据的格式
 //    var requestNeedActive =  InternalDynamic<Bool>(false) //是否启动发送请求(为MVVM设计)
-    var requestInActiveBlock:Void->()
+    var requestBlock:(Void->())?
     var isFirstRequest = false
     var op:Request?
     
     
-    init(block:Void->()) {
-        self.requestInActiveBlock = block
+    override init() {
         super.init()
-        self.loadRequest()
     }
 
     var requestNeedActive: Dynamic<Bool> {
@@ -71,7 +70,7 @@ class EZRequest: NSObject {
             let bond = Bond<Bool>() { [weak self] v in if let s = self {
                 if v {
                     d.value = false
-                    s.requestInActiveBlock()
+                    s.requestBlock?()
                 }
             }}
             d.bindTo(bond, fire: false, strongly: false)
@@ -80,29 +79,10 @@ class EZRequest: NSObject {
             return d
         }
     }
-    
-    func loadRequest (){
 
-    }
-    
     var useCache = false
     var dataFromCache = false
-    
-    var succeed: Bool {
-        return !isEmpty(self.output) && RequestState.Success == self.state
-    }
-    
-    var failed : Bool {
-        return !isEmpty(self.output) && (RequestState.Failed == self.state || RequestState.Error == self.state)
-    }
-    
-    var sending : Bool {
-        return RequestState.Sending == self.state
-    }
-    
-    var cancled : Bool {
-        return RequestState.Cancle == self.state
-    }
+
     
     var requestKey :String {
         return self.nameOfClass
@@ -148,17 +128,17 @@ class EZRequest: NSObject {
     
     func suspend() {
         self.op?.suspend()
-        self.state = .Suspend
+        self.state.value = .Suspend
     }
     
     func resume() {
         self.op?.resume()
-        self.state = .Sending
+        self.state.value = .Sending
     }
     
     func cancel() {
         self.op?.cancel()
-        self.state = .Cancle
+        self.state.value = .Cancle
     }
     
 }

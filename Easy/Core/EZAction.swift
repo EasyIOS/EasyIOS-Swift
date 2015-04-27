@@ -20,7 +20,7 @@ var MSG_KEY = "" //消息提示msg,暂不支持路径 如 msg
 
 class EZAction: NSObject {
     
-    func Send (req :EZRequest){
+    class func Send (req :EZRequest){
         var url = ""
         var requestParams = Dictionary<String,AnyObject>()
         
@@ -40,19 +40,18 @@ class EZAction: NSObject {
                 url = url + req.appendPathInfo
             }
         }
-        self.sending(req)
+        req.state.value = .Sending
         req.op = Alamofire.request(req.method, url, parameters: requestParams, encoding: req.parameterEncoding)
             .validate(statusCode: 200..<300)
             .validate(contentType: req.acceptableContentTypes)
             .responseString { (_, _, string, _) in
                 req.responseString = string!
-            }.responseJSON { [unowned self] (_, _, json, error)  in
+            }.responseJSON { (_, _, json, error)  in
                 if error != nil{
                     req.error = error
                     self.failed(req)
                 }else{
                     req.output = json as! Dictionary<String, AnyObject>
-                    
                     self.checkCode(req)
                 }
             }
@@ -60,8 +59,8 @@ class EZAction: NSObject {
         self.getCacheJson(req)
     }
     
-    func Upload (req :EZRequest){
-        self.sending(req)
+    class func Upload (req :EZRequest){
+        req.state.value = .Sending
         req.op = Alamofire.upload(.POST, req.downloadUrl, req.uploadData!)
             .validate(statusCode: 200..<300)
             .validate(contentType: req.acceptableContentTypes)
@@ -84,8 +83,8 @@ class EZAction: NSObject {
         req.url = req.op?.request.URL
     }
     
-    func Download (req :EZRequest){
-        self.sending(req)
+    class func Download (req :EZRequest){
+        req.state.value = .Sending
         let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
 
         req.op = Alamofire.download(.GET, req.downloadUrl, { (temporaryURL, response) in
@@ -108,20 +107,20 @@ class EZAction: NSObject {
                     self.failed(req)
                 }else{
                     req.responseString = "\(response)"
-                    self.successAction(req)
+                    req.state.value = .Success
                 }
             }
         req.url = req.op?.request.URL
     }
     
-    private func cacheJson (req: EZRequest) {
+    private class func cacheJson (req: EZRequest) {
         if req.useCache {
             let cache = Shared.JSONCache
             cache.set(value:.Dictionary(req.output) , key: req.cacheKey)
         }
     }
     
-    private func getCacheJson (req: EZRequest) {
+    private class func getCacheJson (req: EZRequest) {
         let cache = Shared.JSONCache
         cache.fetch(key: req.cacheKey).onSuccess { JSON in
             req.output = JSON.dictionary
@@ -129,12 +128,23 @@ class EZAction: NSObject {
         
         if req.dataFromCache && !isEmpty(req.output) {
             Async.main(after: 0.1, block: {
-                self.checkCode(req)
+                self.successFromCache(req)
             })
         }
     }
     
-    private func checkCode (req: EZRequest) {
+    private class func successFromCache (req: EZRequest){
+        if req.needCheckCode {
+            req.codeKey = req.output[CODE_KEY] as! Int
+            if req.codeKey == RIGHT_CODE {
+                req.message = req.output[MSG_KEY] as! String
+                req.state.value = .SuccessFromCache
+            }else{
+                self.error(req)
+            }
+        }
+    }
+    private class func checkCode (req: EZRequest) {
         if req.needCheckCode {
             req.codeKey = req.output[CODE_KEY] as! Int
             if req.codeKey == RIGHT_CODE {
@@ -144,34 +154,31 @@ class EZAction: NSObject {
                 self.error(req)
             }
         }else{
-            self.successAction(req)
+            req.state.value = .Success
             self.cacheJson(req)
         }
     }
+
     
-    private func sending (req: EZRequest) {
-        req.state = RequestState.Sending
-    }
-    
-    private func success (req: EZRequest) {
+    private class func success (req: EZRequest) {
         req.isFirstRequest = false
         req.message = req.output[MSG_KEY] as! String
-        self.successAction(req)
+        if isEmpty(req.output) {
+            req.state.value = .Error
+        }else{
+            req.state.value = .Success
+        }
     }
     
-    private func successAction (req: EZRequest) {
-        req.state = RequestState.Success
-    }
-    
-    private func failed (req: EZRequest) {
+    private class func failed (req: EZRequest) {
         req.message = req.error?.userInfo?["NSLocalizedDescription"] as! String
-        req.state = RequestState.Failed
+        req.state.value = .Failed
         println(req.message)
     }
     
-    private func error (req: EZRequest) {
+    private class func error (req: EZRequest) {
         req.message = req.output[MSG_KEY] as! String
-        req.state = RequestState.Error
+        req.state.value = .Error
         println(req.message)
     }
     

@@ -7,16 +7,11 @@
 //
 
 import UIKit
+import Bond
 
 class SceneModel: NSObject {
-    var action = EZAction()
     override init() {
         super.init()
-        self.loadSceneModel()
-    }
-    
-    func loadSceneModel (){
-    
     }
 }
 
@@ -28,51 +23,45 @@ infix operator |>> {}
 infix operator <<| {}
 
 //不使用缓存策略
-func ->> (left:EZRequest , right:EZAction ) {
-    if !isEmpty(left) || !isEmpty(right) {
-        left.useCache = false
-        left.dataFromCache = false
-        right.Send(left)
-    }
+func ->> (left:EZRequest,right:Bond<RequestState>) {
+    left.useCache = false
+    left.dataFromCache = false
+    EZAction.Send(left)
+    left.state *->> right
 }
 
-//使用缓存策略 但不从缓存读取
-func ~>> (left:EZRequest , right:EZAction ) {
-    if !isEmpty(left) && !isEmpty(right) {
-        left.useCache = true
-        left.dataFromCache = false
-        right.Send(left)
-    }
+////使用缓存策略 但不从缓存读取
+func ~>> (left:EZRequest,right:Bond<RequestState>) {
+    left.useCache = true
+    left.dataFromCache = false
+    EZAction.Send(left)
+    left.state *->> right
 }
 
 //使用缓存策略 仅首次读取缓存
-func ~|> (left:EZRequest , right:EZAction ) {
-    if !isEmpty(left) && !isEmpty(right) {
-        left.useCache = true
-        left.dataFromCache = left.isFirstRequest
-        right.Send(left)
-    }
+func ~|> (left:EZRequest,right:Bond<RequestState>) {
+    left.useCache = true
+    left.dataFromCache = left.isFirstRequest
+    EZAction.Send(left)
+    left.state *->> right
 }
 
 //使用缓存策略 优先从缓存读取
-func ~||> (left:EZRequest , right:EZAction ) {
-    if !isEmpty(left) && !isEmpty(right) {
-        left.useCache = true
-        left.dataFromCache = true
-        right.Send(left)
-    }
+func ~||> (left:EZRequest,right:Bond<RequestState>) {
+    left.useCache = true
+    left.dataFromCache = true
+    EZAction.Send(left)
+    left.state *->> right
 }
 
 //上传
-func |>> (left:EZRequest , right:EZAction ) {
-    if !isEmpty(left) && !isEmpty(right) {
-        right.Upload(left)
-    }
+func |>> (left:EZRequest,right:Bond<RequestState>) {
+    EZAction.Upload(left)
+    left.state *->> right
 }
 
 //下载
-func <<| (left:EZRequest , right:EZAction ) {
-    if !isEmpty(left) && !isEmpty(right) {
-        right.Download(left)
-    }
+func <<| (left:EZRequest,right:Bond<RequestState>) {
+    EZAction.Download(left)
+    left.state *->> right
 }
