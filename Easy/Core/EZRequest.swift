@@ -25,11 +25,11 @@ private var stateDynamicHandleRequest: UInt8 = 1;
 class EZRequest: NSObject {
     var output = Dictionary<String,AnyObject>() // 序列化后的数据
     var params = Dictionary<String,AnyObject>() //使用字典参数
-    var responseString = "" // 获取的字符串数据
+    var responseString:String? // 获取的字符串数据
     var error:NSError? //请求的错误
     var state = InternalDynamic<RequestState>(.Default) //Request状态
     var url:NSURL? //请求的链接
-    var message = "" //错误消息或者服务器返回的MSG
+    var message:String? //错误消息或者服务器返回的MSG
     var codeKey = 0  // 错误码返回
     
     //upload上传相关参数
@@ -141,6 +141,11 @@ class EZRequest: NSObject {
         self.state.value = .Cancle
     }
     
+
 }
+
+
+
+
 
 

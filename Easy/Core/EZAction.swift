@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import Haneke
 import Async
+import Bond
 
 var HOST_URL = "" //服务端域名:端口
 var CLIENT = ""  //自定义客户端识别
@@ -18,6 +19,7 @@ var RIGHT_CODE = 0  //正确校验码
 var MSG_KEY = "" //消息提示msg,暂不支持路径 如 msg
 
 
+private var networkReachabilityHandle: UInt8 = 2;
 class EZAction: NSObject {
     
     //使用缓存策略 仅首次读取缓存
@@ -67,7 +69,7 @@ class EZAction: NSObject {
             .validate(statusCode: 200..<300)
             .validate(contentType: req.acceptableContentTypes)
             .responseString { (_, _, string, _) in
-                req.responseString = string!
+                req.responseString = string
             }.responseJSON { (_, _, json, error)  in
                 if error != nil{
                     req.error = error
@@ -185,7 +187,7 @@ class EZAction: NSObject {
     
     private class func success (req: EZRequest) {
         req.isFirstRequest = false
-        req.message = req.output[MSG_KEY] as! String
+        req.message = req.output[MSG_KEY] as? String
         if isEmpty(req.output) {
             req.state.value = .Error
         }else{
@@ -194,17 +196,48 @@ class EZAction: NSObject {
     }
     
     private class func failed (req: EZRequest) {
-        req.message = req.error?.userInfo?["NSLocalizedDescription"] as! String
+        req.message = req.error?.userInfo?["NSLocalizedDescription"] as? String
         req.state.value = .Failed
         EZPrintln(req.message)
     }
     
     private class func error (req: EZRequest) {
-        req.message = req.output[MSG_KEY] as! String
+        req.message = req.output[MSG_KEY] as? String
         req.state.value = .Error
         EZPrintln(req.message)
     }
     
+    /* Usage
+    EZAction.networkReachability *->> Bond<NetworkStatus>{ status in
+        switch (status) {
+        case .NotReachable:
+        EZPrintln("NotReachable")
+        case .ReachableViaWiFi:
+        EZPrintln("ReachableViaWiFi")
+        case .ReachableViaWWAN:
+        EZPrintln("ReachableViaWWAN")
+        default:
+        EZPrintln("default")
+        }
+    }
+    */
+    class var networkReachability: InternalDynamic<NetworkStatus> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &networkReachabilityHandle) {
+            return (d as? InternalDynamic<NetworkStatus>)!
+        } else {
+            let reachability = Reachability.reachabilityForInternetConnection()
+            let d = InternalDynamic<NetworkStatus>(reachability.currentReachabilityStatus)
+            reachability.whenReachable = { reachability in
+                d.value = reachability.currentReachabilityStatus
+            }
+            reachability.whenUnreachable = { reachability in
+                d.value = reachability.currentReachabilityStatus
+            }
+            reachability.startNotifier()
+            objc_setAssociatedObject(self, &networkReachabilityHandle, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return d
+        }
+    }
 }
 
 
