@@ -13,6 +13,5 @@ infix operator *->> {}
 
 public func *->> <T>(left: InternalDynamic<T>, right: Bond<T>) {
     left.bindTo(right)
-    left.retainedObjects.removeAll(keepCapacity: true)
     left.retain(right)
 }

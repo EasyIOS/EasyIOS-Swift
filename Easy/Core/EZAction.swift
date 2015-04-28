@@ -20,6 +20,28 @@ var MSG_KEY = "" //消息提示msg,暂不支持路径 如 msg
 
 class EZAction: NSObject {
     
+    //使用缓存策略 仅首次读取缓存
+    class func SEND_IQ_CACHE (left:EZRequest) {
+        left.useCache = true
+        left.dataFromCache = left.isFirstRequest
+        EZAction.Send(left)
+    }
+    
+    //使用缓存策略 优先从缓存读取
+    class func SEND_CACHE (left:EZRequest) {
+        left.useCache = true
+        left.dataFromCache = true
+        self.Send(left)
+    }
+    
+    //不使用缓存策略
+    class func SEND (left:EZRequest) {
+        left.useCache = false
+        left.dataFromCache = false
+        EZAction.Send(left)
+    }
+    
+    
     class func Send (req :EZRequest){
         var url = ""
         var requestParams = Dictionary<String,AnyObject>()
@@ -144,6 +166,7 @@ class EZAction: NSObject {
             }
         }
     }
+    
     private class func checkCode (req: EZRequest) {
         if req.needCheckCode {
             req.codeKey = req.output[CODE_KEY] as! Int
@@ -173,13 +196,13 @@ class EZAction: NSObject {
     private class func failed (req: EZRequest) {
         req.message = req.error?.userInfo?["NSLocalizedDescription"] as! String
         req.state.value = .Failed
-        println(req.message)
+        EZPrintln(req.message)
     }
     
     private class func error (req: EZRequest) {
         req.message = req.output[MSG_KEY] as! String
         req.state.value = .Error
-        println(req.message)
+        EZPrintln(req.message)
     }
     
 }

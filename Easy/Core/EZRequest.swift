@@ -11,7 +11,8 @@ import Bond
 import Alamofire
 
 enum RequestState : Int {
-    case Success
+    case Init  //初始化状态
+    case Success 
     case Failed
     case Sending
     case Error
@@ -26,7 +27,7 @@ class EZRequest: NSObject {
     var params = Dictionary<String,AnyObject>() //使用字典参数
     var responseString = "" // 获取的字符串数据
     var error:NSError? //请求的错误
-    var state = InternalDynamic<RequestState>(.Cancle) //Request状态
+    var state = InternalDynamic<RequestState>(.Init) //Request状态
     var url:NSURL? //请求的链接
     var message = "" //错误消息或者服务器返回的MSG
     var codeKey = 0  // 错误码返回
@@ -52,7 +53,6 @@ class EZRequest: NSObject {
     var needCheckCode = true  //是否需要检查错误码
     
     var acceptableContentTypes = ["application/json"]  //可接受的序列化返回数据的格式
-//    var requestNeedActive =  InternalDynamic<Bool>(false) //是否启动发送请求(为MVVM设计)
     var requestBlock:(Void->())?
     var isFirstRequest = false
     var op:Request?
