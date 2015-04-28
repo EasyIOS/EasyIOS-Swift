@@ -19,6 +19,7 @@ enum RequestState : Int {
     case Cancle
     case Suspend
     case SuccessFromCache
+    case ErrorFromCache
 }
 private var enabledDynamicHandleRequest: UInt8 = 0;
 private var stateDynamicHandleRequest: UInt8 = 1;
@@ -30,7 +31,7 @@ class EZRequest: NSObject {
     var state = InternalDynamic<RequestState>(.Default) //Request状态
     var url:NSURL? //请求的链接
     var message:String? //错误消息或者服务器返回的MSG
-    var codeKey = 0  // 错误码返回
+    var codeKey:Int?  // 错误码返回
     
     //upload上传相关参数
     var uploadData:NSData?  //上传文件

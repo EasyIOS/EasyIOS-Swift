@@ -140,7 +140,9 @@ class EZAction: NSObject {
     private class func cacheJson (req: EZRequest) {
         if req.useCache {
             let cache = Shared.JSONCache
-            cache.set(value:.Dictionary(req.output) , key: req.cacheKey)
+            cache.set(value: .Dictionary(req.output), key: req.cacheKey, formatName: HanekeGlobals.Cache.OriginalFormatName){ JSON in
+                EZPrintln("Cache Success for key: \(req.cacheKey)")
+            }
         }
     }
     
@@ -148,30 +150,32 @@ class EZAction: NSObject {
         let cache = Shared.JSONCache
         cache.fetch(key: req.cacheKey).onSuccess { JSON in
             req.output = JSON.dictionary
-        }
-        
-        if req.dataFromCache && !isEmpty(req.output) {
-            Async.main(after: 0.1, block: {
-                self.successFromCache(req)
-            })
+            if req.dataFromCache && !isEmpty(req.output) {
+                Async.main(after: 0.1, block: {
+                    self.loadFromCache(req)
+                })
+            }
         }
     }
     
-    private class func successFromCache (req: EZRequest){
-        if req.needCheckCode {
-            req.codeKey = req.output[CODE_KEY] as! Int
+    private class func loadFromCache (req: EZRequest){
+        if req.needCheckCode && req.state.value != .Success {
+            req.codeKey = req.output[CODE_KEY] as? Int
             if req.codeKey == RIGHT_CODE {
-                req.message = req.output[MSG_KEY] as! String
+                req.message = req.output[MSG_KEY] as? String
                 req.state.value = .SuccessFromCache
+                EZPrintln("Fetch  Success from Cache by key: \(req.cacheKey)")
             }else{
-                self.error(req)
+                req.message = req.output[MSG_KEY] as? String
+                req.state.value = .ErrorFromCache
+                EZPrintln(req.message)
             }
         }
     }
     
     private class func checkCode (req: EZRequest) {
         if req.needCheckCode {
-            req.codeKey = req.output[CODE_KEY] as! Int
+            req.codeKey = req.output[CODE_KEY] as? Int
             if req.codeKey == RIGHT_CODE {
                 self.success(req)
                 self.cacheJson(req)
