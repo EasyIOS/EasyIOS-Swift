@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 zhuchao. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 #if (TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR)
 let IOS10_OR_LATER = (UIDevice.currentDevice().systemVersion.caseInsensitiveCompare("10.0") != NSComparisonResult.OrderedAscending)
@@ -92,4 +92,35 @@ func AppIdentifier() ->String{
 
 
 
+var Orientation: UIInterfaceOrientation {
+get {
+    return UIApplication.sharedApplication().statusBarOrientation
+}
+}
+
+var ScreenWidth: CGFloat {
+get {
+    if UIInterfaceOrientationIsPortrait(Orientation) {
+        return UIScreen.mainScreen().bounds.size.width
+    } else {
+        return UIScreen.mainScreen().bounds.size.height
+    }
+}
+}
+
+var ScreenHeight: CGFloat {
+get {
+    if UIInterfaceOrientationIsPortrait(Orientation) {
+        return UIScreen.mainScreen().bounds.size.height
+    } else {
+        return UIScreen.mainScreen().bounds.size.width
+    }
+}
+}
+
+var StatusBarHeight: CGFloat {
+get {
+    return UIApplication.sharedApplication().statusBarFrame.height
+}
+}
 

@@ -120,4 +120,25 @@ public extension EZColor {
         var hexString = NSString(format: "%2X", hex)
         self.init(hexString: hexString as String , alpha: alpha)
     }
+    
+    class func randomColor () -> UIColor {
+        var randomRed:CGFloat = CGFloat(drand48())
+        var randomGreen:CGFloat = CGFloat(drand48())
+        var randomBlue:CGFloat = CGFloat(drand48())
+        
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
+    }
+    
+    class func RGBColor (r: CGFloat,
+        g: CGFloat,
+        b: CGFloat) -> UIColor {
+            return UIColor (red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: 1)
+    }
+    
+    class func RGBAColor (r: CGFloat,
+        g: CGFloat,
+        b: CGFloat,
+        a: CGFloat) -> UIColor {
+            return UIColor (red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: a)
+    }
 }
