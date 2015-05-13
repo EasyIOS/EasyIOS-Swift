@@ -1,0 +1,1 @@
+PODS_BOND_OTHER_LDFLAGS = -framework "SystemConfiguration"

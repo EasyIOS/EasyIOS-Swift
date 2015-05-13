@@ -1,0 +1,31 @@
+PODS:
+  - Alamofire (1.2.1)
+  - Bond (3.7.1)
+  - EasyIOS-Swift (0.1.0):
+    - Alamofire (~> 1.2)
+    - Bond (~> 3.7.1)
+    - HanekeSwift (~> 0.9.1)
+    - SDWebImage (~> 3.7)
+    - SnapKit (~> 0.11.0)
+  - HanekeSwift (0.9.1)
+  - SDWebImage (3.7.2):
+    - SDWebImage/Core (= 3.7.2)
+  - SDWebImage/Core (3.7.2)
+  - SnapKit (0.11.0)
+
+DEPENDENCIES:
+  - EasyIOS-Swift (from `../`)
+
+EXTERNAL SOURCES:
+  EasyIOS-Swift:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Alamofire: 1acfdf179aff68b41a48dff70c1ac7fa263e2bcb
+  Bond: 96a42cdc96269670b0bb3421a8badae8d9b266df
+  EasyIOS-Swift: f2be8588a097ad4f60159b226221d6b36c6ba392
+  HanekeSwift: 50d37bfbc4432edc649167e538c259feccb4a2bb
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  SnapKit: 5194d53cee209d337a989919ff66a70b7aa3dda3
+
+COCOAPODS: 0.37.0.beta.1
