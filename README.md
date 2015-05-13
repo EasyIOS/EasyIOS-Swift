@@ -5,6 +5,12 @@
 [![License](https://img.shields.io/cocoapods/l/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
 [![Platform](https://img.shields.io/cocoapods/p/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
 
+##Features
+
+* MVVM 
+* HTML To Native 
+* Live Load
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
