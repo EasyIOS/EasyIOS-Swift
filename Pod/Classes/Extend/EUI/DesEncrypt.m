@@ -7,19 +7,18 @@
 //
 
 #import "DesEncrypt.h"
-
 #import <CommonCrypto/CommonCrypto.h>
 @implementation DesEncrypt
 + (NSString *)encryptWithText:(NSString *)sText key:(NSString *)key
 {
     //kCCEncrypt 加密
-    return [self encrypt:sText encryptOrDecrypt:kCCEncrypt key:[NSString stringWithFormat:@"as9d813123%@jads8badasda",key]];
+    return [self encrypt:sText encryptOrDecrypt:kCCEncrypt key:[NSString stringWithFormat:@"%@",key]];
 }
 
 + (NSString *)decryptWithText:(NSString *)sText key:(NSString *)key
 {
     //kCCDecrypt 解密
-    return [self encrypt:sText encryptOrDecrypt:kCCDecrypt key:[NSString stringWithFormat:@"as9d813123%@jads8badasda",key]];
+    return [self encrypt:sText encryptOrDecrypt:kCCDecrypt key:[NSString stringWithFormat:@"%@",key]];
 }
 
 + (NSString *)encrypt:(NSString *)sText encryptOrDecrypt:(CCOperation)encryptOperation key:(NSString *)key
