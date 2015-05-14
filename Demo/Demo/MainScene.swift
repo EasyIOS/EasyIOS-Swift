@@ -16,7 +16,7 @@ class MainScene: EUScene,UITableViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "EaysIOS"
+        self.title = "EasyIOS"
 
         // Do any additional setup after loading the view.
     }

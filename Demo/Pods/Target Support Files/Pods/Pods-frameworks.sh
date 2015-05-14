@@ -52,7 +52,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Bond.framework'
   install_framework 'EasyIOS.framework'
   install_framework 'Haneke.framework'
+  install_framework 'ObjectMapper.framework'
   install_framework 'SDWebImage.framework'
+  install_framework 'SVProgressHUD.framework'
   install_framework 'SnapKit.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -60,6 +62,8 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Bond.framework'
   install_framework 'EasyIOS.framework'
   install_framework 'Haneke.framework'
+  install_framework 'ObjectMapper.framework'
   install_framework 'SDWebImage.framework'
+  install_framework 'SVProgressHUD.framework'
   install_framework 'SnapKit.framework'
 fi

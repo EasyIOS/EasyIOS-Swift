@@ -11,9 +11,14 @@ import EasyIOS
 
 class CollectionCellViewModel: EZViewModel {
 
-    var srcUrl:EZURL?
-    init(imageUrl:String){
-        self.srcUrl = EZURL(NSURL(string: imageUrl))
-        
+    var url:EZString?
+    var name:EZString?
+    init(url:String?,name:String?){
+        if url != nil {
+            self.url = EZString(url!)
+        }
+        if name != nil {
+            self.name = EZString(name!)
+        }
     }
 }

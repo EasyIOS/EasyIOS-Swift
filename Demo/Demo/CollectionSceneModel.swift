@@ -9,16 +9,58 @@
 import UIKit
 import EasyIOS
 import Bond
+import ObjectMapper
+
+class FeedModel :Mappable{
+    var url:String?
+    var name:String?
+    
+    required init?(_ map: Map) {
+        mapping(map)
+    }
+    func mapping(map: Map) {
+        url    <- map["url"]
+        name   <- map["name"]
+    }
+}
+
+class FeedList:Mappable {
+    var list:[FeedModel]?
+    required init?(_ map: Map) {
+        mapping(map)
+    }
+    func mapping(map: Map) {
+        list <- map["list"]
+    }
+}
 
 class CollectionSceneModel: EZSceneModel {
-
-    var dataArray =  DynamicArray<CollectionCellViewModel>(Array<CollectionCellViewModel>())
+    var req = FeedRequest()
+    var modelList:FeedList?
+    
+    var viewModelList =  DynamicArray<CollectionCellViewModel>(Array<CollectionCellViewModel>())
     override init (){
         super.init()
-        
-        for var i = 0;i<100;i++ {
-            self.dataArray.append(CollectionCellViewModel(imageUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg"))
+        self.req.requestBlock = {
+            EZAction.SEND_IQ_CACHE(self.req)
         }
-        
+        self.req.state *->> Bond<RequestState>(){[unowned self] value in
+            switch value {
+            case .Success,.SuccessFromCache :
+                if let theData: AnyObject = self.req.output["data"] {
+                    self.modelList = Mapper<FeedList>().map(theData)
+                    
+                    if let array = self.modelList?.list?.map({
+                        (model) -> CollectionCellViewModel in
+                        return CollectionCellViewModel(url: model.url, name: model.name)
+                    }) {
+                        self.viewModelList.removeAll(true)
+                        self.viewModelList.append(array)
+                    }
+                }
+            default :
+                return
+            }
+        }
     }
 }

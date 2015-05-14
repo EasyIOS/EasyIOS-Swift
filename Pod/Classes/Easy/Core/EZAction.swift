@@ -70,7 +70,7 @@ public class EZAction: NSObject {
             .responseString { (_, _, string, _) in
                 req.responseString = string
             }.responseJSON { (_, _, json, error)  in
-                if error != nil{
+                if json == nil{
                     req.error = error
                     self.failed(req)
                 }else{

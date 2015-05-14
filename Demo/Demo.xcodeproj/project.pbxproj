@@ -15,6 +15,7 @@
 		5B8240E91B0377FC00D58574 /* EasyIOS-Swift.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 5B8240E61B0377FC00D58574 /* EasyIOS-Swift.podspec */; };
 		5B8240EA1B0377FC00D58574 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5B8240E71B0377FC00D58574 /* LICENSE */; };
 		5B8240EB1B0377FC00D58574 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 5B8240E81B0377FC00D58574 /* README.md */; };
+		5B90B5CD1B04BFF8000C848D /* FeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B90B5CC1B04BFF8000C848D /* FeedRequest.swift */; };
 		5BDBF0CE1B038B7300E95ACF /* login-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BDBF0CD1B038B7300E95ACF /* login-logo@2x.png */; };
 		5BDBF0D01B038C1700E95ACF /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDBF0CF1B038C1700E95ACF /* MainScene.swift */; };
 		5BDBF0D21B038C3000E95ACF /* MainScene.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5BDBF0D11B038C3000E95ACF /* MainScene.xml */; };
@@ -54,6 +55,7 @@
 		5B8240E61B0377FC00D58574 /* EasyIOS-Swift.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "EasyIOS-Swift.podspec"; path = "../EasyIOS-Swift.podspec"; sourceTree = "<group>"; };
 		5B8240E71B0377FC00D58574 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		5B8240E81B0377FC00D58574 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		5B90B5CC1B04BFF8000C848D /* FeedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedRequest.swift; sourceTree = "<group>"; };
 		5BDBF0CD1B038B7300E95ACF /* login-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-logo@2x.png"; sourceTree = "<group>"; };
 		5BDBF0CF1B038C1700E95ACF /* MainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		5BDBF0D11B038C3000E95ACF /* MainScene.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MainScene.xml; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				5BDC06BA1B0394C200C486E0 /* CollectionScene.swift */,
 				5BDC06BC1B03950500C486E0 /* CollectionSceneModel.swift */,
 				5BDC06BE1B03955A00C486E0 /* CollectionCellViewModel.swift */,
+				5B90B5CC1B04BFF8000C848D /* FeedRequest.swift */,
 			);
 			name = CollectionScene;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BDC06BD1B03950500C486E0 /* CollectionSceneModel.swift in Sources */,
+				5B90B5CD1B04BFF8000C848D /* FeedRequest.swift in Sources */,
 				5BDBF0D51B038C7800E95ACF /* MainSceneModel.swift in Sources */,
 				5BDC06BF1B03955A00C486E0 /* CollectionCellViewModel.swift in Sources */,
 				5BDC06BB1B0394C200C486E0 /* CollectionScene.swift in Sources */,
