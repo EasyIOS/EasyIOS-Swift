@@ -18,7 +18,7 @@ EasyIOS For Swift
 * HTML To Native : Transform HTML&CSS to Native Control,
 * Reflect Cocoa Touch : Reflect all the Cocoa Touch Api ,we can use the Cocoa Touch Api via HTML 
 * AutoLayout : The HTML layout based on the `AutoLayout`
-* Live Load : Edit the Html file and the view in smulator will update automaticly without rebuild your app
+* Live Load : Edit the HTML and the view in smulator will update automaticly without rebuild your app
 * Cryptographic HTML : To make the HTML be safety,we provide the `AES Encryption` to encrypt the HTML
 * URLManager : Push or Present the Controller by the custom URL 
 
