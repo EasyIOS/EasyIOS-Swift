@@ -37,7 +37,9 @@ EasyIOS-Swift is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod "EasyIOS-Swift"
+platform :ios, '8.0'
+use_frameworks!
+pod "EasyIOS-Swift", :git => "https://github.com/EasyIOS/EasyIOS-Swift"
 ```
 
 import the EasyIOS
