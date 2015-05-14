@@ -11,7 +11,7 @@
     <div align="0 0 0 0" type="UIScrollView" background-color="#F3F3F3">
         <div align="@contentAlign">
             <div align="@contentAlign">
-                <img id="logo" image="login-logo" user-interaction-enabled="YES" present="medi://register" align="center-x:0;top:110;"/>
+                <img id="logo" image="login-logo" user-interaction-enabled="YES" present="demo://login" align="center-x:0;top:110;"/>
                 <div id="username" layer_corner-radius="8" background-color="white" align="* 15 * -15" margin="top:30 logo" height="45">
                     <input class="userTextField" id="userTextField" align="edge:10 10 -10 -10;" placeholder-style="@inputStyle" keyboard-type="EmailAddress" style="@inputStyle" placeholder="手机/邮箱"/>
                 </div>
