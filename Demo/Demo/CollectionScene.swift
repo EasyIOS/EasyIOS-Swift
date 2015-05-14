@@ -20,8 +20,8 @@ class CollectionScene: EUScene {
         self.showBarButton(.LEFT, title: "返回", fontColor: UIColor.greenColor())
         self.sceneModel.req.requestNeedActive.value = true
         
-        self.sceneModel.req.state *->> Bond<RequestState>(){[unowned self] value in
-            switch value {
+        self.sceneModel.req.state *->> Bond<RequestState>(){
+            switch $0 {
             case .Sending :
                 SVProgressHUD.show()
             case .Success,.SuccessFromCache :
@@ -43,9 +43,10 @@ class CollectionScene: EUScene {
     
     override func eu_collectionViewDidLoad(collectionView: UICollectionView?) {
         self.sceneModel.viewModelList.map { (data:CollectionCellViewModel,index:Int) -> UICollectionViewCell in
-            let indexPath = NSIndexPath(forItem: index, inSection: 0)
-            let cell = collectionView!.dequeueReusableCell("cell",forIndexPath:indexPath, target: self,bind:data) as UICollectionViewCell
-            return cell
+            return collectionView!.dequeueReusableCell(
+                "cell",
+                forIndexPath:NSIndexPath(forItem: index, inSection: 0),
+                target: self,bind:data) as UICollectionViewCell
             } ->> self.eu_collectionViewDataSource!
     }
 
