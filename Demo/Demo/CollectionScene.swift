@@ -16,7 +16,8 @@ class CollectionScene: EUScene {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.showBarButton(.LEFT, title: "返回", fontColor: UIColor.greenColor())
+        
         // Do any additional setup after loading the view.
     }
 
@@ -34,4 +35,7 @@ class CollectionScene: EUScene {
             } ->> self.eu_collectionViewDataSource!
     }
 
+    override func leftButtonTouch() {
+        URLNavigation.dismissCurrentAnimated(true)
+    }
 }

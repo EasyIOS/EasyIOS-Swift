@@ -120,12 +120,12 @@
 		5B8240BC1B03715600D58574 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				5B90B5C11B043889000C848D /* LoginScene */,
 				5BDC06B91B03949900C486E0 /* CollectionScene */,
 				5BDBF0D31B038C6400E95ACF /* MainScene */,
 				5BDBF0CC1B038B6800E95ACF /* Rescource */,
 				5BAE1D631B0379910002DD5E /* xml */,
 				5B8240BF1B03715600D58574 /* AppDelegate.swift */,
-				5B8240C11B03715600D58574 /* LoginScene.swift */,
 				5B8240C61B03715600D58574 /* Images.xcassets */,
 				5B8240C81B03715600D58574 /* LaunchScreen.xib */,
 				5B8240BD1B03715600D58574 /* Supporting Files */,
@@ -166,6 +166,14 @@
 				5B8240E81B0377FC00D58574 /* README.md */,
 			);
 			name = PodMeta;
+			sourceTree = "<group>";
+		};
+		5B90B5C11B043889000C848D /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				5B8240C11B03715600D58574 /* LoginScene.swift */,
+			);
+			name = LoginScene;
 			sourceTree = "<group>";
 		};
 		5BAE1D631B0379910002DD5E /* xml */ = {
