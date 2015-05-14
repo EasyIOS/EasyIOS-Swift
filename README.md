@@ -9,10 +9,12 @@ EasyIOS For Swift
 [![Platform](https://img.shields.io/cocoapods/p/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
 [![qq](http://img.shields.io/badge/QQ%E7%BE%A4-340906744-green.svg)](http://shang.qq.com/wpa/qunwpa?idkey=562d002e275a8199081313b00580fb7111a4faf694216a239064d29f5238bc91)
 
+## Star is the Best Way to Support EasyIOS !
+
 * [IOSX - EasyIOS Official Forum](http://www.iosx.me)
 * [EasyIOS-ObjC](https://github.com/EasyIOS/EasyIOS)
 
-##Features
+## Features
 
 * MVVM : `Model-View-ViewModel` inspired by [Functional Reactive Programming](http://en.wikipedia.org/wiki/Functional_reactive_programming) 
 * HTML To Native : Transform HTML&CSS to Native Control,
