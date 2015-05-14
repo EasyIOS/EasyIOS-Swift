@@ -1,7 +1,7 @@
 
 ![image](https://raw.githubusercontent.com/zhuchaowe/EasyIOS/gh-pages/images/logo.png)
 
-EasyIOS New Version For Swift
+EasyIOS For Swift
 =======
 
 [![Version](https://img.shields.io/cocoapods/v/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
