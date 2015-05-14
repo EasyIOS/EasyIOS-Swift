@@ -4,7 +4,9 @@
 EasyIOS For Swift
 =======
 
-
+[![Version](https://img.shields.io/cocoapods/v/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
+[![License](https://img.shields.io/cocoapods/l/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
+[![Platform](https://img.shields.io/cocoapods/p/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
 [![qq](http://img.shields.io/badge/QQ%E7%BE%A4-340906744-green.svg)](http://shang.qq.com/wpa/qunwpa?idkey=562d002e275a8199081313b00580fb7111a4faf694216a239064d29f5238bc91)
 
 * [IOSX - EasyIOS Official Forum](http://www.iosx.me)
@@ -25,6 +27,9 @@ EasyIOS For Swift
 To run the example project, clone the repo, and run `pod install` from the Demo directory first.
 
 ## Requirements
+
+* Swift
+* IOS8
 
 ## Installation
 
