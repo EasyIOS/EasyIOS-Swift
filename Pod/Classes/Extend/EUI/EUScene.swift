@@ -20,6 +20,7 @@ public class EUScene: EZScene {
         self.automaticallyAdjustsScrollViewInsets = false;
         self.extendedLayoutIncludesOpaqueBars = true;
         self.edgesForExtendedLayout = UIRectEdge.All;
+        self.view.backgroundColor = UIColor.whiteColor()
         EUI.setLiveLoad(LIVE_LOAD_PATH, controller:self,suffix: SUFFIX)
     }
 

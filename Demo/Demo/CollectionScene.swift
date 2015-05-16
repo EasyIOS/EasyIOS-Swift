@@ -14,6 +14,7 @@ import SVProgressHUD
 class CollectionScene: EUScene {
 
     var sceneModel = CollectionSceneModel()
+    var collectionView:UICollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,7 @@ class CollectionScene: EUScene {
                 SVProgressHUD.show()
             case .Success,.SuccessFromCache :
                 SVProgressHUD.dismiss()
+                self.collectionView?.pullToRefreshView?.stopAnimating()
             case .Error :
                 SVProgressHUD.showErrorWithStatus("数据加载失败")
             default :
@@ -42,6 +44,19 @@ class CollectionScene: EUScene {
     }
     
     override func eu_collectionViewDidLoad(collectionView: UICollectionView?) {
+        self.collectionView = collectionView
+        collectionView?.addPullToRefreshWithActionHandler(){
+            self.sceneModel.req.requestNeedActive.value = true
+        }
+        
+        collectionView?.addInfiniteScrollingWithActionHandler(){
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(3.0 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                collectionView?.infiniteScrollingView?.stopAnimating()
+            }
+        }
+        
         self.sceneModel.viewModelList.map { (data:CollectionCellViewModel,index:Int) -> UICollectionViewCell in
             return collectionView!.dequeueReusableCell(
                 "cell",

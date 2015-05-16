@@ -43,3 +43,36 @@ public class TapGestureDynamic<T>: InternalDynamic<NSInteger>
         }
     }
 }
+
+
+private var urlImageDynamicHandleUIImageView: UInt8 = 0
+extension UIImageView {
+    public var dynURLImage: Dynamic<NSURL?> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &urlImageDynamicHandleUIImageView) {
+            return (d as? Dynamic<NSURL?>)!
+        } else {
+            let d = InternalDynamic<NSURL?>()
+            let bond = Bond<NSURL?>() { [weak self] v in if let s = self { s.sd_setImageWithURL(v) } }
+            d.bindTo(bond, fire: false, strongly: false)
+            d.retain(bond)
+            objc_setAssociatedObject(self, &urlImageDynamicHandleUIImageView, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return d
+        }
+    }
+}
+
+private var textColorDynamicHandleUILabel: UInt8 = 0
+extension UILabel {
+    public var dynTextColor: Dynamic<UIColor> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &textColorDynamicHandleUILabel) {
+            return (d as? Dynamic<UIColor>)!
+        } else {
+            let d = InternalDynamic<UIColor>(self.textColor ?? UIColor.clearColor())
+            let bond = Bond<UIColor>() { [weak self] v in if let s = self { s.textColor = v } }
+            d.bindTo(bond, fire: false, strongly: false)
+            d.retain(bond)
+            objc_setAssociatedObject(self, &textColorDynamicHandleUILabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return d
+        }
+    }
+}

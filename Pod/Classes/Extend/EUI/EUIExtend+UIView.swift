@@ -31,6 +31,7 @@ extension EUScene{
                 self.view.addSubview(view)
             }
             self.view.subRender(self)
+           
             }, catch: { (error) in
                 println(self.nameOfClass + "Error:\(error.description)")
             }, finally: {
@@ -86,7 +87,7 @@ extension UIView {
                     return aview
                 }
             }
-            if view.tagProperty != nil && view.tagProperty.tagId == tagId {
+            if view.tagProperty.tagId == tagId {
                 return view as? UIView
             }
         }
@@ -101,7 +102,7 @@ extension UIView {
         }
     }
     
-     func getViewById(tagId:String) -> UIView? {
+    func getViewById(tagId:String) -> UIView? {
         if tagId == ""{
             return nil
         }else if tagId == Constrain.targetRoot {
@@ -116,22 +117,26 @@ extension UIView {
     }
     
     
-    func subRender(scene:EUScene,bind:EZViewModel? = nil) {
+    func subRender(scene:EUScene) {
         for subView in self.subviews {
             var view = subView as! UIView
-            view.renderTheView(scene,bind: bind)
+            view.renderTheView(scene)
         }
     }
     
-    func renderTheView(scene:EUScene,bind:EZViewModel? = nil){
-        self.subRender(scene,bind: bind)
-        self.renderDataBinding(bind)
+    func renderTheView(scene:EUScene){
+        self.subRender(scene)
         self.renderSelector(scene)
         self.renderGesture(scene)
         self.renderLayout()
     }
     
-    func renderDataBinding(bind:EZViewModel?){
+    public func renderDataBinding(bind:EZViewModel?){
+        for subView in self.subviews {
+            var view = subView as! UIView
+            view.renderDataBinding(bind)
+        }
+        
         if let bindKey = self.tagProperty.bind["background-color"] {
             if let color = bind!.valueForKey(bindKey) as? EZColor {
                 color.dym! ->> self.dynBackgroundColor
@@ -268,15 +273,13 @@ extension UIView {
 }
 
 extension UIImageView {
-    override func renderDataBinding(bind:EZViewModel?){
+    override public func renderDataBinding(bind:EZViewModel?){
         super.renderDataBinding(bind)
         if let bindKey = self.tagProperty.bind["src"] {
             if let image = bind!.valueForKey(bindKey) as? EZImage {
                 image.dym! ->> self.dynImage
             }else if let src = bind!.valueForKey(bindKey) as? EZURL {
-                src.dym! *->> Bond<NSURL?>{ value in
-                    self.sd_setImageWithURL(value)
-                }
+                src.dym! ->> self.dynURLImage
             }
         }else if let bindKey = self.tagProperty.bind["image"] {
             if let image = bind!.valueForKey(bindKey) as? EZImage {
@@ -286,9 +289,8 @@ extension UIImageView {
     }
 }
 
-private var textColorDynamicHandleUILabel: UInt8 = 0;
 extension UILabel {
-    override func renderDataBinding(bind:EZViewModel?){
+    override public func renderDataBinding(bind:EZViewModel?){
         super.renderDataBinding(bind)
         if let bindKey = self.tagProperty.bind["text"] {
             if let text = bind!.valueForKey(bindKey) as? EZAttributedString {
@@ -303,23 +305,10 @@ extension UILabel {
             }
         }
     }
-    
-    public var dynTextColor: Dynamic<UIColor> {
-        if let d: AnyObject = objc_getAssociatedObject(self, &textColorDynamicHandleUILabel) {
-            return (d as? Dynamic<UIColor>)!
-        } else {
-            let d = InternalDynamic<UIColor>(self.textColor ?? UIColor.clearColor())
-            let bond = Bond<UIColor>() { [weak self] v in if let s = self { s.textColor = v } }
-            d.bindTo(bond, fire: false, strongly: false)
-            d.retain(bond)
-            objc_setAssociatedObject(self, &textColorDynamicHandleUILabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-            return d
-        }
-    }
 }
 
 extension UITextField {
-    override func renderDataBinding(bind:EZViewModel?){
+    override public func renderDataBinding(bind:EZViewModel?){
         super.renderDataBinding(bind)
         if let bindKey = self.tagProperty.bind["text"] {
              if let text = bind!.valueForKey(bindKey) as? EZString {
@@ -360,7 +349,7 @@ extension UITableView {
         }
     }
     
-    override func subRender(scene:EUScene,bind:EZViewModel? = nil) {
+    override func subRender(scene:EUScene) {
         let property = self.tagProperty as! TableViewProperty
         scene.eu_tableViewDataSource = nil
         scene.eu_tableViewDataSource = UITableViewDataSourceBond(tableView: self)
@@ -375,12 +364,15 @@ extension UITableView {
                 SwiftTryCatch.try({
                     var view = cellProperty.getView()
                     cell.contentView.addSubview(view)
-                    view.renderTheView(target,bind:bind)
+                    view.renderTheView(target)
                     }, catch: { (error) in
                         println(self.nameOfClass + "Error:\(error.description)")
                     }, finally: {
                 })
             }
+        }
+        if let view = cell.contentView.subviews.first as? UIView {
+            view.renderDataBinding(bind)
         }
         return cell
     }
@@ -401,7 +393,7 @@ extension UICollectionView {
         }
     }
     
-    override func subRender(scene:EUScene,bind:EZViewModel? = nil) {
+    override func subRender(scene:EUScene) {
         let property = self.tagProperty as! CollectionViewProperty
         scene.eu_collectionViewDataSource = nil
         scene.eu_collectionViewDataSource = UICollectionViewDataSourceBond(collectionView: self)
@@ -417,12 +409,15 @@ extension UICollectionView {
                 SwiftTryCatch.try({
                     var view = cellProperty.getView()
                     cell.contentView.addSubview(view)
-                    view.renderTheView(target,bind:bind)
+                    view.renderTheView(target)
                     }, catch: { (error) in
                         println(self.nameOfClass + "Error:\(error.description)")
                     }, finally: {
                 })
             }
+        }
+        if let view = cell.contentView.subviews.first as? UIView {
+            view.renderDataBinding(bind)
         }
         return cell
     }

@@ -18,6 +18,11 @@
   "requires_arc": true,
   "module_name": "EasyIOS",
   "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "EasyIOS-Swift": [
+      "Pod/Assets/*.png"
+    ]
+  },
   "dependencies": {
     "HanekeSwift": [
       "~> 0.9.1"
@@ -33,6 +38,9 @@
     ],
     "SDWebImage": [
       "~>3.7"
+    ],
+    "ObjectMapper": [
+      "~> 0.11"
     ]
   },
   "public_header_files": [

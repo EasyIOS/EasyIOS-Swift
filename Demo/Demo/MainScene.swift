@@ -27,12 +27,28 @@ class MainScene: EUScene,UITableViewDelegate{
     }
     
     override func eu_tableViewDidLoad(tableView:UITableView?){
+        tableView?.addPullToRefreshWithActionHandler(){
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(3.0 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                tableView?.pullToRefreshView?.stopAnimating()
+            }
+        }
+        
+//        tableView?.addInfiniteScrollingWithActionHandler(){
+//            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+//                Int64(3.0 * Double(NSEC_PER_SEC)))
+//            dispatch_after(delayTime, dispatch_get_main_queue()) {
+//                tableView?.infiniteScrollingView?.stopAnimating()
+//            }
+//        }
+        
         tableView?.delegate = self
         self.sceneModel.dataArray.map { (data:MainCellViewModel) -> UITableViewCell in
             let cell = tableView!.dequeueReusableCell("cell", target: self,bind:data) as UITableViewCell
             cell.selectionStyle = .None
             return cell
-            } ->> self.eu_tableViewDataSource!
+        } ->> self.eu_tableViewDataSource!
     }
     
     func click(){
