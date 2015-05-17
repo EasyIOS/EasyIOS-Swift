@@ -14,6 +14,8 @@ class ScrollViewProperty:ViewProperty{
     var contentSize = CGSizeZero
     var scrollIndicatorInsets = UIEdgeInsetsZero
     var indicatorStyle:UIScrollViewIndicatorStyle = .Default
+    var pullToRefresh:PullRefreshAction?
+    var infiniteScrolling:InfiniteScrollingAction?
     
     override func view() -> UIScrollView{
         var view = UIScrollView()
@@ -38,7 +40,7 @@ class ScrollViewProperty:ViewProperty{
     }
     
     override func renderTag(pelement:OGElement){
-        self.tagOut += ["content-offset","content-inset","content-size","scroll-indicator-insets","indicator-style"]
+        self.tagOut += ["content-offset","content-inset","content-size","scroll-indicator-insets","indicator-style","pull-to-refresh","infinite-scrolling"]
         
         if let contentInset = EUIParse.string(pelement,key:"content-inset") {
             self.contentInset = UIEdgeInsetsFromString(contentInset)
@@ -59,6 +61,29 @@ class ScrollViewProperty:ViewProperty{
         if let scrollIndicatorInsets = EUIParse.string(pelement,key:"scroll-indicator-insets") {
             self.scrollIndicatorInsets = UIEdgeInsetsFromString(scrollIndicatorInsets)
         }
+        
+        if let thePullRefresh = EUIParse.string(pelement, key: "pull-to-refresh") {
+            var values = thePullRefresh.trimArray
+            if values.count == 1 {
+                self.pullToRefresh = PullRefreshAction(selector: values[0])
+            }else if values.count == 2 {
+                self.pullToRefresh = PullRefreshAction(selector: values[0], viewClass: values[1])
+            }else if values.count >= 3 {
+                self.pullToRefresh = PullRefreshAction(selector: values[0], viewClass: values[1], target: values[2])
+            }
+        }
+        
+        if let theInfiniteScrolling = EUIParse.string(pelement, key: "infinite-scrolling") {
+            var values = theInfiniteScrolling.trimArray
+            if values.count == 1 {
+                self.infiniteScrolling = InfiniteScrollingAction(selector: values[0])
+            }else if values.count == 2 {
+                self.infiniteScrolling = InfiniteScrollingAction(selector: values[0], viewClass: values[1])
+            }else if values.count >= 3 {
+                self.infiniteScrolling = InfiniteScrollingAction(selector: values[0], viewClass: values[1], target: values[2])
+            }
+        }
+        
         super.renderTag(pelement)
     }
 

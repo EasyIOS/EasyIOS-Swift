@@ -26,22 +26,15 @@ class MainScene: EUScene,UITableViewDelegate{
         // Dispose of any resources that can be recreated.
     }
     
-    override func eu_tableViewDidLoad(tableView:UITableView?){
-        tableView?.addPullToRefreshWithActionHandler(){
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
-                Int64(3.0 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                tableView?.pullToRefreshView?.stopAnimating()
-            }
+    func handlePullRefresh (tableView:UITableView){
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+            Int64(3.0 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            tableView.pullToRefreshView?.stopAnimating()
         }
-        
-//        tableView?.addInfiniteScrollingWithActionHandler(){
-//            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
-//                Int64(3.0 * Double(NSEC_PER_SEC)))
-//            dispatch_after(delayTime, dispatch_get_main_queue()) {
-//                tableView?.infiniteScrollingView?.stopAnimating()
-//            }
-//        }
+    }
+    
+    override func eu_tableViewDidLoad(tableView:UITableView?){
         
         tableView?.delegate = self
         self.sceneModel.dataArray.map { (data:MainCellViewModel) -> UITableViewCell in

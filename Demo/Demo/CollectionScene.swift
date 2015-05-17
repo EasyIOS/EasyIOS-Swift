@@ -43,19 +43,20 @@ class CollectionScene: EUScene {
         // Dispose of any resources that can be recreated.
     }
     
+    func handlePullRefresh (collectionView:UICollectionView){
+        self.sceneModel.req.requestNeedActive.value = true
+    }
+    
+    func handleInfinite (collectionView:UICollectionView){
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+            Int64(3.0 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            collectionView.infiniteScrollingView?.stopAnimating()
+        }
+    }
+    
     override func eu_collectionViewDidLoad(collectionView: UICollectionView?) {
         self.collectionView = collectionView
-        collectionView?.addPullToRefreshWithActionHandler(){
-            self.sceneModel.req.requestNeedActive.value = true
-        }
-        
-        collectionView?.addInfiniteScrollingWithActionHandler(){
-            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
-                Int64(3.0 * Double(NSEC_PER_SEC)))
-            dispatch_after(delayTime, dispatch_get_main_queue()) {
-                collectionView?.infiniteScrollingView?.stopAnimating()
-            }
-        }
         
         self.sceneModel.viewModelList.map { (data:CollectionCellViewModel,index:Int) -> UICollectionViewCell in
             return collectionView!.dequeueReusableCell(

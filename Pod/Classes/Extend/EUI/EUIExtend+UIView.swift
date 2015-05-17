@@ -423,5 +423,45 @@ extension UICollectionView {
     }
 }
 
-
+extension UIScrollView {
+    override func renderSelector(scene:EUScene){
+        var property =  self.tagProperty as? ScrollViewProperty
+        
+        if let pullRefresh = property?.pullToRefresh {
+            var target:AnyObject!
+            if !isEmpty(pullRefresh.target){
+                target = scene.valueForKeyPath(pullRefresh.target)
+            }else {
+                target = scene
+            }
+            if isEmpty(pullRefresh.viewClass) {
+                self.addPullToRefreshWithActionHandler(){
+                    NSThread.detachNewThreadSelector(pullRefresh.selector, toTarget:target, withObject: self)
+                }
+            }else if let view =  NSObject(fromString: pullRefresh.viewClass) as? UIView {
+                self.addPullToRefreshWithActionHandler(customer:view) {
+                    NSThread.detachNewThreadSelector(pullRefresh.selector, toTarget:target, withObject: self)
+                }
+            }
+        }
+        
+        if let infiniteScrolling = property?.infiniteScrolling {
+            var target:AnyObject!
+            if !isEmpty(infiniteScrolling.target){
+                target = scene.valueForKeyPath(infiniteScrolling.target)
+            }else {
+                target = scene
+            }
+            if isEmpty(infiniteScrolling.viewClass) {
+                self.addInfiniteScrollingWithActionHandler(){
+                    NSThread.detachNewThreadSelector(infiniteScrolling.selector, toTarget:target, withObject: self)
+                }
+            }else if let view =  NSObject(fromString: infiniteScrolling.viewClass) as? UIView {
+                self.addInfiniteScrollingWithActionHandler(customer:view) {
+                    NSThread.detachNewThreadSelector(infiniteScrolling.selector, toTarget:target, withObject: self)
+                }
+            }
+        }
+    }
+}
 

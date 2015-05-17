@@ -62,6 +62,41 @@ struct SelectorAction{
     }
 }
 
+struct PullRefreshAction {
+    var selector:Selector
+    var target:String = ""
+    var viewClass:String = ""
+    
+    init(selector:String,viewClass:String = "",target:String = ""){
+        if selector.hasSuffix(".") {
+            var val = selector
+            val.removeAtIndex(advance(val.startIndex, count(val) - 1))
+            self.selector = Selector(val + ":")
+        }else{
+            self.selector = Selector(selector)
+        }
+        self.target = target
+        self.viewClass = viewClass
+    }
+}
+
+struct InfiniteScrollingAction {
+    var selector:Selector
+    var target:String = ""
+    var viewClass:String = ""
+    
+    init(selector:String,viewClass:String = "",target:String = ""){
+        if selector.hasSuffix(".") {
+            var val = selector
+            val.removeAtIndex(advance(val.startIndex, count(val) - 1))
+            self.selector = Selector(val + ":")
+        }else{
+            self.selector = Selector(selector)
+        }
+        self.target = target
+        self.viewClass = viewClass
+    }
+}
 
 struct TapGestureAction{
     var selector:Selector = ""
