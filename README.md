@@ -23,7 +23,7 @@ EasyIOS For Swift
 * Live Load : Edit the HTML and the view in smulator will update automaticly without rebuild your app
 * Cryptographic HTML : To make the HTML be safety,we provide the `AES Encryption` to encrypt the HTML
 * URLManager : Push or Present the Controller by the custom URL 
-
+* Elegant PullToRefresh : Add  PullToRefresh or InfiniteScrolling by HTML
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Demo directory first.
