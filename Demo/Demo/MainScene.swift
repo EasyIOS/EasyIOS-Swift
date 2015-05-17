@@ -26,6 +26,7 @@ class MainScene: EUScene,UITableViewDelegate{
         // Dispose of any resources that can be recreated.
     }
     
+    //接收xml里的下拉刷新事件
     func handlePullRefresh (tableView:UITableView){
         let delayTime = dispatch_time(DISPATCH_TIME_NOW,
             Int64(3.0 * Double(NSEC_PER_SEC)))

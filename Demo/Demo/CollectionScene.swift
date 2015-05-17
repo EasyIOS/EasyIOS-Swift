@@ -43,21 +43,23 @@ class CollectionScene: EUScene {
         // Dispose of any resources that can be recreated.
     }
     
+    //接收xml里的下拉刷新事件
     func handlePullRefresh (collectionView:UICollectionView){
         self.sceneModel.req.requestNeedActive.value = true
     }
     
+    //接收xml里的上拉加载事件
     func handleInfinite (collectionView:UICollectionView){
         let delayTime = dispatch_time(DISPATCH_TIME_NOW,
             Int64(3.0 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             collectionView.infiniteScrollingView?.stopAnimating()
+            collectionView.infiniteScrollingView?.setEnded()
         }
     }
     
     override func eu_collectionViewDidLoad(collectionView: UICollectionView?) {
         self.collectionView = collectionView
-        
         self.sceneModel.viewModelList.map { (data:CollectionCellViewModel,index:Int) -> UICollectionViewCell in
             return collectionView!.dequeueReusableCell(
                 "cell",

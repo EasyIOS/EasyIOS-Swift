@@ -131,8 +131,8 @@ public class EZInfiniteScrollingView :UIView {
                     self.state.value = .Pulling
                 }
             }
-        }else if keyPath == "contentSize" && scrollView.contentSize.height >= scrollView.bounds.size.height  {
-            scrollView.showsInfiniteScrolling = true // 当contentSize.height大于scrollView的高度时才显示上拉加载
+        }else if keyPath == "contentSize" && scrollView.contentSize.height >= scrollView.bounds.size.height && scrollView.showsInfiniteScrolling == false  {
+                scrollView.showsInfiniteScrolling = true // 当contentSize.height大于scrollView的高度时才显示上拉加载
         }
     }
 }

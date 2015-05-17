@@ -27,11 +27,7 @@ class LoginScene: EUScene {
     }
 
     func login (){
-        self.navigationController?.navigationBar.hidden = true
-        if let nav = self.navigationController as? EZNavigationController {
-            nav.popGestureRecognizerEnabled = false
-        }
-//        URLNavigation.pushViewController(TabBarScene(), animated: true)
+        //在这里进行登录操作
     }
 }
 
