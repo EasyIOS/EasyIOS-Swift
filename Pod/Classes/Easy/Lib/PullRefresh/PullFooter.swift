@@ -66,7 +66,6 @@ public class PullFooter : Footer {
         var scrollView = object as! UIScrollView
         if keyPath == "contentSize" && scrollView.contentSize.height > scrollView.bounds.size.height && scrollView.bounds.size.height > 0  {
             scrollView.infiniteScrollingView!.frame = CGRectMake(0, scrollView.contentSize.height, scrollView.superview!.size.width,EZInfiniteScrollingViewHeight)
-            EZPrintln(scrollView.infiniteScrollingView!.frame)
         }
     }
     
