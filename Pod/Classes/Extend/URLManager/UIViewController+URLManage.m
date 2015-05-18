@@ -119,7 +119,7 @@ static char URLdictQuery;
                 [scene open:url withQuery:query];
             }
         }
-    }else if([query objectForKey:@"openURL"]){
+    }else if([query objectForKey:@"openURL"] || [url.scheme hasPrefix:@"http"]){
         [[UIApplication sharedApplication] openURL:url];
     }
     return scene;

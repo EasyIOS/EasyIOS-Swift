@@ -23,6 +23,10 @@ class LabelScene: EUScene {
         // Dispose of any resources that can be recreated.
     }
     
+    override func eu_viewWillLoad() {
+        self.attributedLabelDelegate = MainLabelDeleage()
+    }
+    
     override func leftButtonTouch() {
         URLNavigation.dismissCurrentAnimated(true)
     }
