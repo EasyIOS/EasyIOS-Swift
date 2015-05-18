@@ -10,16 +10,16 @@ import UIKit
 import EasyIOS
 
 class MainCellViewModel: EZViewModel {
-    var title:EZString?
-    var subTitle:EZData?
-    var srcUrl:EZURL?
-    var link:EZString?
+    var title:String?
+    var subTitle:NSData?
+    var srcUrl:NSURL?
+    var link:String?
     init(title:String,subTitle:String = "",srcUrl:String = "",link:String = ""){
-        self.title = EZString(title)
+        self.title = title
         if let data = subTitle.toData() {
-            self.subTitle = EZData(data)
+            self.subTitle = data
         }
-        self.srcUrl = EZURL(NSURL(string: srcUrl))
-        self.link = EZString(link)
+        self.srcUrl = NSURL(string: srcUrl)
+        self.link = link
     }
 }

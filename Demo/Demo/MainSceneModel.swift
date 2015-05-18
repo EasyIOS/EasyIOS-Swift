@@ -33,7 +33,7 @@ class MainSceneModel: EZSceneModel {
             title: "HTML版的Label,采用TTTAttributeLabel",
             subTitle: "<p>Hello <a href='demo://login'>World!</a></p>",
             srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
-            link:"demo://collection"))
+            link:"demo://LabelScene"))
 
    
     }

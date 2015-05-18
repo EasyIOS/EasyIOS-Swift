@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B7B80C51B08D8E00059CAEF /* MainLabelDeleage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */; };
+		5B7B80DB1B0A0B2A0059CAEF /* LabelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B80DA1B0A0B2A0059CAEF /* LabelScene.swift */; };
+		5B7B80DD1B0A0B3F0059CAEF /* LabelScene.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5B7B80DC1B0A0B3F0059CAEF /* LabelScene.xml */; };
 		5B8240C01B03715600D58574 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8240BF1B03715600D58574 /* AppDelegate.swift */; };
 		5B8240C21B03715600D58574 /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8240C11B03715600D58574 /* LoginScene.swift */; };
 		5B8240C71B03715600D58574 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B8240C61B03715600D58574 /* Images.xcassets */; };
@@ -45,6 +47,8 @@
 		0BAFEE4C5E077414790C2042 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		55CB89BDD03972BB5036E6DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLabelDeleage.swift; sourceTree = "<group>"; };
+		5B7B80DA1B0A0B2A0059CAEF /* LabelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelScene.swift; sourceTree = "<group>"; };
+		5B7B80DC1B0A0B3F0059CAEF /* LabelScene.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LabelScene.xml; sourceTree = "<group>"; };
 		5B8240BA1B03715600D58574 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B8240BE1B03715600D58574 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B8240BF1B03715600D58574 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +104,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5B7B80D91B0A0B0F0059CAEF /* LabelScene */ = {
+			isa = PBXGroup;
+			children = (
+				5B7B80DA1B0A0B2A0059CAEF /* LabelScene.swift */,
+			);
+			name = LabelScene;
+			sourceTree = "<group>";
+		};
 		5B8240B11B03715600D58574 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +136,7 @@
 		5B8240BC1B03715600D58574 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				5B7B80D91B0A0B0F0059CAEF /* LabelScene */,
 				5B90B5C11B043889000C848D /* LoginScene */,
 				5BDC06B91B03949900C486E0 /* CollectionScene */,
 				5BDBF0D31B038C6400E95ACF /* MainScene */,
@@ -183,6 +196,7 @@
 		5BAE1D631B0379910002DD5E /* xml */ = {
 			isa = PBXGroup;
 			children = (
+				5B7B80DC1B0A0B3F0059CAEF /* LabelScene.xml */,
 				5BE27D471B03815A00418220 /* LoginScene.xml */,
 				5BDBF0D11B038C3000E95ACF /* MainScene.xml */,
 				5BDC06C21B03960400C486E0 /* CollectionScene.xml */,
@@ -317,6 +331,7 @@
 				5B8240E91B0377FC00D58574 /* EasyIOS-Swift.podspec in Resources */,
 				5BDBF0D21B038C3000E95ACF /* MainScene.xml in Resources */,
 				5BDBF0CE1B038B7300E95ACF /* login-logo@2x.png in Resources */,
+				5B7B80DD1B0A0B3F0059CAEF /* LabelScene.xml in Resources */,
 				5BDC06C31B03960400C486E0 /* CollectionScene.xml in Resources */,
 				5B8240C71B03715600D58574 /* Images.xcassets in Resources */,
 				5BDBF0D91B038F0D00E95ACF /* url.plist in Resources */,
@@ -391,6 +406,7 @@
 				5BDBF0D51B038C7800E95ACF /* MainSceneModel.swift in Sources */,
 				5BDC06BF1B03955A00C486E0 /* CollectionCellViewModel.swift in Sources */,
 				5BDC06BB1B0394C200C486E0 /* CollectionScene.swift in Sources */,
+				5B7B80DB1B0A0B2A0059CAEF /* LabelScene.swift in Sources */,
 				5B8240EB1B0377FC00D58574 /* README.md in Sources */,
 				5BDBF0D01B038C1700E95ACF /* MainScene.swift in Sources */,
 				5B8240C21B03715600D58574 /* LoginScene.swift in Sources */,

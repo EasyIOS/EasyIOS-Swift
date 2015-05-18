@@ -305,10 +305,16 @@ extension UIImageView {
                 image.dym! ->> self.dynImage
             }else if let src = bind!.valueForKey(bindKey) as? EZURL {
                 src.dym! ->> self.dynURLImage
+            }else if let image = bind!.valueForKey(bindKey) as? UIImage {
+                self.image = image
+            }else if let url = bind!.valueForKey(bindKey) as? NSURL {
+                self.sd_setImageWithURL(url)
             }
         }else if let bindKey = self.tagProperty.bind["image"] {
             if let image = bind!.valueForKey(bindKey) as? EZImage {
                 image.dym! ->> self.dynImage
+            }else if let image = bind!.valueForKey(bindKey) as? UIImage {
+                self.image = image
             }
         }
     }
@@ -322,11 +328,19 @@ extension UILabel {
                 text.dym! ->> self.dynAttributedText
             }else if let text = bind!.valueForKey(bindKey) as? EZString {
                 text.dym! ->> self.dynText
+            }else if let text = bind!.valueForKey(bindKey) as? String {
+                self.text = text
+            }else if let data = bind!.valueForKey(bindKey) as? NSData {
+                self.attributedText = NSAttributedString(fromHTMLData: data, attributes: ["dict":self.tagProperty.style])
+            }else if let string = bind!.valueForKey(bindKey) as? NSAttributedString {
+                self.attributedText = string
             }
         }
         if let bindKey = self.tagProperty.bind["text-color"] {
             if let color = bind!.valueForKey(bindKey) as? EZColor {
                 color.dym! ->> self.dynTextColor
+            }else if let color = bind!.valueForKey(bindKey) as? UIColor {
+                self.textColor = color
             }
         }
     }
@@ -342,6 +356,12 @@ extension TTTAttributedLabel {
                 text.dym! ->> self.dynTTText
             }else if let data = bind!.valueForKey(bindKey) as? EZData {
                 data.dym! ->> self.dynTTTData
+            }else if let text = bind!.valueForKey(bindKey) as? String {
+                self.setText(text)
+            }else if let data = bind!.valueForKey(bindKey) as? NSData {
+                self.setText(NSAttributedString(fromHTMLData: data, attributes: ["dict":self.tagProperty.style]))
+            }else if let string = bind!.valueForKey(bindKey) as? NSAttributedString {
+                self.setText(string)
             }
         }
     }
@@ -357,8 +377,10 @@ extension UITextField {
     override public func renderDataBinding(bind:EZViewModel?){
         super.renderDataBinding(bind)
         if let bindKey = self.tagProperty.bind["text"] {
-             if let text = bind!.valueForKey(bindKey) as? EZString {
+            if let text = bind!.valueForKey(bindKey) as? EZString {
                 text.dym! ->> self.dynText
+            }else if let text = bind!.valueForKey(bindKey) as? String {
+                self.text = text
             }
         }
     }

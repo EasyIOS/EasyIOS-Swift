@@ -113,14 +113,10 @@ static char URLdictQuery;
             }
         }
         if(class !=nil){
-            if([NSStringFromClass(class) isEqualToString:@"TOWebViewController"]){
-                scene = [[class alloc]initWithURL:url];
-            }else{
-                scene = [[class alloc]init];
-                scene.hidesBottomBarWhenPushed = YES;
-                if([scene  respondsToSelector:@selector(open:withQuery:)]){
-                    [scene open:url withQuery:query];
-                }
+            scene = [[class alloc]init];
+            scene.hidesBottomBarWhenPushed = YES;
+            if([scene  respondsToSelector:@selector(open:withQuery:)]){
+                [scene open:url withQuery:query];
             }
         }
     }else if([query objectForKey:@"openURL"]){

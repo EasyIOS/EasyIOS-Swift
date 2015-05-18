@@ -40,7 +40,6 @@ class MainScene: EUScene,UITableViewDelegate{
     }
     
     override func eu_tableViewDidLoad(tableView:UITableView?){
-        
         tableView?.delegate = self
         self.sceneModel.dataArray.map { (data:MainCellViewModel) -> UITableViewCell in
             let cell = tableView!.dequeueReusableCell("cell", target: self,bind:data) as UITableViewCell
@@ -55,7 +54,7 @@ class MainScene: EUScene,UITableViewDelegate{
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var model = self.sceneModel.dataArray[indexPath.row]
-        if let link = model.link?.value {
+        if let link = model.link {
             URLManager.pushURLString(link, animated: true)
         }
     }
