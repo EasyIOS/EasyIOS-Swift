@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B7B80C51B08D8E00059CAEF /* MainLabelDeleage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */; };
 		5B8240C01B03715600D58574 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8240BF1B03715600D58574 /* AppDelegate.swift */; };
 		5B8240C21B03715600D58574 /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8240C11B03715600D58574 /* LoginScene.swift */; };
 		5B8240C71B03715600D58574 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B8240C61B03715600D58574 /* Images.xcassets */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		0BAFEE4C5E077414790C2042 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		55CB89BDD03972BB5036E6DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLabelDeleage.swift; sourceTree = "<group>"; };
 		5B8240BA1B03715600D58574 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B8240BE1B03715600D58574 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B8240BF1B03715600D58574 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				5BDBF0CF1B038C1700E95ACF /* MainScene.swift */,
 				5BDBF0D41B038C7800E95ACF /* MainSceneModel.swift */,
 				5BDBF0D61B038CBB00E95ACF /* MainCellViewModel.swift */,
+				5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */,
 			);
 			name = MainScene;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				5BDBF0D01B038C1700E95ACF /* MainScene.swift in Sources */,
 				5B8240C21B03715600D58574 /* LoginScene.swift in Sources */,
 				5B8240C01B03715600D58574 /* AppDelegate.swift in Sources */,
+				5B7B80C51B08D8E00059CAEF /* MainLabelDeleage.swift in Sources */,
 				5BDBF0D71B038CBB00E95ACF /* MainCellViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -56,6 +56,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'SDWebImage.framework'
   install_framework 'SVProgressHUD.framework'
   install_framework 'SnapKit.framework'
+  install_framework 'TTTAttributedLabel.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Alamofire.framework'
@@ -66,4 +67,5 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'SDWebImage.framework'
   install_framework 'SVProgressHUD.framework'
   install_framework 'SnapKit.framework'
+  install_framework 'TTTAttributedLabel.framework'
 fi

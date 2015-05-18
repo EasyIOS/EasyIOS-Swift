@@ -9,6 +9,18 @@
 import UIKit
 import Bond
 
+public class EZData:NSObject {
+    public var dym:InternalDynamic<NSData>?
+    
+    public var value:NSData?{
+        return self.dym?.value
+    }
+    
+    public init(_ data:NSData) {
+        self.dym = InternalDynamic<NSData>(data)
+    }
+}
+
 public class EZString:NSObject {
     public var dym:InternalDynamic<String>?
     

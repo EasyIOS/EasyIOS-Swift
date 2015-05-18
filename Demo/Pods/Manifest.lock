@@ -1,13 +1,14 @@
 PODS:
-  - Alamofire (1.2.1)
+  - Alamofire (1.2.2)
   - Bond (3.7.1)
   - EasyIOS-Swift (0.1.0):
-    - Alamofire (~> 1.2)
-    - Bond (~> 3.7.1)
-    - HanekeSwift (~> 0.9.1)
-    - ObjectMapper (~> 0.11)
-    - SDWebImage (~> 3.7)
-    - SnapKit (~> 0.11.0)
+    - Alamofire
+    - Bond
+    - HanekeSwift
+    - ObjectMapper
+    - SDWebImage
+    - SnapKit
+    - TTTAttributedLabel
   - HanekeSwift (0.9.1)
   - ObjectMapper (0.11)
   - SDWebImage (3.7.2):
@@ -15,6 +16,7 @@ PODS:
   - SDWebImage/Core (3.7.2)
   - SnapKit (0.11.0)
   - SVProgressHUD (1.1.3)
+  - TTTAttributedLabel (1.13.3)
 
 DEPENDENCIES:
   - EasyIOS-Swift (from `../`)
@@ -25,13 +27,14 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Alamofire: 1acfdf179aff68b41a48dff70c1ac7fa263e2bcb
+  Alamofire: 11a6022f5089887d92ffb5a3014c97a0a915ab98
   Bond: 96a42cdc96269670b0bb3421a8badae8d9b266df
-  EasyIOS-Swift: 8644ce9013fa5169532840d6b5e5ce2e638d1b12
+  EasyIOS-Swift: 4179dbddb0717329c980272b0536d9196e61d010
   HanekeSwift: 50d37bfbc4432edc649167e538c259feccb4a2bb
   ObjectMapper: fc34b29bb04086ed831174a01c8310b507a6ba25
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   SnapKit: 5194d53cee209d337a989919ff66a70b7aa3dda3
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
 
 COCOAPODS: 0.37.0.beta.1

@@ -26,6 +26,14 @@ class MainSceneModel: EZSceneModel {
                 subTitle: "UICollectionView的使用Demo,包含了网络请求",
                 srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
                 link:"demo://collection"))
+        
+        
+        
+        self.dataArray.append(MainCellViewModel(
+            title: "HTML版的Label,采用TTTAttributeLabel",
+            subTitle: "<p>Hello <a href='demo://login'>World!</a></p>",
+            srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
+            link:"demo://collection"))
 
    
     }

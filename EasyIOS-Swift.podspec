@@ -26,12 +26,13 @@ Pod::Spec.new do |s|
   s.module_name = "EasyIOS"
   s.source_files = 'Pod/Classes/**/*'
   s.resource_bundles = {'EasyIOS-Swift' => ['Pod/Assets/*.png']}
-    s.dependency 'HanekeSwift', '~> 0.9.1'
-    s.dependency 'Bond', '~> 3.7.1'
-    s.dependency 'Alamofire', '~> 1.2'
-    s.dependency 'SnapKit', '~> 0.11.0'
-    s.dependency 'SDWebImage', '~>3.7'
-    s.dependency 'ObjectMapper', '~> 0.11'
+    s.dependency 'HanekeSwift'
+    s.dependency 'Bond'
+    s.dependency 'Alamofire'
+    s.dependency 'SnapKit'
+    s.dependency 'SDWebImage'
+    s.dependency 'ObjectMapper'
+    s.dependency 'TTTAttributedLabel'
 s.public_header_files = 'Pod/Classes/Easy/**/*.h','Pod/Classes/Extend/**/*.h','Pod/Classes/Private/**/*.h'
 s.frameworks = 'UIKit'
 end

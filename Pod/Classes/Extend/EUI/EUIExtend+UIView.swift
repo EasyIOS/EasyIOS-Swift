@@ -10,16 +10,35 @@ import UIKit
 import SnapKit
 import Bond
 import SDWebImage
+import TTTAttributedLabel
 
 private var UIViewTagIdHandle :UInt8 = 1
 private var UIViewViewPropertyHandle :UInt8 = 2
 private var UIViewConstraintGroupHandle :UInt8 = 3
 private var UIViewWatchHandle :UInt8 = 4
-private var TableViewDataSourceBond :UInt8 = 6
+private var TableViewDataSourceBond :UInt8 = 5
 private var CollectionViewDataSourceBond :UInt8 = 6
+private var attributedLabelDelegateHandle :UInt8 = 7
 
+
+public class TTTAttributedLabelDelegateHandle:NSObject,TTTAttributedLabelDelegate{
+    
+}
 extension EUScene{
+     public var attributedLabelDelegate:TTTAttributedLabelDelegateHandle? {
+        get{
+            if let d: AnyObject = objc_getAssociatedObject(self, &attributedLabelDelegateHandle) {
+                return d as? TTTAttributedLabelDelegateHandle
+            }else{
+                return nil
+            }
+        }set (value){
+            objc_setAssociatedObject(self, &attributedLabelDelegateHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+        }
+    }
+
     func loadEZLayout(html:String){
+        self.eu_viewWillLoad()
         SwiftTryCatch.try({ [unowned self] in
             var body = EUIParse.ParseHtml(html)
             var views = [UIView]()
@@ -41,8 +60,11 @@ extension EUScene{
     
     public var eu_tableViewDataSource: UITableViewDataSourceBond<UITableViewCell>? {
         get{
-            let d: AnyObject = objc_getAssociatedObject(self, &TableViewDataSourceBond)
-            return d as? UITableViewDataSourceBond<UITableViewCell>
+            if let d: AnyObject = objc_getAssociatedObject(self, &TableViewDataSourceBond){
+                return d as? UITableViewDataSourceBond<UITableViewCell>
+            }else{
+                return nil
+            }
         }set (value){
             objc_setAssociatedObject(self, &TableViewDataSourceBond, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
         }
@@ -50,8 +72,11 @@ extension EUScene{
     
     public var eu_collectionViewDataSource: UICollectionViewDataSourceBond<UICollectionViewCell>? {
         get{
-            let d: AnyObject = objc_getAssociatedObject(self, &CollectionViewDataSourceBond)
-            return d as? UICollectionViewDataSourceBond<UICollectionViewCell>
+            if let d: AnyObject = objc_getAssociatedObject(self, &CollectionViewDataSourceBond){
+                return d as? UICollectionViewDataSourceBond<UICollectionViewCell>
+            }else{
+                return nil
+            }
         }set (value){
             objc_setAssociatedObject(self, &CollectionViewDataSourceBond, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
         }
@@ -303,6 +328,27 @@ extension UILabel {
             if let color = bind!.valueForKey(bindKey) as? EZColor {
                 color.dym! ->> self.dynTextColor
             }
+        }
+    }
+}
+
+extension TTTAttributedLabel {
+    override public func renderDataBinding(bind:EZViewModel?){
+        super.renderDataBinding(bind)
+        if let bindKey = self.tagProperty.bind["TTText"] {
+            if let text = bind!.valueForKey(bindKey) as? EZAttributedString {
+                text.dym! ->> self.dynTTTAttributedText
+            }else if let text = bind!.valueForKey(bindKey) as? EZString {
+                text.dym! ->> self.dynTTText
+            }else if let data = bind!.valueForKey(bindKey) as? EZData {
+                data.dym! ->> self.dynTTTData
+            }
+        }
+    }
+    
+    override func renderSelector(scene:EUScene){
+        if let delegate = scene.attributedLabelDelegate {
+            self.delegate = scene.attributedLabelDelegate
         }
     }
 }

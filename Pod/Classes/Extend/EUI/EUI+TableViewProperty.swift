@@ -38,6 +38,7 @@ class TableViewProperty:ScrollViewProperty{
     override func renderTag(pelement:OGElement){
         self.tagOut += ["table-view-style","separator-inset","delegate","datasource","row-height","separator-style"]
         
+        super.renderTag(pelement)
         if let style = EUIParse.string(pelement,key:"table-view-style") {
             if style == "plain" {
                 self.tableViewStyle = .Plain
@@ -66,7 +67,6 @@ class TableViewProperty:ScrollViewProperty{
                 self.separatorStyle = .SingleLine
             }
         }
-        super.renderTag(pelement)
     }
     
     override func childLoop(pelement: OGElement) {

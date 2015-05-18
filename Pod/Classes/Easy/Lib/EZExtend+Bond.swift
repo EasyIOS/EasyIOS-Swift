@@ -7,6 +7,7 @@
 //
 
 import Bond
+import TTTAttributedLabel
 
 infix operator *->> {}
 infix operator <-- {}
@@ -74,5 +75,59 @@ extension UILabel {
             objc_setAssociatedObject(self, &textColorDynamicHandleUILabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
             return d
         }
+    }
+}
+
+private var textDynamicHandleTTTAttributeLabel: UInt8 = 0
+private var attributedTextDynamicHandleTTTAttributeLabel: UInt8 = 0
+private var dataDynamicHandleTTTAttributeLabel: UInt8 = 0
+
+extension TTTAttributedLabel: Bondable {
+     public var dynTTText: Dynamic<String> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &textDynamicHandleTTTAttributeLabel) {
+            return (d as? Dynamic<String>)!
+        } else {
+            let d = InternalDynamic<String>(self.text ?? "")
+            let bond = Bond<String>() { [weak self] v in if let s = self {
+                s.setText(v)
+            } }
+            d.bindTo(bond, fire: false, strongly: false)
+            d.retain(bond)
+            objc_setAssociatedObject(self, &textDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return d
+        }
+    }
+    
+    public var dynTTTData: Dynamic<NSData> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &dataDynamicHandleTTTAttributeLabel) {
+            return (d as? Dynamic<NSData>)!
+        } else {
+            let d = InternalDynamic<NSData>()
+            let bond = Bond<NSData>() { [weak self] v in if let s = self {
+                s.setText(NSAttributedString(fromHTMLData: v, attributes: ["dict":s.tagProperty.style]))
+            }}
+            d.bindTo(bond, fire: false, strongly: false)
+            d.retain(bond)
+            objc_setAssociatedObject(self, &dataDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return d
+        }
+    }
+    
+    public var dynTTTAttributedText: Dynamic<NSAttributedString> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &attributedTextDynamicHandleTTTAttributeLabel) {
+            return (d as? Dynamic<NSAttributedString>)!
+        } else {
+            let d = InternalDynamic<NSAttributedString>(self.attributedText ?? NSAttributedString(string: ""))
+            let bond = Bond<NSAttributedString>() { [weak self] v in if let s = self {
+                s.setText(v) } }
+            d.bindTo(bond, fire: false, strongly: false)
+            d.retain(bond)
+            objc_setAssociatedObject(self, &attributedTextDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return d
+        }
+    }
+    
+    public var designatedTTTBond: Bond<String> {
+        return self.dynTTText.valueBond
     }
 }

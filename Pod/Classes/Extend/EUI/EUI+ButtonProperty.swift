@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ButtonProperty:LabelProperty{
+class ButtonProperty:ViewProperty{
     
     var highlightedStyle = ""
     var disabledStyle = ""
@@ -16,11 +16,11 @@ class ButtonProperty:LabelProperty{
     var applicationStyle = ""
     var reservedStyle = ""
     
-    var highlightedText:NSData?
-    var disabledText:NSData?
-    var selectedText:NSData?
-    var applicationText:NSData?
-    var reservedText:NSData?
+    var highlightedText:String?
+    var disabledText:String?
+    var selectedText:String?
+    var applicationText:String?
+    var reservedText:String?
     var onEvent:SelectorAction?
     
     override func view() -> UIButton{
@@ -28,27 +28,27 @@ class ButtonProperty:LabelProperty{
         view.tagProperty = self
         
         if self.style != "" {
-            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.text, attributes: ["html":self.style]), forState: UIControlState.Normal)
+            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.contentText?.toData(), attributes: ["html":self.style]), forState: UIControlState.Normal)
         }
         
         if self.highlightedText != nil {
-            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.highlightedText, attributes: ["html":self.highlightedStyle]), forState: UIControlState.Highlighted)
+            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.highlightedText?.toData(), attributes: ["html":self.highlightedStyle]), forState: UIControlState.Highlighted)
         }
         
         if self.disabledText != nil {
-            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.disabledText, attributes: ["html":self.disabledStyle]), forState: UIControlState.Disabled)
+            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.disabledText?.toData(), attributes: ["html":self.disabledStyle]), forState: UIControlState.Disabled)
         }
         
         if self.selectedText != nil {
-            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.selectedText, attributes: ["html":self.selectedStyle]), forState: UIControlState.Selected)
+            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.selectedText?.toData(), attributes: ["html":self.selectedStyle]), forState: UIControlState.Selected)
         }
         
         if self.applicationText != nil {
-            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.applicationText, attributes: ["html":self.applicationStyle]), forState: UIControlState.Application)
+            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.applicationText?.toData(), attributes: ["html":self.applicationStyle]), forState: UIControlState.Application)
         }
         
         if self.reservedText != nil {
-            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.reservedText, attributes: ["html":self.reservedStyle]), forState: UIControlState.Reserved)
+            view.setAttributedTitle(NSAttributedString(fromHTMLData: self.reservedText?.toData(), attributes: ["html":self.reservedStyle]), forState: UIControlState.Reserved)
         }
 
         self.renderViewStyle(view)
@@ -56,8 +56,11 @@ class ButtonProperty:LabelProperty{
     }
     
     override func renderTag(pelement: OGElement) {
+       
         self.tagOut += ["highlighted","disabled","selected","application","reserved","disabled-text",
         "selected-text","application-text","reserved-text","highlighted-text","onevent"]
+        
+        super.renderTag(pelement)
         
         if let highlightedStyle = EUIParse.string(pelement,key: "highlighted") {
             self.highlightedStyle = "html{" + highlightedStyle + "}"
@@ -80,12 +83,11 @@ class ButtonProperty:LabelProperty{
         }
 
         
-        self.setText(pelement, key: "disabled-text")
-        self.setText(pelement, key: "selected-text")
-        self.setText(pelement, key: "application-text")
-        self.setText(pelement, key: "reserved-text")
-        self.setText(pelement, key: "highlighted-text")
-        
+        self.disabledText = EUIParse.string(pelement,key: "disabled-text")
+        self.selectedText = EUIParse.string(pelement,key: "selected-text")
+        self.applicationText = EUIParse.string(pelement,key: "application-text")
+        self.reservedText = EUIParse.string(pelement,key: "reserved-text")
+        self.highlightedText = EUIParse.string(pelement,key: "highlighted-text")
         
         if let theSelector = EUIParse.string(pelement, key: "onevent") {
             var values = theSelector.trimArrayBy(":")
@@ -100,14 +102,16 @@ class ButtonProperty:LabelProperty{
             }
         }
         
-        super.renderTag(pelement)
-    }
-    
-    func setText(pelement: OGElement,key:String){
-        var str = self.text
-        if let value = EUIParse.string(pelement,key: key)  {
-            self.setValue(value.dataUsingEncoding(NSUTF8StringEncoding), forKey: key)
+        var html = ""
+        for child in pelement.children
+        {
+            html += child.html().trim
         }
+        if let newHtml = self.bindTheKeyPath(html, key: "text") {
+            html = newHtml
+        }
+        self.contentText = html
     }
+
 
 }

@@ -96,4 +96,8 @@ extension String {
         var data = self.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         return data!.MD5String
     }
+    
+    public func toData () -> NSData?{
+        return self.dataUsingEncoding(NSUTF8StringEncoding)?.dataByReplacingOccurrencesOfData("\\n".dataUsingEncoding(NSUTF8StringEncoding), withData: "\n".dataUsingEncoding(NSUTF8StringEncoding))
+    }
 }

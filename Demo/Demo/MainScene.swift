@@ -17,7 +17,6 @@ class MainScene: EUScene,UITableViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "EasyIOS"
-
         // Do any additional setup after loading the view.
     }
     
@@ -33,6 +32,11 @@ class MainScene: EUScene,UITableViewDelegate{
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             tableView.pullToRefreshView?.stopAnimating()
         }
+    }
+    
+    //do someThing init before loadTheView
+    override func eu_viewWillLoad() {
+        self.attributedLabelDelegate = MainLabelDeleage()
     }
     
     override func eu_tableViewDidLoad(tableView:UITableView?){

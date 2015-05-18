@@ -29,11 +29,12 @@ class ImageProperty:ViewProperty{
     
     override func renderTag(pelement:OGElement){
         self.tagOut += ["src"]
+        
+        super.renderTag(pelement)
         if let src = EUIParse.string(pelement,key:"src"),let filterHtml = self.bindTheKeyPath(src, key: "src") {
             self.src = filterHtml
         }
         
-        super.renderTag(pelement)
     }
     
     override func childLoop(pelement: OGElement) {

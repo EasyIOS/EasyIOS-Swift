@@ -195,6 +195,30 @@ func keyboardTypeFromString(type:String) -> UIKeyboardType {
 }
 
 
+func underlineStyleFromString(style:String) -> NSUnderlineStyle{
+    switch style.lowercaseString {
+    case "None".lowercaseString :
+        return NSUnderlineStyle.StyleNone
+    case "StyleSingle".lowercaseString :
+        return NSUnderlineStyle.StyleSingle
+    case "StyleThick".lowercaseString :
+        return NSUnderlineStyle.StyleThick
+    case "StyleDouble".lowercaseString :
+        return NSUnderlineStyle.StyleDouble
+    case "PatternDot".lowercaseString :
+        return NSUnderlineStyle.PatternDot
+    case "PatternDash".lowercaseString :
+        return NSUnderlineStyle.PatternDash
+    case "PatternDashDot".lowercaseString :
+        return NSUnderlineStyle.PatternDashDot
+    case "PatternDashDotDot".lowercaseString :
+        return NSUnderlineStyle.PatternDashDotDot
+    case "ByWord".lowercaseString :
+        return NSUnderlineStyle.ByWord
+    default :
+        return NSUnderlineStyle.StyleSingle
+    }
+}
 
 func controlEventFromString(event:String) -> UIControlEvents{
     switch event.lowercaseString {

@@ -29,6 +29,7 @@ class CollectionViewProperty: ScrollViewProperty {
     override func renderTag(pelement:OGElement){
         self.tagOut += ["delegate","datasource","flow-layout","layout"]
         
+        super.renderTag(pelement)
         if let layout = EUIParse.string(pelement, key: "flow-layout") {
             var dict = layout.trimArrayBy(";")
             for value in dict {
@@ -41,7 +42,6 @@ class CollectionViewProperty: ScrollViewProperty {
         
         self.layout = EUIParse.string(pelement, key: "layout")
         
-        super.renderTag(pelement)
     }
 
     func getLayout() -> UICollectionViewLayout{

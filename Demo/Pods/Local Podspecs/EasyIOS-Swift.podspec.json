@@ -25,22 +25,25 @@
   },
   "dependencies": {
     "HanekeSwift": [
-      "~> 0.9.1"
+
     ],
     "Bond": [
-      "~> 3.7.1"
+
     ],
     "Alamofire": [
-      "~> 1.2"
+
     ],
     "SnapKit": [
-      "~> 0.11.0"
+
     ],
     "SDWebImage": [
-      "~>3.7"
+
     ],
     "ObjectMapper": [
-      "~> 0.11"
+
+    ],
+    "TTTAttributedLabel": [
+
     ]
   },
   "public_header_files": [

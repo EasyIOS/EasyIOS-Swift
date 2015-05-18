@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TTTAttributedLabel
 
 public var LIVE_LOAD_PATH = __FILE__.stringByDeletingLastPathComponent
 
@@ -14,7 +15,7 @@ public var CRTPTO_KEY = ""
 
 public class EUScene: EZScene {
     public var SUFFIX = "xml"
-    
+
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false;
@@ -24,6 +25,9 @@ public class EUScene: EZScene {
         EUI.setLiveLoad(LIVE_LOAD_PATH, controller:self,suffix: SUFFIX)
     }
 
+    public func eu_viewWillLoad(){
+    
+    }
 
     public func eu_tableViewDidLoad(tableView:UITableView?){
         

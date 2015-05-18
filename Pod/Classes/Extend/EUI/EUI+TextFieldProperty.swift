@@ -30,6 +30,7 @@ class TextFieldProperty:ViewProperty{
     override func renderTag(pelement: OGElement) {
         self.tagOut += ["placeholder","placeholder-style","text","keyboard-type"]
         
+        super.renderTag(pelement)
         if let text = EUIParse.string(pelement, key: "text"),
            let newHtml = Regex("\\{\\{(\\w+)\\}\\}").replace(text, withBlock: { (regx) -> String in
                 var keyPath = regx.subgroupMatchAtIndex(0)?.trim
@@ -52,7 +53,6 @@ class TextFieldProperty:ViewProperty{
             self.keyboardType = keyboardTypeFromString(keyboardType)
         }
         
-        super.renderTag(pelement)
     }
     
 

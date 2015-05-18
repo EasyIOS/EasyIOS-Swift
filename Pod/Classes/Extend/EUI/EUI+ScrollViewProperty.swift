@@ -42,6 +42,7 @@ class ScrollViewProperty:ViewProperty{
     override func renderTag(pelement:OGElement){
         self.tagOut += ["content-offset","content-inset","content-size","scroll-indicator-insets","indicator-style","pull-to-refresh","infinite-scrolling"]
         
+        super.renderTag(pelement)
         if let contentInset = EUIParse.string(pelement,key:"content-inset") {
             self.contentInset = UIEdgeInsetsFromString(contentInset)
         }
@@ -84,7 +85,6 @@ class ScrollViewProperty:ViewProperty{
             }
         }
         
-        super.renderTag(pelement)
     }
 
 }

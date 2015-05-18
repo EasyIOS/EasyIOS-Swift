@@ -11,12 +11,14 @@ import EasyIOS
 
 class MainCellViewModel: EZViewModel {
     var title:EZString?
-    var subTitle:EZString?
+    var subTitle:EZData?
     var srcUrl:EZURL?
     var link:EZString?
     init(title:String,subTitle:String = "",srcUrl:String = "",link:String = ""){
         self.title = EZString(title)
-        self.subTitle = EZString(subTitle)
+        if let data = subTitle.toData() {
+            self.subTitle = EZData(data)
+        }
         self.srcUrl = EZURL(NSURL(string: srcUrl))
         self.link = EZString(link)
     }
