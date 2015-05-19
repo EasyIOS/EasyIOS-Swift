@@ -30,23 +30,17 @@
 #define COCOAPODS_VERSION_MINOR_HanekeSwift 9
 #define COCOAPODS_VERSION_PATCH_HanekeSwift 1
 
+// Kingfisher
+#define COCOAPODS_POD_AVAILABLE_Kingfisher
+#define COCOAPODS_VERSION_MAJOR_Kingfisher 1
+#define COCOAPODS_VERSION_MINOR_Kingfisher 4
+#define COCOAPODS_VERSION_PATCH_Kingfisher 1
+
 // ObjectMapper
 #define COCOAPODS_POD_AVAILABLE_ObjectMapper
 #define COCOAPODS_VERSION_MAJOR_ObjectMapper 0
 #define COCOAPODS_VERSION_MINOR_ObjectMapper 11
 #define COCOAPODS_VERSION_PATCH_ObjectMapper 0
-
-// SDWebImage
-#define COCOAPODS_POD_AVAILABLE_SDWebImage
-#define COCOAPODS_VERSION_MAJOR_SDWebImage 3
-#define COCOAPODS_VERSION_MINOR_SDWebImage 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage 2
-
-// SDWebImage/Core
-#define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
-#define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
-#define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
-#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
 
 // SVProgressHUD
 #define COCOAPODS_POD_AVAILABLE_SVProgressHUD

@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 import Bond
-import SDWebImage
+import Kingfisher
 import TTTAttributedLabel
 
 private var UIViewTagIdHandle :UInt8 = 1
@@ -308,7 +308,7 @@ extension UIImageView {
             }else if let image = bind!.valueForKey(bindKey) as? UIImage {
                 self.image = image
             }else if let url = bind!.valueForKey(bindKey) as? NSURL {
-                self.sd_setImageWithURL(url)
+                self.kf_setImageWithURL(url)
             }
         }else if let bindKey = self.tagProperty.bind["image"] {
             if let image = bind!.valueForKey(bindKey) as? EZImage {

@@ -53,7 +53,11 @@ extension UIImageView {
             return (d as? Dynamic<NSURL?>)!
         } else {
             let d = InternalDynamic<NSURL?>()
-            let bond = Bond<NSURL?>() { [weak self] v in if let s = self { s.sd_setImageWithURL(v) } }
+            let bond = Bond<NSURL?>() { [weak self] v in if let s = self {
+                if v != nil {
+                    s.kf_setImageWithURL(v!)
+                }
+            } }
             d.bindTo(bond, fire: false, strongly: false)
             d.retain(bond)
             objc_setAssociatedObject(self, &urlImageDynamicHandleUIImageView, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))

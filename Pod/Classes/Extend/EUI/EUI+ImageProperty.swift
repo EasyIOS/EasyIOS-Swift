@@ -15,7 +15,7 @@ class ImageProperty:ViewProperty{
         view.tagProperty = self
         if !isEmpty(self.src) {
             if self.src.hasPrefix("http") {
-                view.sd_setImageWithURL(NSURL(string: self.src)!)
+                view.kf_setImageWithURL(NSURL(string: self.src)!)
             }else{
                 view.image = UIImage(named: self.src)
             }

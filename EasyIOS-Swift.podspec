@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
     s.dependency 'Bond'
     s.dependency 'Alamofire'
     s.dependency 'SnapKit'
-    s.dependency 'SDWebImage'
+    s.dependency 'Kingfisher'
     s.dependency 'ObjectMapper'
     s.dependency 'TTTAttributedLabel'
 s.public_header_files = 'Pod/Classes/Easy/**/*.h','Pod/Classes/Extend/**/*.h','Pod/Classes/Private/**/*.h'
