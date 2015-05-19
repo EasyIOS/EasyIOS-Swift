@@ -100,4 +100,12 @@ extension String {
     public func toData () -> NSData?{
         return self.dataUsingEncoding(NSUTF8StringEncoding)?.dataByReplacingOccurrencesOfData("\\n".dataUsingEncoding(NSUTF8StringEncoding), withData: "\n".dataUsingEncoding(NSUTF8StringEncoding))
     }
+    
+    public var chineseFirstLetter : String{
+        return HTFirstLetter.firstLetter(self)
+    }
+    
+    public var chineseFirstLetters : String {
+        return HTFirstLetter.firstLetters(self)
+    }
 }

@@ -6,6 +6,7 @@
 #import "NSAttributedString+HTMLStyle.h"
 #import "SwiftTryCatch.h"
 #import "UIColor+HTMLColors.h"
+#import "pinyin.h"
 #import "UIViewController+URLManage.h"
 #import "URLManager.h"
 #import "URLNavigation.h"
