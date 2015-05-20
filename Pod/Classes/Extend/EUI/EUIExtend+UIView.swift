@@ -405,6 +405,17 @@ extension UIButton {
 private var UITableViewCellHandle :UInt8 = 5
 extension UITableView {
     
+    public func getSectionViewByTagId(tagId:String,target:EUScene,bind:EZViewModel? = nil) -> UIView?{
+        var property = self.tagProperty as? TableViewProperty
+        if let pro = property?.sectionView[tagId] {
+            var view = pro.getView()
+            view.renderTheView(target)
+            view.renderDataBinding(bind)
+            return view
+        }
+        return nil
+    }
+    
     var reusableViews:Dictionary<String,UIView>{
         get{
             if let d: AnyObject = objc_getAssociatedObject(self, &UITableViewCellHandle) {

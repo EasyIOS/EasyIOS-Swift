@@ -15,6 +15,7 @@ class TableViewProperty:ScrollViewProperty{
     var rowHeight = UITableViewAutomaticDimension
     
     var reuseCell = Dictionary<String,ViewProperty>()
+    var sectionView = Dictionary<String,ViewProperty>()
     var separatorStyle = UITableViewCellSeparatorStyle.SingleLine
 
     override func view() -> UITableView{
@@ -73,10 +74,15 @@ class TableViewProperty:ScrollViewProperty{
         for element in pelement.children {
             if element.isKindOfClass(OGElement) {
                 var ele = element as! OGElement
-                var type = EUIParse.string(ele, key: "type")
-                var reuseId = EUIParse.string(ele, key: "reuseid")
-                if type?.lowercaseString == "cell" && reuseId != nil {
-                    self.reuseCell[reuseId!] = EUIParse.loopElement(ele)
+                if let type = EUIParse.string(ele, key: "type"),
+                    let tagId = EUIParse.string(ele, key: "id"),
+                    let property = EUIParse.loopElement(ele){
+                        
+                    if type.lowercaseString == "cell" {
+                        self.reuseCell[tagId] = property
+                    }else if type.lowercaseString == "section"{
+                        self.sectionView[tagId] = property
+                    }
                 }
             }
         }

@@ -1,6 +1,6 @@
 <body>
     <div id="collectionView" align="0 0 0 0" type="UICollectionView" flow-layout="scroll-direction:Vertical;item-size:{300,50};section-inset:{3,3,0,3};minimum-interitem-spacing:3;minimum-line-spacing:3" content-inset="{64,0,0,0}" background-color="white" pull-to-refresh="handlePullRefresh." infinite-scrolling="handleInfinite.">
-        <div align="0 0 0 0" type="cell"  reuseId="cell"  background-color="red">
+        <div align="0 0 0 0" type="cell"  id="cell"  background-color="red">
             <span align="10 10 -10 -10" font="10 system">{{name}}</span>
         </div>
     </div>
