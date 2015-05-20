@@ -53,9 +53,7 @@ extension EUScene{
            
             }, catch: { (error) in
                 println(self.nameOfClass + "Error:\(error.description)")
-            }, finally: {
-                // close resources
-        })
+            }, finally: nil)
     }
     
     public var eu_tableViewDataSource: UITableViewDataSourceBond<UITableViewCell>? {
@@ -438,17 +436,15 @@ extension UITableView {
     public func dequeueReusableCell(reuseId:String,target:EUScene,bind:EZViewModel? = nil) -> UITableViewCell{
         var cell = self.dequeueReusableCellWithIdentifier(reuseId) as! UITableViewCell
         if cell.contentView.subviews.count == 0 {
-            var property = self.tagProperty as! TableViewProperty
-            if let cellProperty = property.reuseCell[reuseId] {
-                SwiftTryCatch.try({
-                    var view = cellProperty.getView()
-                    cell.contentView.addSubview(view)
-                    view.renderTheView(target)
-                    }, catch: { (error) in
-                        println(self.nameOfClass + "Error:\(error.description)")
-                    }, finally: {
-                })
-            }
+            SwiftTryCatch.try({
+                var property = self.tagProperty as! TableViewProperty
+                if let cellProperty = property.reuseCell[reuseId] {
+                var view = cellProperty.getView()
+                cell.contentView.addSubview(view)
+                view.renderTheView(target)
+            }}, catch: { (error) in
+                println(self.nameOfClass + "Error:\(error.description)")
+            }, finally:nil)
         }
         if let view = cell.contentView.subviews.first as? UIView {
             view.renderDataBinding(bind)
@@ -481,19 +477,16 @@ extension UICollectionView {
     
     public func dequeueReusableCell(reuseId:String,forIndexPath:NSIndexPath,target:EUScene,bind:EZViewModel? = nil) -> UICollectionViewCell{
         var cell = self.dequeueReusableCellWithReuseIdentifier(reuseId, forIndexPath: forIndexPath) as! UICollectionViewCell
-        
         if cell.contentView.subviews.count == 0 {
-            var property = self.tagProperty as! CollectionViewProperty
-            if let cellProperty = property.reuseCell[reuseId] {
-                SwiftTryCatch.try({
-                    var view = cellProperty.getView()
-                    cell.contentView.addSubview(view)
-                    view.renderTheView(target)
-                    }, catch: { (error) in
-                        println(self.nameOfClass + "Error:\(error.description)")
-                    }, finally: {
-                })
-            }
+            SwiftTryCatch.try({
+                var property = self.tagProperty as! CollectionViewProperty
+                if let cellProperty = property.reuseCell[reuseId] {
+                var view = cellProperty.getView()
+                cell.contentView.addSubview(view)
+                view.renderTheView(target)
+            }}, catch: { (error) in
+                println(self.nameOfClass + "Error:\(error.description)")
+            }, finally: nil)
         }
         if let view = cell.contentView.subviews.first as? UIView {
             view.renderDataBinding(bind)
