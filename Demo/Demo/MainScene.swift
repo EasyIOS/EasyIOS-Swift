@@ -41,12 +41,16 @@ class MainScene: EUScene,UITableViewDelegate{
     
     override func eu_tableViewDidLoad(tableView:UITableView?){
         tableView?.delegate = self
-        self.sceneModel.dataArray.map { (data:MainCellViewModel) -> UITableViewCell in
+        
+        let section1 = self.sceneModel.dataArray.map{ (data:MainCellViewModel) -> UITableViewCell in
             let cell = tableView!.dequeueReusableCell("cell", target: self,bind:data) as UITableViewCell
             cell.selectionStyle = .None
             return cell
-        } ->> self.eu_tableViewDataSource!
+        }
+
+        DynamicArray([section1,section1,section1]) ->> self.eu_tableViewDataSource!
     }
+    
     
     func click(){
         
@@ -58,4 +62,16 @@ class MainScene: EUScene,UITableViewDelegate{
             URLManager.pushURLString(link, animated: true)
         }
     }
+    
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 23.0
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        tableView
+        return tableView.getSectionViewByTagId("bgView", target: self,bind:sceneModel.sectionArray[section])
+    }
+    
+    
 }

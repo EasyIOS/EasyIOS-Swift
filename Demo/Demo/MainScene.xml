@@ -5,5 +5,10 @@
             <span align="top:2 avatar;right:-10" margin="left:12 avatar"  font="15 system" id="title">{{title}}</span>
             <span align="bottom:0 avatar;right:-10" margin="left:12 avatar" font="13 system" text-color="#ACACAC" id="subTitle" style="color:#ACACAC;" link-style="color:green;" >{{subTitle}}</span>
         </div>
+        
+        <div type="section" id="bgView" background-color="#F2F1F6" >
+            <span align="left:15;center-y:0" font="14 system">{{title}}</span>
+        </div>
+        
     </div>
 </body>

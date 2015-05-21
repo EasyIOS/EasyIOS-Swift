@@ -11,7 +11,7 @@ import EasyIOS
 import Bond
 import SVProgressHUD
 
-class CollectionScene: EUScene {
+class CollectionScene: EUScene,UICollectionViewDelegate {
 
     var sceneModel = CollectionSceneModel()
     var collectionView:UICollectionView?
@@ -60,6 +60,7 @@ class CollectionScene: EUScene {
     
     override func eu_collectionViewDidLoad(collectionView: UICollectionView?) {
         self.collectionView = collectionView
+        collectionView?.delegate = self
         self.sceneModel.viewModelList.map { (data:CollectionCellViewModel,index:Int) -> UICollectionViewCell in
             return collectionView!.dequeueReusableCell(
                 "cell",
