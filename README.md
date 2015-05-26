@@ -18,6 +18,7 @@ EasyIOS For Swift
 
 * MVVM : `Model-View-ViewModel` inspired by [Functional Reactive Programming](http://en.wikipedia.org/wiki/Functional_reactive_programming) 
 * HTML To Native : Transform HTML&CSS to Native Control,
+* DataBinding : We can use the SwiftBond to Bind the data via swift,and use the EZViewModel to Bind the data via html.example `{{title}}`
 * Reflect Cocoa Touch : Reflect all the Cocoa Touch Api ,we can use the Cocoa Touch Api via HTML 
 * AutoLayout : The HTML layout based on the `AutoLayout`
 * Live Load : Edit the HTML and the view in smulator will update automaticly without rebuild your app
@@ -112,6 +113,14 @@ EasyIOS For Swift
     </div>
 </body>
 ```
+
+
+## MVVM
+
+The MVVM based on the Swift binding framework [SwiftBond](https://github.com/SwiftBond/Bond)
+
+Bond is a Swift binding framework that takes binding concept to a whole new level - boils it down to just one operator. It's simple, powerful, type-safe and multi-paradigm - just like Swift.
+
 
 ## Usage
 
