@@ -1,7 +1,7 @@
 
 ![image](https://raw.githubusercontent.com/zhuchaowe/EasyIOS/gh-pages/images/logo.png)
 
-EasyIOS For Swift
+EasyIOS Swift版本新鲜出炉！ 
 =======
 
 [![Version](https://img.shields.io/cocoapods/v/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
@@ -9,28 +9,28 @@ EasyIOS For Swift
 [![Platform](https://img.shields.io/cocoapods/p/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
 [![qq](http://img.shields.io/badge/QQ%E7%BE%A4-340906744-green.svg)](http://shang.qq.com/wpa/qunwpa?idkey=562d002e275a8199081313b00580fb7111a4faf694216a239064d29f5238bc91)
 
-## Star is the Best Way to Support EasyIOS !
-* [中文README](/README/Chinese.md)
-* [IOSX - EasyIOS Official Forum](http://www.iosx.me)
-* [EasyIOS-ObjC](https://github.com/EasyIOS/EasyIOS)
+## Star不可少啊！
 
-## Features
+* [IOSX - EasyIOS官方论坛](http://www.iosx.me)
+* [EasyIOS-ObjC版本](https://github.com/EasyIOS/EasyIOS)
 
-* MVVM : `Model-View-ViewModel` inspired by [Functional Reactive Programming](http://en.wikipedia.org/wiki/Functional_reactive_programming) 
-* HTML To Native : Transform HTML&CSS to Native Control,
-* DataBinding : We can use the SwiftBond to Bind the data via swift,and use the EZViewModel to Bind the data via html.example `{{title}}`
-* Reflect Cocoa Touch : Reflect all the Cocoa Touch Api ,we can use the Cocoa Touch Api via HTML 
-* AutoLayout : The HTML layout based on the `AutoLayout`
-* Live Load : Edit the HTML and the view in smulator will update automaticly without rebuild your app
-* Cryptographic HTML : To make the HTML be safety,we provide the `AES Encryption` to encrypt the HTML
-* URLManager : Push or Present the Controller by the custom URL 
-* Elegant PullToRefresh : Add  PullToRefresh or InfiniteScrolling by HTML
+## 新版特性
+
+* MVVM : `Model-View-ViewModel` 实现代码分离，分离ViewController中的大量逻辑代码，解决ViewController承担了过多角色而造成的代码质量低下。增加视图与模型的绑定特性。 
+* HTML To Native : 利用类似HTML的语言来对UI进行布局，简单易学，可重用
+* DataBinding : 采用了第三方库`SwiftBond`,可以实现数据绑定操作，同样HTML里也可以进行数据绑定操作，识别标签是双大括号比如`{{title}}`
+* Reflect Cocoa Touch : 可以反射所有Cocoa Touch中UIKit的所有属性，目前实现了一部分，后面大家一起来维护，增加更多API
+* AutoLayout : 在HTML进行`Autolayout`布局，真的很简单！
+* Live Load : 在模拟器中运行app，在修改HTML之后进行保存，模拟器中会自动更新UI布局，不需要重新编译APP
+* Cryptographic HTML : 为了保证HTML代码的安全，我们提供了`AES Encryption`对HTML进行加密
+* URLManager : 我们可以利用URL来push或者present一个视图
+* Elegant PullToRefresh : 可以利用HTML轻松的添加下拉刷新和上拉加载控件
 
 ## HTML To Native
 
 * UITableView With PullReflash
-    * `align`,`margin` to control the AutoLayout of the UIView
-    * `pull-to-refresh="handlePullRefresh." `,`infinite-scrolling="handleInfinite. PullFooter"` to add the PullRefresh or InfiniteScrolling .
+    * `align`,`margin` 来控制UIView的布局
+    * `pull-to-refresh="handlePullRefresh." `,`infinite-scrolling="handleInfinite. PullFooter"` 来添加下拉刷新和上拉加载
     * `handlePullRefresh.` handle the event by `func handlePullRefresh (tableView:UITableView)` ,you can define it by yourself.
     * `PullFooter` can load the custom PullReflashView 
 

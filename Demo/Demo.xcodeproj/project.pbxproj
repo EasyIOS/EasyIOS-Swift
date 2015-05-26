@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B5950DF1B1478D10013A406 /* Chinese.md in Sources */ = {isa = PBXBuildFile; fileRef = 5B5950DE1B1478D10013A406 /* Chinese.md */; };
 		5B6512AC1B1414CF00B1BA89 /* LabelHtml.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5B6512AB1B1414CF00B1BA89 /* LabelHtml.xml */; };
 		5B6512AF1B141A2A00B1BA89 /* EncodeLoginScene.crypto in Resources */ = {isa = PBXBuildFile; fileRef = 5B6512AE1B141A2A00B1BA89 /* EncodeLoginScene.crypto */; };
 		5B6512B11B141A9E00B1BA89 /* EncodeLoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6512B01B141A9E00B1BA89 /* EncodeLoginScene.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		0BAFEE4C5E077414790C2042 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		55CB89BDD03972BB5036E6DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B5950DE1B1478D10013A406 /* Chinese.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Chinese.md; sourceTree = "<group>"; };
 		5B6512AB1B1414CF00B1BA89 /* LabelHtml.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LabelHtml.xml; sourceTree = "<group>"; };
 		5B6512AE1B141A2A00B1BA89 /* EncodeLoginScene.crypto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EncodeLoginScene.crypto; sourceTree = "<group>"; };
 		5B6512B01B141A9E00B1BA89 /* EncodeLoginScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncodeLoginScene.swift; sourceTree = "<group>"; };
@@ -106,6 +108,14 @@
 				0BAFEE4C5E077414790C2042 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		5B5950DD1B1478D10013A406 /* README */ = {
+			isa = PBXGroup;
+			children = (
+				5B5950DE1B1478D10013A406 /* Chinese.md */,
+			);
+			path = README;
 			sourceTree = "<group>";
 		};
 		5B6512AD1B141A1E00B1BA89 /* crypto */ = {
@@ -191,6 +201,7 @@
 		5B8240DF1B0372B500D58574 /* PodMeta */ = {
 			isa = PBXGroup;
 			children = (
+				5B5950DD1B1478D10013A406 /* README */,
 				5B8240E61B0377FC00D58574 /* EasyIOS-Swift.podspec */,
 				5B8240E71B0377FC00D58574 /* LICENSE */,
 				5B8240E81B0377FC00D58574 /* README.md */,
@@ -424,6 +435,7 @@
 				5BDC06BF1B03955A00C486E0 /* CollectionCellViewModel.swift in Sources */,
 				5BDC06BB1B0394C200C486E0 /* CollectionScene.swift in Sources */,
 				5B7B80DB1B0A0B2A0059CAEF /* LabelScene.swift in Sources */,
+				5B5950DF1B1478D10013A406 /* Chinese.md in Sources */,
 				5B8240EB1B0377FC00D58574 /* README.md in Sources */,
 				5BDBF0D01B038C1700E95ACF /* MainScene.swift in Sources */,
 				5B8240C21B03715600D58574 /* LoginScene.swift in Sources */,
