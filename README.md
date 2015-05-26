@@ -43,11 +43,13 @@ EasyIOS For Swift
 </body>
 ```
 
-`pull-to-refresh="handlePullRefresh." infinite-scrolling="handleInfinite. PullFooter"` to add the PullRefresh or InfiniteScrolling .
+    * `align`,`margin` to control the AutoLayout of the UIView
 
-`handlePullRefresh.` handle the event by `func handlePullRefresh (tableView:UITableView)` ,you can define it by yourself.
+    * `pull-to-refresh="handlePullRefresh." `,`infinite-scrolling="handleInfinite. PullFooter"` to add the PullRefresh or InfiniteScrolling .
 
-`PullFooter` can load the custom PullReflashView 
+    * `handlePullRefresh.` handle the event by `func handlePullRefresh (tableView:UITableView)` ,you can define it by yourself.
+
+    * `PullFooter` can load the custom PullReflashView 
 
 * UIScrollView With CSS
 ```HTML
@@ -75,9 +77,8 @@ EasyIOS For Swift
 </body>
 ```
 
-Use the CSS by `@` for example `@contentAlign`.
-
-* HTML Label and reusable html
+    * Use the CSS by `@` for example `@contentAlign`.
+    * HTML Label and reusable html
 
 ```
 <style>
@@ -100,11 +101,11 @@ Use the CSS by `@` for example `@contentAlign`.
 </body>
 ```
 
-`@import(LabelHtml)` to import the `LabelHtml.xml` 
+    * `@import(LabelHtml)` to import the `LabelHtml.xml` 
 
-When span set `style="color:#ACACAC;font-size:18px;"` node ,we can use the origin html inner the span tag.
+    * When span set `style="color:#ACACAC;font-size:18px;"` node ,we can use the origin html inner the span tag.
 
-* UICollectionView with FlowLayout
+    * UICollectionView with FlowLayout
 
 ```HTML
 <body>
