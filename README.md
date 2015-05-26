@@ -43,6 +43,12 @@ EasyIOS For Swift
 </body>
 ```
 
+`pull-to-refresh="handlePullRefresh." infinite-scrolling="handleInfinite. PullFooter"` to add the PullRefresh or InfiniteScrolling .
+
+`handlePullRefresh.` handle the event by `func handlePullRefresh (tableView:UITableView)` ,you can define it by yourself.
+
+`PullFooter` can load the custom PullReflashView 
+
 * UIScrollView With CSS
 ```HTML
 <style>
@@ -64,6 +70,47 @@ EasyIOS For Swift
                 <input id="passwordTextField" secure-text-entry="YES" align="10 10 -10 -10" placeholder="密码" placeholder-style="@inputStyle" style="@inputStyle" />
             </div>
             <button id="submit" style="color:white;font-size:20;" background-color="#3FBCFB" align="* 15 -10 -15" margin="top:25 password" height="45" layer_corner-radius="8" onEvent="touch-up-inside:login">登陆</button>
+        </div>
+    </div>
+</body>
+```
+
+Use the CSS by `@` for example `@contentAlign`.
+
+* HTML Label and reusable html
+
+```
+<style>
+    <!--支持css 样式设置，html中利用@的方式进行调用-->
+    .contentAlign{
+        edge:0 0 0 0;left:0 root;right:0 root;
+    }
+</style>
+
+<body>
+    <div align="0 0 0 0" type="UIScrollView" background-color="#F3F3F3">
+        <div align="@contentAlign">
+            <!--span标签设置了style属性则启用富文本模式，span内部可以支持原生HTML的所有属性，具体请看LabelHtml.xml文件-->
+            <span align="64 0 0 0" style="color:#ACACAC;font-size:18px;" link-style="color:green;" number-of-lines="0">
+                <!--import the xml -->
+                    @import(LabelHtml)
+            </span>
+        </div>
+    </div>
+</body>
+```
+
+`@import(LabelHtml)` to import the `LabelHtml.xml` 
+
+When span set `style="color:#ACACAC;font-size:18px;"` node ,we can use the origin html inner the span tag.
+
+* UICollectionView with FlowLayout
+
+```HTML
+<body>
+    <div id="collectionView" align="0 0 0 0" type="UICollectionView" flow-layout="scroll-direction:Vertical;item-size:{300,50};section-inset:{3,3,0,3};minimum-interitem-spacing:3;minimum-line-spacing:3" content-inset="{64,0,0,0}" background-color="white" pull-to-refresh="handlePullRefresh." infinite-scrolling="handleInfinite.">
+        <div align="0 0 0 0" type="cell"  id="cell"  background-color="red">
+            <span align="10 10 -10 -10" font="10 system">{{name}}</span>
         </div>
     </div>
 </body>
