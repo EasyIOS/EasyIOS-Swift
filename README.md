@@ -26,7 +26,7 @@ EasyIOS For Swift
 * Elegant PullToRefresh : Add  PullToRefresh or InfiniteScrolling by HTML
 
 ## HTML To Native
-* tableView With PullReflash
+* UITableView With PullReflash
 
 ```HTML
 <body>
@@ -43,6 +43,31 @@ EasyIOS For Swift
 </body>
 ```
 
+* UIScrollView With CSS
+```HTML
+<style>
+    .contentAlign{
+    edge:0 0 0 0;left:0 root;right:0 root;
+    }
+    .inputStyle{
+    font-size:15;color:#999999;
+    }
+</style>
+<body>
+    <div align="0 0 0 0" type="UIScrollView" background-color="#F3F3F3">
+        <div align="@contentAlign">
+            <img id="logo" image="login-logo" user-interaction-enabled="YES" present="demo://login" align="center-x:0;top:110;"/>
+            <div id="username" layer_corner-radius="8" background-color="white" align="* 15 * -15" margin="top:30 logo" height="45">
+                <input class="userTextField" id="userTextField" align="edge:10 10 -10 -10;" placeholder-style="@inputStyle" keyboard-type="EmailAddress" style="@inputStyle" placeholder="上面的logo可以被点击"/>
+            </div>
+            <div id="password" layer_corner-radius="8" background-color="white" align="* 15 * -15" margin="top:13 username" height="45">
+                <input id="passwordTextField" secure-text-entry="YES" align="10 10 -10 -10" placeholder="密码" placeholder-style="@inputStyle" style="@inputStyle" />
+            </div>
+            <button id="submit" style="color:white;font-size:20;" background-color="#3FBCFB" align="* 15 -10 -15" margin="top:25 password" height="45" layer_corner-radius="8" onEvent="touch-up-inside:login">登陆</button>
+        </div>
+    </div>
+</body>
+```
 
 ## Usage
 
