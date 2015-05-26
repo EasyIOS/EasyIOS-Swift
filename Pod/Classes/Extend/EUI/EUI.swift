@@ -9,15 +9,14 @@
 import UIKit
 
 public class EUI: NSObject {
-    public class func encode(fileName:String,toPath:String){
-        var path = NSBundle.mainBundle().pathForResource(fileName, ofType: "xml")!
+    public class func encode(fileName:String,suffix:String = "xml",toPath:String){
+        var path = NSBundle.mainBundle().pathForResource(fileName, ofType: suffix)!
         if  NSFileManager.defaultManager().fileExistsAtPath(path) == false{
             return
         }
         if let str = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
             if let encrypt = DesEncrypt.encryptWithText(str, key: CRTPTO_KEY) {
                 var error:NSError?
-                
                 if encrypt.writeToFile(toPath, atomically: true, encoding: NSUTF8StringEncoding, error: &error) {
                     EZPrintln("success")
                 }else{
@@ -56,7 +55,7 @@ public class EUI: NSObject {
             var finalHtml = html
             if let newHtml = Regex("@import\\(([^\\)]*)\\)").replace(finalHtml,withBlock: { (regx) -> String in
                 var subFile = regx.subgroupMatchAtIndex(0)?.trim
-                var subPath = filePath.stringByAppendingPathComponent(subFile!+"."+suffix)
+                var subPath = NSBundle.mainBundle().pathForResource(subFile, ofType: suffix)!
                 if NSFileManager.defaultManager().fileExistsAtPath(subPath) {
                     paths.append(subPath)
                     return String(contentsOfFile:subPath, encoding: NSUTF8StringEncoding, error: nil)!
@@ -100,7 +99,8 @@ public class EUI: NSObject {
             }
             if let newHtml = Regex("@import\\(([^\\)]*)\\)").replace(finalHtml,withBlock: { (regx) -> String in
                 var subFile = regx.subgroupMatchAtIndex(0)?.trim
-                var subPath = fileName.stringByAppendingPathComponent(subFile!+"."+suffix)
+                var subPath = NSBundle.mainBundle().pathForResource(subFile, ofType: suffix)!
+                
                 if NSFileManager.defaultManager().fileExistsAtPath(subPath) {
                     return String(contentsOfFile:subPath, encoding: NSUTF8StringEncoding, error: nil)!
                 }else{

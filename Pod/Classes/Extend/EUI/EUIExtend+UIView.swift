@@ -307,6 +307,12 @@ extension UIImageView {
                 self.image = image
             }else if let url = bind!.valueForKey(bindKey) as? NSURL {
                 self.kf_setImageWithURL(url)
+            }else if let str = bind!.valueForKey(bindKey) as? String {
+                if let url = NSURL(string: str) {
+                    self.kf_setImageWithURL(url)
+                }else if let image = UIImage(named: str) {
+                    self.image = image
+                }
             }
         }else if let bindKey = self.tagProperty.bind["image"] {
             if let image = bind!.valueForKey(bindKey) as? EZImage {

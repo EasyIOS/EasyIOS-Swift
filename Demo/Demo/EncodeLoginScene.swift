@@ -1,25 +1,23 @@
 //
-//  ViewController.swift
+//  EncodeLoginScene.swift
 //  Demo
 //
-//  Created by zhuchao on 15/5/13.
+//  Created by zhuchao on 15/5/26.
 //  Copyright (c) 2015年 zhuchao. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import EasyIOS
 
-class LoginScene: EUScene {
-
+class EncodeLoginScene: EUScene {
+    
     override func viewDidLoad() {
+        self.SUFFIX = "crypto"  //修改后缀为加密版本的
         super.viewDidLoad()
         self.showBarButton(.LEFT, title: "返回", fontColor: UIColor.greenColor())
         
-        //在模拟器中调用下面这个方法可以生成一个加密文件
-//        EUI.encode("LoginScene", suffix: "xml", toPath: "/Users/zhuchao/Desktop/EncodeLoginScene.crypto")
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
+   }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -28,7 +26,7 @@ class LoginScene: EUScene {
     override func leftButtonTouch() {
         URLNavigation.dismissCurrentAnimated(true)
     }
-
+    
     func login (){
         //在这里进行登录操作
     }

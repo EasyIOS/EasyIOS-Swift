@@ -46,7 +46,13 @@ class MainSceneModel: EZSceneModel {
                 srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
                 link:"demo://login"))
         self.dataArray.append(MainCellViewModel(
-                title: "一个简单的Collection页面",
+            title: "还是登陆界面不过是加密版本",
+            subTitle: "UIScrollView的使用Demo",
+            srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
+            link:"demo://encodelogin"))
+        
+        self.dataArray.append(MainCellViewModel(
+                title: "Collection+网络请求+下拉控件",
                 subTitle: "UICollectionView的使用Demo,包含了网络请求",
                 srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
                 link:"demo://collection"))

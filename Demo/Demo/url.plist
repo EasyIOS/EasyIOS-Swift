@@ -4,6 +4,8 @@
 <dict>
 	<key>demo</key>
 	<dict>
+		<key>demo://encodelogin</key>
+		<string>EncodeLoginScene</string>
 		<key>demo://collection</key>
 		<string>CollectionScene</string>
 		<key>demo://login</key>

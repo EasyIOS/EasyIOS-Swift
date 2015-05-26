@@ -16,16 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        CODE_KEY = "code"
-        MSG_KEY = "msg"
+        CODE_KEY = "code"//错误码
+        MSG_KEY = "msg" //网络请求的msg信息
         
-        LIVE_LOAD_PATH = __FILE__.stringByDeletingLastPathComponent
-        CRTPTO_KEY = "easyios"
+        LIVE_LOAD_PATH = __FILE__.stringByDeletingLastPathComponent  //xml文件的路径（项目路径）
+        CRTPTO_KEY = "easyios"  //这是自定义的密钥
         
-        URLManager.loadConfigFromPlist(NSBundle.mainBundle().pathForResource("url", ofType: "plist"))
+        URLManager.loadConfigFromPlist(NSBundle.mainBundle().pathForResource("url", ofType: "plist"))  // 初始化URLManager
         
         var firstVc = MainScene()
-        
         var nav = EZNavigationController(rootViewController: firstVc)
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.rootViewController = nav
