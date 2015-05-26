@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "EasyIOS-Swift"
-  s.version          = "0.0.1"
+  s.version          = "1.0.0"
   s.summary          = "The Swift version of EasyIOS"
   s.description      = <<-DESC
                       EasyIOS is a new generation of development framework based on `Model-View-ViewModel` ,`HTML To Native`,`Live Load`.
