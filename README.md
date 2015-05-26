@@ -26,7 +26,12 @@ EasyIOS For Swift
 * Elegant PullToRefresh : Add  PullToRefresh or InfiniteScrolling by HTML
 
 ## HTML To Native
+
 * UITableView With PullReflash
+    * `align`,`margin` to control the AutoLayout of the UIView
+    * `pull-to-refresh="handlePullRefresh." `,`infinite-scrolling="handleInfinite. PullFooter"` to add the PullRefresh or InfiniteScrolling .
+    * `handlePullRefresh.` handle the event by `func handlePullRefresh (tableView:UITableView)` ,you can define it by yourself.
+    * `PullFooter` can load the custom PullReflashView 
 
 ```HTML
 <body>
@@ -43,15 +48,9 @@ EasyIOS For Swift
 </body>
 ```
 
-    * `align`,`margin` to control the AutoLayout of the UIView
-
-    * `pull-to-refresh="handlePullRefresh." `,`infinite-scrolling="handleInfinite. PullFooter"` to add the PullRefresh or InfiniteScrolling .
-
-    * `handlePullRefresh.` handle the event by `func handlePullRefresh (tableView:UITableView)` ,you can define it by yourself.
-
-    * `PullFooter` can load the custom PullReflashView 
-
 * UIScrollView With CSS
+    * Use the CSS by `@` for example `@contentAlign`.
+   
 ```HTML
 <style>
     .contentAlign{
@@ -77,9 +76,9 @@ EasyIOS For Swift
 </body>
 ```
 
-    * Use the CSS by `@` for example `@contentAlign`.
-    * HTML Label and reusable html
-
+* HTML Label and reusable html
+    * `@import(LabelHtml)` to import the `LabelHtml.xml` 
+    *  When span set `style="color:#ACACAC;font-size:18px;"` node ,we can use the origin html inner the span tag.
 ```
 <style>
     <!--支持css 样式设置，html中利用@的方式进行调用-->
@@ -101,11 +100,8 @@ EasyIOS For Swift
 </body>
 ```
 
-    * `@import(LabelHtml)` to import the `LabelHtml.xml` 
 
-    * When span set `style="color:#ACACAC;font-size:18px;"` node ,we can use the origin html inner the span tag.
-
-    * UICollectionView with FlowLayout
+* UICollectionView with FlowLayout
 
 ```HTML
 <body>
