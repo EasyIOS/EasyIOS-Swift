@@ -17,7 +17,7 @@
 
 +(GumboTag)gumboTagForTag:(NSString *)tag
 {
-    return [[OGUtility tagStrings] indexOfObject:tag];
+    return (GumboTag)[[OGUtility tagStrings] indexOfObject:tag];
 }
 
 +(NSArray*)tagStrings

@@ -117,7 +117,7 @@ static void read_char(Utf8Iterator* iter) {
   // iter.
   uint64_t code_point = c & mask;
   if (iter->_start + iter->_width > iter->_end) {
-    iter->_width = iter->_end - iter->_start;
+    iter->_width = (int)(iter->_end - iter->_start);
     add_error(iter, GUMBO_ERR_UTF8_TRUNCATED);
     is_bad_char = true;
   }
@@ -142,7 +142,7 @@ static void read_char(Utf8Iterator* iter) {
   // character and flip the flag indicating that a decode error occurred.
   // Ditto if we have a code point that is explicitly on the list of characters
   // prohibited by the HTML5 spec, such as control characters.
-  if (is_bad_char || utf8_is_invalid_code_point(code_point)) {
+  if (is_bad_char || utf8_is_invalid_code_point((int)code_point)) {
     add_error(iter, GUMBO_ERR_UTF8_INVALID);
     code_point = kUtf8ReplacementChar;
   }
@@ -166,7 +166,7 @@ static void read_char(Utf8Iterator* iter) {
 
   // At this point, we know we have a valid character as the code point, so we
   // set it, and we're done.
-  iter->_current = code_point;
+  iter->_current = (int)code_point;
 }
 
 static void update_position(Utf8Iterator* iter) {

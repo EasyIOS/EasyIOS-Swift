@@ -27,7 +27,7 @@
 #include "util.h"
 #include "vector.h"
 
-static const size_t kMessageBufferSize = 256;
+//static const size_t kMessageBufferSize = 256;
 
 // Prints a formatted message to a StringBuffer.  This automatically resizes the
 // StringBuffer as necessary to fit the message.  Returns the number of bytes
@@ -36,7 +36,7 @@ static int print_message(GumboParser* parser, GumboStringBuffer* output,
                          const char* format, ...) {
   va_list args;
   va_start(args, format);
-  int remaining_capacity = output->capacity - output->length;
+  unsigned long remaining_capacity = output->capacity - output->length;
   int bytes_written = vsnprintf(output->data + output->length,
                                 remaining_capacity, format, args);
   if (bytes_written > remaining_capacity) {
