@@ -79,7 +79,7 @@ EasyIOS For Swift
 * HTML Label and reusable html
     * `@import(LabelHtml)` to import the `LabelHtml.xml` 
     *  When span set `style="color:#ACACAC;font-size:18px;"` node ,we can use the origin html inner the span tag.
-```
+```HTML
 <style>
     <!--支持css 样式设置，html中利用@的方式进行调用-->
     .contentAlign{
