@@ -6,7 +6,6 @@
     font-size:15;color:#999999;
     }
 </style>
-
 <body>
     <div align="0 0 0 0" type="UIScrollView" background-color="#F3F3F3">
         <div align="@contentAlign">
