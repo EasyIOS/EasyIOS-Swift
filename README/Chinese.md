@@ -14,6 +14,8 @@ EasyIOS Swift版本新鲜出炉！
 * [IOSX - EasyIOS官方论坛](http://www.iosx.me)
 * [EasyIOS-ObjC版本](https://github.com/EasyIOS/EasyIOS)
 
+[![ScreenShot](http://g3.tdimg.com/0d239f40817111df0dfe941cbc6f9d5e/b0_2.jpg)](http://www.tudou.com/v/aWwPwUhdt5E/&rpid=6059352&resourceId=6059352_04_05_99/v.swf)
+
 ## 新版特性
 
 * MVVM : `Model-View-ViewModel` 实现代码分离，分离ViewController中的大量逻辑代码，解决ViewController承担了过多角色而造成的代码质量低下。增加视图与模型的绑定特性。 
