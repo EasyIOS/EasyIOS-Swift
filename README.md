@@ -10,6 +10,8 @@ EasyIOS For Swift
 [![qq](http://img.shields.io/badge/QQ%E7%BE%A4-340906744-green.svg)](http://shang.qq.com/wpa/qunwpa?idkey=562d002e275a8199081313b00580fb7111a4faf694216a239064d29f5238bc91)
 
 ## Star is the Best Way to Support EasyIOS !
+* [On Github](https://github.com/EasyIOS/EasyIOS-Swift)
+* [On OSChina](http://git.oschina.net/zhuchaowe/EasyIOS-Swift)
 * [中文README](/README/Chinese.md)
 * [IOSX - EasyIOS Official Forum](http://www.iosx.me)
 * [EasyIOS-ObjC](https://github.com/EasyIOS/EasyIOS)
