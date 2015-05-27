@@ -13,6 +13,7 @@ EasyIOS For Swift
 * [中文README](/README/Chinese.md)
 * [IOSX - EasyIOS Official Forum](http://www.iosx.me)
 * [EasyIOS-ObjC](https://github.com/EasyIOS/EasyIOS)
+* The document will come as soon as possible！
 
 ## DEMO Video
 [![ScreenShot](http://g3.tdimg.com/0d239f40817111df0dfe941cbc6f9d5e/b0_2.jpg)](http://www.tudou.com/v/aWwPwUhdt5E/&rpid=6059352&resourceId=6059352_04_05_99/v.swf)
