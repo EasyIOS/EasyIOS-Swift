@@ -25,7 +25,7 @@ public class EZAction: NSObject {
     public class func SEND_IQ_CACHE (left:EZRequest) {
         left.useCache = true
         left.dataFromCache = left.isFirstRequest
-        EZAction.Send(left)
+        self.Send(left)
     }
     
     //使用缓存策略 优先从缓存读取
@@ -39,7 +39,7 @@ public class EZAction: NSObject {
     public class func SEND (left:EZRequest) {
         left.useCache = false
         left.dataFromCache = false
-        EZAction.Send(left)
+        self.Send(left)
     }
     
     

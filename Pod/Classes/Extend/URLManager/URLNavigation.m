@@ -10,7 +10,7 @@
 @implementation URLNavigation
 
 #pragma mark - Singleton
-+ (instancetype)navigation{
++ (instancetype)shareInstance{
     static dispatch_once_t predicate = 0;
     static id sharedInstance = nil;
     dispatch_once(&predicate, ^{
@@ -22,7 +22,7 @@
 #pragma mark - Public Method
 + (void)setRootViewController:(UIViewController *)viewController
 {
-  [URLNavigation navigation].applicationDelegate.window.rootViewController = viewController;
+  [URLNavigation shareInstance].applicationDelegate.window.rootViewController = viewController;
 }
 
 + (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
@@ -37,7 +37,7 @@
     [URLNavigation setRootViewController:viewController];
   else {
     // Check if a UINavigationController exists in the view controllers stack.
-    UINavigationController *navigationController = [URLNavigation navigation].currentNavigationViewController;
+    UINavigationController *navigationController = [URLNavigation shareInstance].currentNavigationViewController;
     if (navigationController) {
       // In case it should replace, look for the last UIViewController on the UINavigationController, if it's of the same class, replace it with a new one.
       if (replace && [navigationController.viewControllers.lastObject isKindOfClass:[viewController class]]) {
@@ -50,7 +50,7 @@
     } else {
       // Create a new UINavigationController to use with the viewController
       navigationController = [[UINavigationController alloc]initWithRootViewController:viewController];
-      [URLNavigation navigation].applicationDelegate.window.rootViewController = navigationController;
+      [URLNavigation shareInstance].applicationDelegate.window.rootViewController = navigationController;
     }
   }
 }
@@ -58,19 +58,19 @@
 + (void)presentViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
   // Look for the currentViewController
-  UIViewController *currentViewController = [[URLNavigation navigation] currentViewController];
+  UIViewController *currentViewController = [[URLNavigation shareInstance] currentViewController];
   if (currentViewController) {
     // Present viewController from currentViewcontroller
     [currentViewController presentViewController:viewController animated:animated completion:nil];
   } else {
     // Otherwise set the window rootViewController
-    [URLNavigation navigation].applicationDelegate.window.rootViewController = viewController;
+    [URLNavigation shareInstance].applicationDelegate.window.rootViewController = viewController;
   }
 }
 
 
 +(void)dismissCurrentAnimated:(BOOL)animated{
-  UIViewController *currentViewController = [[URLNavigation navigation] currentViewController];
+  UIViewController *currentViewController = [[URLNavigation shareInstance] currentViewController];
   if(currentViewController){
       if(currentViewController.navigationController){
           if(currentViewController.navigationController.viewControllers.count == 1){
@@ -92,10 +92,18 @@
   return [UIApplication sharedApplication].delegate;
 }
 
++(UIViewController*)currentViewController{
+    return [[URLNavigation shareInstance] currentViewController];
+}
+
 - (UIViewController*)currentViewController
 {
   UIViewController* rootViewController = self.applicationDelegate.window.rootViewController;
   return [self currentViewControllerFrom:rootViewController];
+}
+
++(UIViewController*)currentNavigationViewController{
+    return [[URLNavigation shareInstance] currentNavigationViewController];
 }
 
 - (UINavigationController*)currentNavigationViewController

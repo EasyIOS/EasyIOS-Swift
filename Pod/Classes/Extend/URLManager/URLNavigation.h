@@ -20,7 +20,6 @@
  *
  */
 @interface URLNavigation : NSObject
-
 /**
  *  setRootViewController: changes the root view controller of the AppDelegate's window.
  *
@@ -63,4 +62,6 @@
 + (void)presentViewController:(UIViewController *)viewController animated:(BOOL)animated;
 
 +(void)dismissCurrentAnimated:(BOOL)animated;
++(UIViewController*)currentViewController;
++(UINavigationController*)currentNavigationViewController;
 @end

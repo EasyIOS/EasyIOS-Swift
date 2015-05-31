@@ -33,12 +33,15 @@ public class EUI: NSObject {
                 for path in paths! {
                     watchForChangesToFilePath(path) {
                         self.loadLiveFile(filePath, controller: controller,suffix:suffix)
+                        controller.eu_viewWillLoad()
+                        controller.loadEZLayout()
                     }
                 }
             }
         }else{
             self.loadHtml(controller, suffix: suffix)
         }
+        controller.eu_viewWillLoad()
     }
     
     private class func loadLiveFile(filePath:String,controller:EUScene,suffix:String) -> [String]?{
@@ -76,12 +79,20 @@ public class EUI: NSObject {
             if let cleanHtml = Regex("@[\\w]*").replace(finalHtml, withTemplate: "") {
                 finalHtml = cleanHtml
             }
-            controller.loadEZLayout(finalHtml)
+            
+            SwiftTryCatch.try({
+                var body = EUIParse.ParseHtml(finalHtml)
+                var views = [UIView]()
+                for aview in body {
+                    views.append(aview.getView())
+                }
+                controller.eu_subViews = views
+                }, catch: { (error) in
+                    println(controller.nameOfClass + "Error:\(error.description)")
+                }, finally: nil)
         }
         return paths
     }
-    
-    
     
     private class func loadHtml (controller:EUScene,suffix:String){
         var fileName = controller.nameOfClass
@@ -120,7 +131,17 @@ public class EUI: NSObject {
             if let cleanHtml = Regex("@[\\w]*").replace(finalHtml, withTemplate: "") {
                 finalHtml = cleanHtml
             }
-            controller.loadEZLayout(finalHtml)
+            
+            SwiftTryCatch.try({
+                var body = EUIParse.ParseHtml(finalHtml)
+                var views = [UIView]()
+                for aview in body {
+                    views.append(aview.getView())
+                }
+                controller.eu_subViews = views
+                }, catch: { (error) in
+                    println(controller.nameOfClass + "Error:\(error.description)")
+                }, finally: nil)
         }
     }
     

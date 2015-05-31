@@ -15,18 +15,28 @@ public var CRTPTO_KEY = ""
 
 public class EUScene: EZScene {
     public var SUFFIX = "xml"
-
+    public var eu_subViews:[UIView]?
+    
+    override public func loadView() {
+        super.loadView()
+        EUI.setLiveLoad(LIVE_LOAD_PATH, controller:self,suffix: SUFFIX)
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         self.automaticallyAdjustsScrollViewInsets = false;
         self.extendedLayoutIncludesOpaqueBars = true;
         self.edgesForExtendedLayout = UIRectEdge.All;
         self.view.backgroundColor = UIColor.whiteColor()
-        EUI.setLiveLoad(LIVE_LOAD_PATH, controller:self,suffix: SUFFIX)
+        self.loadEZLayout()
     }
-
+    
     public func eu_viewWillLoad(){
     
+    }
+    
+    public func eu_viewDidLoad(){
+        
     }
 
     public func eu_tableViewDidLoad(tableView:UITableView?){

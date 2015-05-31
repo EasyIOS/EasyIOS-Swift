@@ -113,7 +113,7 @@ public class EZNumber:NSObject {
     }
 }
 
-public class EZViewModel:NSObject {
+extension NSObject{
     public var model_properyies :Dictionary<String,AnyObject>{
         return self.listProperties()
     }
@@ -121,4 +121,8 @@ public class EZViewModel:NSObject {
     public func model_hasKey(key:String) -> Bool{
         return contains(self.model_properyies.keys, key)
     }
+}
+
+public class EZViewModel:NSObject {
+
 }

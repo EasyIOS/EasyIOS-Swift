@@ -48,4 +48,11 @@ extension UIButton{
         self.setTitleColor(color, forState: UIControlState.Normal)
         self.setTitle(navTitle, forState: UIControlState.Normal)
     }
+    
+    public func setBackgroundImageWithColor(color: UIColor?, forState state: UIControlState){
+        if let c = color {
+            var image = UIImage.imageWithColor(c, size: CGSizeMake(1, 1))
+            self.setBackgroundImage(image, forState: state)
+        }
+    }
 }

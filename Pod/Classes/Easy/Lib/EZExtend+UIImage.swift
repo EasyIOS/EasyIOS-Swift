@@ -10,6 +10,15 @@ import UIKit
 // MARK: - UIImage
 
 extension UIImage {
+    public class func imageWithColor(color:UIColor,size:CGSize) -> UIImage {
+        var rect = CGRectMake(0, 0, size.width, size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        var image: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
     
     public func aspectResizeWithWidth (width: CGFloat) -> UIImage {
         let aspectSize = CGSize (width: width, height: aspectHeightForWidth(width))
@@ -40,4 +49,5 @@ extension UIImage {
     public func aspectWidthForHeight (height: CGFloat) -> CGFloat {
         return (height * self.size.width) / self.size.height
     }
+    
 }
