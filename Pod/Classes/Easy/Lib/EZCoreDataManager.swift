@@ -9,110 +9,100 @@
 import Foundation
 import CoreData
 
+private var managedObjectContextHandle:UInt8 = 0
+private var persistentStoreCoordinatorHandle:UInt8 = 1
+private var databaseNameHandle:UInt8 = 2
+private var modelNameHandle:UInt8 = 3
+private var managedObjectModelHandle:UInt8 = 4
+
 public class EZCoreDataManager {
     
-    public let appName = NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
+    private static let appName = NSBundle.mainBundle().infoDictionary!["CFBundleName"] as! String
     
     public var databaseName: String {
         get {
-            if let db = self._databaseName {
+            if let db = objc_getAssociatedObject(self, &databaseNameHandle) as? String {
                 return db
             } else {
-                return self.appName + ".sqlite"
+                return EZCoreDataManager.appName + ".sqlite"
             }
         }
-        set {
-            _databaseName = newValue
-            if _managedObjectContext != nil {
-                _managedObjectContext = nil
-            }
-            if _persistentStoreCoordinator != nil {
-                _persistentStoreCoordinator = nil
-            }
+        set(value){
+            objc_setAssociatedObject(self, &databaseNameHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &managedObjectContextHandle, nil, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, nil, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
         }
     }
-    private var _databaseName: String?
     
     public var modelName: String {
         get {
-            if let model = _modelName {
+            if let model = objc_getAssociatedObject(self, &modelNameHandle) as? String {
                 return model
             } else {
-                return appName
+                return EZCoreDataManager.appName
             }
         }
-        set {
-            _modelName = newValue
-            if _managedObjectContext != nil {
-                _managedObjectContext = nil
-            }
-            if _persistentStoreCoordinator != nil {
-                _persistentStoreCoordinator = nil
-            }
+        set(value) {
+            objc_setAssociatedObject(self, &modelNameHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &managedObjectContextHandle, nil, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, nil, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
         }
     }
-    private var _modelName: String?
     
     public var managedObjectContext: NSManagedObjectContext {
         get {
-            if let context = _managedObjectContext {
+            if let context = objc_getAssociatedObject(self, &managedObjectContextHandle) as? NSManagedObjectContext  {
                 return context
             } else {
                 let c = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
                 c.persistentStoreCoordinator = persistentStoreCoordinator
-                _managedObjectContext = c
+                objc_setAssociatedObject(self, &managedObjectContextHandle, c, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
                 return c
             }
         }
-        set {
-            _managedObjectContext = newValue
+        set (value){
+            objc_setAssociatedObject(self, &managedObjectContextHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
         }
     }
-    private var _managedObjectContext: NSManagedObjectContext?
     
     public var persistentStoreCoordinator: NSPersistentStoreCoordinator {
-        if let store = _persistentStoreCoordinator {
-            return store
-        } else {
-            let p = self.persistentStoreCoordinator(NSSQLiteStoreType, storeURL: self.sqliteStoreURL)
-            _persistentStoreCoordinator = p
-            return p
+        get {
+            if let store = objc_getAssociatedObject(self, &persistentStoreCoordinatorHandle) as? NSPersistentStoreCoordinator  {
+                return store
+            } else {
+                let p = self.persistentStoreCoordinator(NSSQLiteStoreType, storeURL: self.sqliteStoreURL)
+                objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, p, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                return p
+            }
+        }set(value){
+            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
         }
     }
-    private var _persistentStoreCoordinator: NSPersistentStoreCoordinator?
-    
+
     public var managedObjectModel: NSManagedObjectModel {
-        if let m = _managedObjectModel {
+        if let m = objc_getAssociatedObject(self, &managedObjectModelHandle) as? NSManagedObjectModel {
             return m
         } else {
             let modelURL = NSBundle.mainBundle().URLForResource(self.modelName, withExtension: "momd")
-            _managedObjectModel = NSManagedObjectModel(contentsOfURL: modelURL!)
-            return _managedObjectModel!
+            let model = NSManagedObjectModel(contentsOfURL: modelURL!)
+            objc_setAssociatedObject(self, &managedObjectModelHandle, model, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            return model!
         }
     }
-    private var _managedObjectModel: NSManagedObjectModel?
     
     public func useInMemoryStore() {
-        _persistentStoreCoordinator = self.persistentStoreCoordinator(NSInMemoryStoreType, storeURL: nil)
+        persistentStoreCoordinator = self.persistentStoreCoordinator(NSInMemoryStoreType, storeURL: nil)
     }
     
     public func saveContext() -> Bool {
         return self.managedObjectContext.save()
     }
     
-    public func applicationDocumentsDirectory() -> NSURL {
-        return NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last as! NSURL
-    }
-    
-    public func applicationSupportDirectory() -> NSURL {
-        return (NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last as! NSURL).URLByAppendingPathComponent(self.appName)
-    }
-    
     private var sqliteStoreURL: NSURL {
         #if os(iOS)
-            let dir = self.applicationDocumentsDirectory()
+            let dir = EZCoreDataManager.applicationDocumentsDirectory
             #else
-            let dir = self.applicationSupportDirectory()
+            let dir = EZCoreDataManager.applicationSupportDirectory
             self.createApplicationSupportDirIfNeeded(dir)
         #endif
         return dir.URLByAppendingPathComponent(self.databaseName)
@@ -128,7 +118,15 @@ public class EZCoreDataManager {
         return c
     }
     
-    private func createApplicationSupportDirIfNeeded(dir: NSURL) {
+    private static var applicationDocumentsDirectory:NSURL {
+        return NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last as! NSURL
+    }
+    
+    private static var applicationSupportDirectory:NSURL {
+        return (NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last as! NSURL).URLByAppendingPathComponent(EZCoreDataManager.appName)
+    }
+    
+    private static func createApplicationSupportDirIfNeeded(dir: NSURL) {
         if NSFileManager.defaultManager().fileExistsAtPath(dir.absoluteString!) {
             return
         }
