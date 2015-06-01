@@ -82,7 +82,7 @@ public extension NSManagedObject{
         return self.query.count()
     }
     
-    public class func updateOrCreate(unique:[String:AnyObject],data:[String:AnyObject]) -> NSManagedObject{
+    public static func updateOrCreate(unique:[String:AnyObject],data:[String:AnyObject]) -> NSManagedObject{
         if let object = self.find(unique) {
             object.update(data)
             return object
@@ -117,18 +117,20 @@ public extension NSManagedObject{
     }
     
     public func save() -> Bool {
-        return self.defaultContext().saveTheContext()
+        return self.defaultContext().save()
     }
     
-    public func delete() {
+    public func delete() -> NSManagedObject {
         let context = self.defaultContext()
         context.deleteObject(self)
+        return self
     }
     
-    public static func deleteAll() {
+    public static func deleteAll() -> NSManagedObjectContext{
         for o in self.all() {
             o.delete()
         }
+        return self.defaultContext()
     }
     
     public static func create() -> NSManagedObject {

@@ -97,7 +97,7 @@ public class EZCoreDataManager {
     }
     
     public func saveContext() -> Bool {
-        return self.managedObjectContext.saveTheContext()
+        return self.managedObjectContext.save()
     }
     
     public func applicationDocumentsDirectory() -> NSURL {
@@ -151,7 +151,7 @@ public extension NSManagedObjectContext {
         return request
     }
     
-    func saveTheContext() -> Bool {
+    func save() -> Bool {
         if !self.hasChanges {
             return true
         }
@@ -287,6 +287,5 @@ public extension NSFetchRequest{
     }
     
 }
-
 
 

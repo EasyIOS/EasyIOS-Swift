@@ -11,7 +11,7 @@ import Foundation
 extension Dictionary {
     
     //join the Dictionary with "&" to a url path
-     var joinPath : String{
+    var joinPath : String{
         var array = ArraySlice<String>()
         for (key,value) in self {
            array.append("\(key)=\(value)")
