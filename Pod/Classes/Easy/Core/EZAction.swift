@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import Haneke
 import Bond
-
 public var HOST_URL = "" //服务端域名:端口
 public var CLIENT = ""  //自定义客户端识别
 public var CODE_KEY = "" //错误码key,暂不支持路径 如 code
@@ -25,6 +24,8 @@ public class EZAction: NSObject {
     public class func SEND_IQ_CACHE (left:EZRequest) {
         left.useCache = true
         left.dataFromCache = left.isFirstRequest
+        Manager.sharedInstance.session.configuration.HTTPAdditionalHeaders = ["M-API-KEY":"token"]
+        
         self.Send(left)
     }
     
@@ -64,7 +65,19 @@ public class EZAction: NSObject {
             }
         }
         req.state.value = .Sending
-        req.op = Alamofire.request(req.method, url, parameters: requestParams, encoding: req.parameterEncoding)
+
+        var manager:Manager? = nil
+        if let reqManager = req.manager {
+             manager = reqManager
+        }else if let configuration = req.sessionConfiguration{
+            manager = Alamofire.Manager(configuration: configuration)
+            req.manager = manager
+        }else {
+            manager = Alamofire.Manager.sharedInstance
+        }
+        
+        req.op =
+            manager?.request(req.method, url, parameters: requestParams, encoding: req.parameterEncoding)
             .validate(statusCode: 200..<300)
             .validate(contentType: req.acceptableContentTypes)
             .responseString { (_, _, string, _) in
@@ -84,7 +97,18 @@ public class EZAction: NSObject {
     
     public class func Upload (req :EZRequest){
         req.state.value = .Sending
-        req.op = Alamofire.upload(.POST, req.downloadUrl, req.uploadData!)
+
+        var manager:Manager? = nil
+        if let reqManager = req.manager {
+            manager = reqManager
+        }else if let configuration = req.sessionConfiguration{
+            manager = Alamofire.Manager(configuration: configuration)
+            req.manager = manager
+        }else {
+            manager = Alamofire.Manager.sharedInstance
+        }
+        
+        req.op = manager?.upload(.POST, req.downloadUrl, data: req.uploadData!)
             .validate(statusCode: 200..<300)
             .validate(contentType: req.acceptableContentTypes)
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
@@ -110,7 +134,17 @@ public class EZAction: NSObject {
         req.state.value = .Sending
         let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
 
-        req.op = Alamofire.download(.GET, req.downloadUrl, { (temporaryURL, response) in
+        var manager:Manager? = nil
+        if let reqManager = req.manager {
+            manager = reqManager
+        }else if let configuration = req.sessionConfiguration{
+            manager = Alamofire.Manager(configuration: configuration)
+            req.manager = manager
+        }else {
+            manager = Alamofire.Manager.sharedInstance
+        }
+        
+        req.op = manager?.download(.GET, req.downloadUrl, destination: { (temporaryURL, response) in
             if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory,
                     inDomains: .UserDomainMask)[0]
                 as? NSURL {

@@ -272,6 +272,15 @@ public extension NSFetchRequest{
         return self.take(1).get().first
     }
     
+    public func delete() -> NSInteger{
+        var i = 0
+        for o in self.get() {
+            o.delete()
+            i++
+        }
+        return i
+    }
+    
     public func get() -> [NSManagedObject]{
         return NSManagedObjectContext.defaultContext.executeFetchRequest(self, error: nil) as! [NSManagedObject] 
     }

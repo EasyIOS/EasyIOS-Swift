@@ -41,6 +41,13 @@ class CollectionSceneModel: EZSceneModel {
     var viewModelList =  DynamicArray<CollectionCellViewModel>(Array<CollectionCellViewModel>())
     override init (){
         super.init()
+        
+        let configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+//        configuration.HTTPAdditionalHeaders  = Alamofire.Manager.sharedInstance.session.configuration.HTTPAdditionalHeaders ?? [:]
+
+        
+        self.req.sessionConfiguration = configuration
+        
         self.req.requestBlock = {
             EZAction.SEND_IQ_CACHE(self.req)
         }
@@ -48,6 +55,7 @@ class CollectionSceneModel: EZSceneModel {
             switch value {
             case .Success,.SuccessFromCache :
                 if let theData: AnyObject = self.req.output["data"] {
+                    
                     self.modelList = Mapper<FeedList>().map(theData)
                     
                     if let array = self.modelList?.list?.map({

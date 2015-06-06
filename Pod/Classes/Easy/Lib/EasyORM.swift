@@ -9,6 +9,10 @@
 import Foundation
 import CoreData
 
+public func DBQuery(aClass: NSManagedObject.Type!,entityName:String) -> NSFetchRequest {
+    return aClass.defaultContext().createFetchRequest(entityName)
+}
+
 public class EasyORM {
     
     public static var generateRelationships = false
@@ -18,11 +22,13 @@ public class EasyORM {
     }
     
     private static var nameToEntities: [String:NSManagedObject.Type] = [String:NSManagedObject.Type]()
+
+    
 }
 
 public extension NSManagedObject{
 
-    private func defaultContext() -> NSManagedObjectContext{
+    public func defaultContext() -> NSManagedObjectContext{
         return self.managedObjectContext ?? self.dynamicType.defaultContext()
     }
     
@@ -82,6 +88,15 @@ public extension NSManagedObject{
         return self.query.count()
     }
     
+    public static func findAndUpdate(unique:[String:AnyObject],data:[String:AnyObject]) -> NSManagedObject?{
+        if let object = self.find(unique) {
+            object.update(data)
+            return object
+        }else{
+            return nil
+        }
+    }
+    
     public static func updateOrCreate(unique:[String:AnyObject],data:[String:AnyObject]) -> NSManagedObject{
         if let object = self.find(unique) {
             object.update(data)
@@ -120,10 +135,10 @@ public extension NSManagedObject{
         return self.defaultContext().save()
     }
     
-    public func delete() -> NSManagedObject {
+    public func delete() -> NSManagedObjectContext {
         let context = self.defaultContext()
         context.deleteObject(self)
-        return self
+        return context
     }
     
     public static func deleteAll() -> NSManagedObjectContext{

@@ -20,7 +20,7 @@ extension UILabel {
         }
     }
     
-   public  func addAttributedString (text: String,
+    public  func addAttributedString (text: String,
         color: UIColor,
         font: UIFont) {
             var att = NSAttributedString (string: text,

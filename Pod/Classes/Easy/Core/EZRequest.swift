@@ -40,7 +40,7 @@ public class EZRequest: NSObject {
     public var totalBytesExpectedToWrite = 0.0  //全部需要上传的数据大小
     
     // download下载相关参数
-    public var downloadUrl = ""
+    public var downloadUrl:URLStringConvertible = ""
     public var targetPath = ""
     public var totalBytesRead = 0.0 //已下载传数据大小
     public var totalBytesExpectedToRead = 0.0 //全部需要下载的数据大小
@@ -56,6 +56,12 @@ public class EZRequest: NSObject {
     public var acceptableContentTypes = ["application/json"]  //可接受的序列化返回数据的格式
     public var requestBlock:(Void->())?
     public var isFirstRequest = false
+    
+    //HttpHeader timeoutInterval Cookies 等都在这里设置
+    public var sessionConfiguration:NSURLSessionConfiguration?
+    
+    var manager:Manager?
+    
     public var op:Request?
     
     public var requestNeedActive: Dynamic<Bool> {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Bond
 // MARK: - UIView
 
 let UIViewAnimationDuration: NSTimeInterval = 1
@@ -305,5 +305,12 @@ extension UIView {
         action: Selector) {
             let pan = UIPanGestureRecognizer (target: target, action: action)
             self.addGestureRecognizer(pan)
+    }
+    
+    public func whenTap(number:NSInteger = 1,block:()->Void){
+        self.userInteractionEnabled = true
+        TapGestureDynamic<NSInteger>(view: self,number:number) **->> Bond<NSInteger>{ value in
+            block()
+        }
     }
 }

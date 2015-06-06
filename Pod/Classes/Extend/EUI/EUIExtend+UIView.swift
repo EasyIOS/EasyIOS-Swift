@@ -198,13 +198,13 @@ extension UIView {
         var property =  self.tagProperty as ViewProperty
         
         if let push = property.pushUrl {
-            TapGestureDynamic<NSInteger>(view: self) *->> Bond<NSInteger>{ value in
+            self.whenTap(){
                 URLManager.pushURLString(push, animated: true)
             }
         }
         
         if let present = property.presentUrl {
-            TapGestureDynamic<NSInteger>(view: self) *->> Bond<NSInteger>{ value in
+            self.whenTap(){
                 var viewController = UIViewController.initFromString(present, fromConfig: URLManager.shareInstance().config)
                 var nav = EZNavigationController(rootViewController: viewController)
                 URLNavigation.presentViewController(nav, animated: true)
