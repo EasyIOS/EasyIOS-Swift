@@ -21,8 +21,10 @@ public enum RequestState : Int {
     case SuccessFromCache
     case ErrorFromCache
 }
-private var enabledDynamicHandleRequest: UInt8 = 0;
-private var stateDynamicHandleRequest: UInt8 = 1;
+private var enabledDynamicHandleRequest: UInt8 = 0
+private var stateDynamicHandleRequest: UInt8 = 1
+private var managerHandle: UInt8 = 2
+
 public class EZRequest: NSObject {
     public var output = Dictionary<String,AnyObject>() // 序列化后的数据
     public var params = Dictionary<String,AnyObject>() //使用字典参数
@@ -59,9 +61,6 @@ public class EZRequest: NSObject {
     
     //HttpHeader timeoutInterval Cookies 等都在这里设置
     public var sessionConfiguration:NSURLSessionConfiguration?
-    
-    var manager:Manager?
-    
     public var op:Request?
     
     public var requestNeedActive: Dynamic<Bool> {
@@ -143,7 +142,21 @@ public class EZRequest: NSObject {
         self.state.value = .Cancle
     }
     
-
+    public var manager:Manager {
+        get{
+            if let reqManager = objc_getAssociatedObject(self, &managerHandle) as? Manager {
+                return reqManager
+            }else if let configuration = sessionConfiguration{
+                var aManager = Alamofire.Manager(configuration: configuration)
+                objc_setAssociatedObject(self, &managerHandle, aManager, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                return aManager
+            }else{
+                return Alamofire.Manager.sharedInstance
+            }
+        }set(aManager){
+            objc_setAssociatedObject(self, &managerHandle, aManager, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+        }
+    }
 }
 
 

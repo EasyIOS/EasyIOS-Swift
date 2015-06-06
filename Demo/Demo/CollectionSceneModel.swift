@@ -43,9 +43,8 @@ class CollectionSceneModel: EZSceneModel {
         super.init()
         
         let configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-//        configuration.HTTPAdditionalHeaders  = Alamofire.Manager.sharedInstance.session.configuration.HTTPAdditionalHeaders ?? [:]
+//        configuration.HTTPAdditionalHeaders  = ["User-Agent":"EasyIOS"]
 
-        
         self.req.sessionConfiguration = configuration
         
         self.req.requestBlock = {
