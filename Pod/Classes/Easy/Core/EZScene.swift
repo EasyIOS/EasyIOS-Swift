@@ -29,8 +29,11 @@ public enum INSET : Int{
 }
 
 public class EZScene: UIViewController {
-    public var parentScene:EZScene?
+    
+    //parentScene 保留设计，必要的时候保存parentScene
+    public weak var parentScene:EZScene?
 
+    //导航条左右按钮设置 NAV是一个枚举值：.LEFT,.RIGHT
     public func showBarButton(position:NAV,title:String,fontColor:UIColor){
         self.showBarButton(position, button: UIButton(navTitle: title, color: fontColor))
     }

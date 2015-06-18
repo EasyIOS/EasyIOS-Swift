@@ -13,7 +13,11 @@ public class EZData:NSObject {
     public var dym:InternalDynamic<NSData>?
     
     public var value:NSData?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     
     public init(_ data:NSData) {
@@ -25,7 +29,11 @@ public class EZString:NSObject {
     public var dym:InternalDynamic<String>?
     
     public var value:String?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     
     public init(_ str:String) {
@@ -36,7 +44,11 @@ public class EZString:NSObject {
 public class EZURL:NSObject {
     public var dym:InternalDynamic<NSURL?>?
     public var value:NSURL?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     public init(_ url:NSURL?) {
         self.dym = InternalDynamic<NSURL?>(url)
@@ -46,7 +58,11 @@ public class EZURL:NSObject {
 public class EZAttributedString:NSObject {
     public var dym:InternalDynamic<NSAttributedString>?
     public var value:NSAttributedString?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     public init(_ str:NSAttributedString) {
         self.dym = InternalDynamic<NSAttributedString>(str)
@@ -56,7 +72,11 @@ public class EZAttributedString:NSObject {
 public class EZImage:NSObject {
     public var dym:InternalDynamic<UIImage?>?
     public var value:UIImage?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     public init(_ image:UIImage?) {
         self.dym = InternalDynamic<UIImage?>(image)
@@ -66,7 +86,11 @@ public class EZImage:NSObject {
 public class EZColor:NSObject {
     public var dym:InternalDynamic<UIColor>?
     public var value:UIColor?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     public init(_ color:UIColor) {
         self.dym = InternalDynamic<UIColor>(color)
@@ -76,7 +100,11 @@ public class EZColor:NSObject {
 public class EZBool:NSObject {
     public var dym:InternalDynamic<Bool>?
     public var value:Bool?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     public init(_ b:Bool) {
         self.dym = InternalDynamic<Bool>(b)
@@ -86,7 +114,11 @@ public class EZBool:NSObject {
 public class EZFloat:NSObject {
     public var dym:InternalDynamic<CGFloat>?
     public var value:CGFloat?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     public init(_ fl:CGFloat) {
         self.dym = InternalDynamic<CGFloat>(fl)
@@ -96,7 +128,11 @@ public class EZFloat:NSObject {
 public class EZInt:NSObject {
     public var dym:InternalDynamic<Int>?
     public var value:Int?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     public init(_ i:Int) {
         self.dym = InternalDynamic<Int>(i)
@@ -106,7 +142,11 @@ public class EZInt:NSObject {
 public class EZNumber:NSObject {
     public var dym:InternalDynamic<NSNumber>?
     public var value:NSNumber?{
-        return self.dym?.value
+        get{
+            return self.dym?.value
+        }set(value){
+            self.dym?.value = value!
+        }
     }
     public init(_ i:NSNumber) {
         self.dym = InternalDynamic<NSNumber>(i)

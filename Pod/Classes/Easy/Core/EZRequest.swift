@@ -36,14 +36,15 @@ public class EZRequest: NSObject {
     public var codeKey:Int?  // 错误码返回
     
     //upload上传相关参数
+    public var uploadUrl:URLStringConvertible = "" //上传图片到这个URL协议
     public var uploadData:NSData?  //上传文件
     public var progress = 0.0 //上传进度
     public var totalBytesWritten = 0.0 //已上传数据大小
     public var totalBytesExpectedToWrite = 0.0  //全部需要上传的数据大小
     
     // download下载相关参数
-    public var downloadUrl:URLStringConvertible = ""
-    public var targetPath = ""
+    public var downloadUrl:URLStringConvertible = ""//下载图片URL
+    public var targetPath = "" //下载到路径
     public var totalBytesRead = 0.0 //已下载传数据大小
     public var totalBytesExpectedToRead = 0.0 //全部需要下载的数据大小
     

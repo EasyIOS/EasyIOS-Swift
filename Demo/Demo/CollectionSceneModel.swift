@@ -43,10 +43,7 @@ class CollectionSceneModel: EZSceneModel {
         super.init()
         
         let configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-//        configuration.HTTPAdditionalHeaders  = ["User-Agent":"EasyIOS"]
 
-        self.req.sessionConfiguration = configuration
-        
         self.req.requestBlock = {
             EZAction.SEND_IQ_CACHE(self.req)
         }

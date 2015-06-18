@@ -20,24 +20,24 @@ private var networkReachabilityHandle: UInt8 = 2;
 public class EZAction: NSObject {
     
     //使用缓存策略 仅首次读取缓存
-    public class func SEND_IQ_CACHE (left:EZRequest) {
-        left.useCache = true
-        left.dataFromCache = left.isFirstRequest
-        self.Send(left)
+    public class func SEND_IQ_CACHE (req:EZRequest) {
+        req.useCache = true
+        req.dataFromCache = req.isFirstRequest
+        self.Send(req)
     }
     
     //使用缓存策略 优先从缓存读取
-    public class func SEND_CACHE (left:EZRequest) {
-        left.useCache = true
-        left.dataFromCache = true
-        self.Send(left)
+    public class func SEND_CACHE (req:EZRequest) {
+        req.useCache = true
+        req.dataFromCache = true
+        self.Send(req)
     }
     
     //不使用缓存策略
-    public class func SEND (left:EZRequest) {
-        left.useCache = false
-        left.dataFromCache = false
-        self.Send(left)
+    public class func SEND (req:EZRequest) {
+        req.useCache = false
+        req.dataFromCache = false
+        self.Send(req)
     }
     
     
@@ -85,7 +85,7 @@ public class EZAction: NSObject {
     public class func Upload (req :EZRequest){
         req.state.value = .Sending
         req.op = req.manager
-            .upload(.POST, req.downloadUrl, data: req.uploadData!)
+            .upload(.POST, req.uploadUrl, data: req.uploadData!)
             .validate(statusCode: 200..<300)
             .validate(contentType: req.acceptableContentTypes)
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
