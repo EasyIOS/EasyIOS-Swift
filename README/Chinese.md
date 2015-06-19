@@ -11,7 +11,7 @@ EasyIOS Swift版本新鲜出炉！
 
 ## Star不可少啊！
 
-* [IOSX - EasyIOS官方论坛](http://www.iosx.me)
+* [IOSX - EasyIOS官方论坛](http://dev.iosx.me)
 * [EasyIOS-ObjC版本](https://github.com/EasyIOS/EasyIOS)
 * 使用教程正在快马加鞭编写中！
 

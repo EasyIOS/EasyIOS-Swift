@@ -13,7 +13,7 @@ EasyIOS For Swift
 * [On Github](https://github.com/EasyIOS/EasyIOS-Swift)
 * [On OSChina](http://git.oschina.net/zhuchaowe/EasyIOS-Swift)
 * [中文README](/README/Chinese.md)
-* [IOSX - EasyIOS Official Forum](http://www.iosx.me)
+* [IOSX - EasyIOS Official Forum](http://dev.iosx.me)
 * [EasyIOS-ObjC](https://github.com/EasyIOS/EasyIOS)
 * [EasyIOS-Swift-Doc](http://zhuchaowe.gitbooks.io/easyios-swift/content/)
 
