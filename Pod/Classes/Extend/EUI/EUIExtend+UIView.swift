@@ -391,7 +391,7 @@ extension TTTAttributedLabel {
                 return view
             }
         }
-        return TTTAttributedLabel()
+        return TTTAttributedLabel(frame: CGRectZero)
     }
     
     override public func renderDataBinding(bind:NSObject?){

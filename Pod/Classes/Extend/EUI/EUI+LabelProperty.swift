@@ -21,7 +21,7 @@ class LabelProperty:ViewProperty{
             self.renderViewStyle(view)
             return view
         }else{
-            var view = TTTAttributedLabel()
+            var view = TTTAttributedLabel(frame: CGRectZero)
             view.tagProperty = self
             if self.linkStyle.count > 0 {
                 view.linkAttributes = self.linkStyle
