@@ -29,19 +29,19 @@ class EUIParse: NSObject {
         var tagProperty:ViewProperty?
         
         var type = self.string(pelement,key:"type")
-        if type == "UIScrollView" {
+        if type == "UIScrollView" || type == "scroll" {
             tagProperty = ScrollViewProperty()
-        }else if type == "UITableView"{
+        }else if type == "UITableView" || type == "table" {
             tagProperty = TableViewProperty()
-        }else if type == "UICollectionView"{
+        }else if type == "UICollectionView" || type == "collection"{
             tagProperty = CollectionViewProperty()
-        }else if pelement.tag.value == GUMBO_TAG_IMG.value {
+        }else if type == "UIImageView" || type == "imageView"  || pelement.tag.value == GUMBO_TAG_IMG.value {
             tagProperty = ImageProperty()
-        }else if pelement.tag.value == GUMBO_TAG_SPAN.value {
+        }else if type == "UILabel" || type == "label" ||  pelement.tag.value == GUMBO_TAG_SPAN.value {
             tagProperty = LabelProperty()
-        }else if pelement.tag.value == GUMBO_TAG_BUTTON.value {
+        }else if type == "UIButton" || type == "button" ||  pelement.tag.value == GUMBO_TAG_BUTTON.value {
             tagProperty = ButtonProperty()
-        }else if pelement.tag.value == GUMBO_TAG_INPUT.value{
+        }else if type == "UITextField" || type == "field" || pelement.tag.value == GUMBO_TAG_INPUT.value{
             tagProperty = TextFieldProperty()
         }else if pelement.tag.value == GUMBO_TAG_DIV.value{
             tagProperty = ViewProperty()

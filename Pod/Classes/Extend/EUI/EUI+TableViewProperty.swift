@@ -78,9 +78,9 @@ class TableViewProperty:ScrollViewProperty{
                     let tagId = EUIParse.string(ele, key: "id"),
                     let property = EUIParse.loopElement(ele){
                         
-                    if type.lowercaseString == "cell" {
+                    if type.lowercaseString == "cell" || type.lowercaseString == "UITableViewCell" {
                         self.reuseCell[tagId] = property
-                    }else if type.lowercaseString == "section"{
+                    }else if type.lowercaseString == "section" || type.lowercaseString == "UITableViewSection"{
                         self.sectionView[tagId] = property
                     }
                 }
