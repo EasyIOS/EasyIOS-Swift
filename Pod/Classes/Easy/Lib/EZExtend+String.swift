@@ -68,6 +68,16 @@ extension String {
         return (self as NSString).boolValue
     }
     
+    
+    public func anyValue(key:String) -> AnyObject{
+        if key == "font" {
+            if let font = UIFont.Font(self.trim) {
+                return font
+            }
+        }
+        return self.anyValue
+    }
+    
     public var anyValue :AnyObject{
         var str = self.trim
         
@@ -83,8 +93,6 @@ extension String {
             return color
         }else if let image = UIImage(named: str){
             return image
-        }else if let font = UIFont.Font(str){
-            return font
         }else if str.floatValue != 0.0 {
             return str.floatValue
         }else{

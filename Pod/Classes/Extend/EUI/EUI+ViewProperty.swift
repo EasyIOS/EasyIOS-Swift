@@ -179,7 +179,7 @@ class ViewProperty :NSObject{
                     continue
                 }
             }
-            view.setValue((value as! String).anyValue, forKeyPath: key.toKeyPath)
+            view.setValue((value as! String).anyValue(key.toKeyPath), forKeyPath: key.toKeyPath)
         }
     }
     

@@ -61,6 +61,8 @@ extension UIFont {
             }else{
                 return UIFont(name: array[1], size: array[0].floatValue)
             }
+        }else if array.count == 1{
+            return UIFont.systemFontOfSize(array[0].floatValue)
         }
         return nil
     }

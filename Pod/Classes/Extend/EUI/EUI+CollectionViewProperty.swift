@@ -52,7 +52,7 @@ class CollectionViewProperty: ScrollViewProperty {
         var layout = UICollectionViewFlowLayout()
         for (key,value) in self.flowLayout{
             if key == "minimumLineSpacing" || key == "minimumInteritemSpacing"{
-                layout.setValue(value.anyValue, forKeyPath: key)
+                layout.setValue(value.floatValue, forKeyPath: key)
             }else if key == "itemSize" {
                 layout.itemSize = CGSizeFromString(value)
             }else if key == "estimatedItemSize" {
