@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import Haneke
 import Bond
+
 public var HOST_URL = "" //服务端域名:端口
 public var CODE_KEY = "" //错误码key,暂不支持路径 如 code
 public var RIGHT_CODE = 0  //正确校验码
@@ -17,6 +18,7 @@ public var MSG_KEY = "" //消息提示msg,暂不支持路径 如 msg
 
 
 private var networkReachabilityHandle: UInt8 = 2;
+
 public class EZAction: NSObject {
     
     //使用缓存策略 仅首次读取缓存

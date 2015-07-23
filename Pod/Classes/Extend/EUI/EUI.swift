@@ -68,14 +68,32 @@ public class EUI: NSObject {
             }) {
                 finalHtml = newHtml
             }
-            Regex("\\.([\\w]*)[\\s]?\\{[\\s]?([^}]*)[\\s]?\\}").replace(finalHtml) { (regx) -> String in
-                var className = regx.subgroupMatchAtIndex(0)!.trim
-                var values = regx.subgroupMatchAtIndex(1)!.trim
-                if let aHtml = Regex("@"+className).replace(finalHtml, withTemplate: values) {
-                    finalHtml = aHtml
+            
+            if let regMatchs = Regex("<style>([\\s\\S]*?)</style>").match(finalHtml) {
+                for regx in regMatchs {
+                    if let styleString = regx.subgroupMatchAtIndex(0)?.trim,
+                        let regxsubs = Regex("\\.([\\w]*)[\\s]*\\{[\\s]?([^}]*)[\\s]?\\}").match(styleString){
+                            for regxsub in regxsubs {
+                                var className = regxsub.subgroupMatchAtIndex(0)!.trim
+                                var values = regxsub.subgroupMatchAtIndex(1)!.trim
+                                if let aHtml = Regex("@"+className).replace(finalHtml, withTemplate: values) {
+                                    finalHtml = aHtml
+                                }
+                            }
+                    }
                 }
-                return ""
             }
+            
+            if let regMatchs = Regex("<script\\b[^>]*>([\\s\\S]*?)</script>").match(finalHtml) {
+                var scriptStrings = "";
+                for regx in regMatchs {
+                    if let scriptString = regx.subgroupMatchAtIndex(0)?.trim{
+                        scriptStrings += scriptString
+                    }
+                }
+                controller.scriptString = scriptStrings
+            }
+
             if let cleanHtml = Regex("@[\\w]*").replace(finalHtml, withTemplate: "") {
                 finalHtml = cleanHtml
             }
@@ -87,9 +105,9 @@ public class EUI: NSObject {
                     views.append(aview.getView())
                 }
                 controller.eu_subViews = views
-                }, catch: { (error) in
-                    println(controller.nameOfClass + "Error:\(error.description)")
-                }, finally: nil)
+            }, catch: { (error) in
+                println(controller.nameOfClass + "Error:\(error.description)")
+            }, finally: nil)
         }
         return paths
     }
@@ -120,14 +138,34 @@ public class EUI: NSObject {
             }) {
                 finalHtml = newHtml
             }
-            Regex("\\.([\\w]*)[\\s]?\\{[\\s]?([^}]*)[\\s]?\\}").replace(finalHtml) { (regx) -> String in
-                var className = regx.subgroupMatchAtIndex(0)!.trim
-                var values = regx.subgroupMatchAtIndex(1)!.trim
-                if let aHtml = Regex("@"+className).replace(finalHtml, withTemplate: values) {
-                    finalHtml = aHtml
+            
+            
+            if let regMatchs = Regex("<style>([\\s\\S]*?)</style>").match(finalHtml) {
+                for regx in regMatchs {
+                    if let styleString = regx.subgroupMatchAtIndex(0)?.trim,
+                        let regxsubs = Regex("\\.([\\w]*)[\\s]*\\{[\\s]?([^}]*)[\\s]?\\}").match(styleString){
+                            for regxsub in regxsubs {
+                                var className = regxsub.subgroupMatchAtIndex(0)!.trim
+                                var values = regxsub.subgroupMatchAtIndex(1)!.trim
+                                if let aHtml = Regex("@"+className).replace(finalHtml, withTemplate: values) {
+                                    finalHtml = aHtml
+                                }
+                            }
+                    }
                 }
-                return ""
             }
+            
+            if let regMatchs = Regex("<script\\b[^>]*>([\\s\\S]*?)</script>").match(finalHtml) {
+                var scriptStrings = "";
+                for regx in regMatchs {
+                    if let scriptString = regx.subgroupMatchAtIndex(0)?.trim{
+                        scriptStrings += scriptString
+                    }
+                }
+                controller.scriptString = scriptStrings
+            }
+        
+            
             if let cleanHtml = Regex("@[\\w]*").replace(finalHtml, withTemplate: "") {
                 finalHtml = cleanHtml
             }

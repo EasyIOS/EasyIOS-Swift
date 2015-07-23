@@ -27,29 +27,47 @@ class EUIParse: NSObject {
     // 对子节点进行递归解析
     class func loopElement(pelement:OGElement) -> ViewProperty?{
         var tagProperty:ViewProperty?
+        var type:String?
         
-        var type = self.string(pelement,key:"type")
-        if type == "UIScrollView" || type == "scroll" {
-            tagProperty = ScrollViewProperty()
-        }else if type == "UITableView" || type == "table" {
-            tagProperty = TableViewProperty()
-        }else if type == "UICollectionView" || type == "collection"{
-            tagProperty = CollectionViewProperty()
-        }else if type == "UIImageView" || type == "imageView"  || pelement.tag.value == GUMBO_TAG_IMG.value {
-            tagProperty = ImageProperty()
-        }else if type == "UILabel" || type == "label" ||  pelement.tag.value == GUMBO_TAG_SPAN.value {
-            tagProperty = LabelProperty()
-        }else if type == "UIButton" || type == "button" ||  pelement.tag.value == GUMBO_TAG_BUTTON.value {
-            tagProperty = ButtonProperty()
-        }else if type == "UITextField" || type == "field" || pelement.tag.value == GUMBO_TAG_INPUT.value{
-            tagProperty = TextFieldProperty()
-        }else if pelement.tag.value == GUMBO_TAG_DIV.value{
+        switch (pelement.tag.value){
+            case GUMBO_TAG_IMG.value :
+                type = "UIImageView"
+            case GUMBO_TAG_SPAN.value :
+                type = "UILabel"
+            case GUMBO_TAG_BUTTON.value :
+                type = "UIButton"
+            case GUMBO_TAG_INPUT.value :
+                type = "UITextField"
+            default :
+                type = self.string(pelement,key:"type")
+        }
+        
+        if let atype = type {
+            switch (atype){
+            case "UIScrollView","scroll":
+                tagProperty = ScrollViewProperty()
+            case "UITableView","table":
+                tagProperty = TableViewProperty()
+            case "UICollectionView","collection":
+                tagProperty = CollectionViewProperty()
+            case "UIImageView","imageView":
+                tagProperty = ImageProperty()
+            case "UILabel","label":
+                tagProperty = LabelProperty()
+            case "UIButton","button":
+                tagProperty = ButtonProperty()
+            case "UITextField","field":
+                tagProperty = TextFieldProperty()
+            default :
+                tagProperty = ViewProperty()
+            }
+        }else{
             tagProperty = ViewProperty()
         }
+    
         if tagProperty != nil {
             tagProperty!.renderTag(pelement)
         }
-        
         return tagProperty
     }
     

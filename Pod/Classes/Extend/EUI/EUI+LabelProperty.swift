@@ -8,6 +8,9 @@
 
 import Foundation
 import TTTAttributedLabel
+import JavaScriptCore
+
+
 
 class LabelProperty:ViewProperty{
     var linkStyle = Dictionary<NSObject,AnyObject>()

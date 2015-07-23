@@ -45,108 +45,52 @@ struct Constrain{
 }
 
 struct SelectorAction{
-    var selector:Selector
-    var target:String = ""
+    var selector:String = ""
     var event:UIControlEvents = UIControlEvents.TouchUpInside
     
-    init(selector:String,event:String = "TouchUpInside",target:String = ""){
-        if selector.hasSuffix(".") {
-            var val = selector
-            val.removeAtIndex(advance(val.startIndex, count(val) - 1))
-            self.selector = Selector(val + ":")
-        }else{
-            self.selector = Selector(selector)
-        }
-        self.target = target
+    init(selector:String,event:String = "TouchUpInside"){
+        self.selector = selector
         self.event = controlEventFromString(event)
     }
 }
 
 struct PullRefreshAction {
-    var selector:Selector
-    var target:String = ""
+    var selector:String = ""
     var viewClass:String = ""
     
-    init(selector:String,viewClass:String = "",target:String = ""){
-        if selector.hasSuffix(".") {
-            var val = selector
-            val.removeAtIndex(advance(val.startIndex, count(val) - 1))
-            self.selector = Selector(val + ":")
-        }else{
-            self.selector = Selector(selector)
-        }
-        self.target = target
+    init(selector:String,viewClass:String = ""){
+        self.selector = selector
         self.viewClass = viewClass
     }
 }
 
 struct InfiniteScrollingAction {
-    var selector:Selector
-    var target:String = ""
+    var selector:String = ""
     var viewClass:String = ""
     
-    init(selector:String,viewClass:String = "",target:String = ""){
-        if selector.hasSuffix(".") {
-            var val = selector
-            val.removeAtIndex(advance(val.startIndex, count(val) - 1))
-            self.selector = Selector(val + ":")
-        }else{
-            self.selector = Selector(selector)
-        }
-        self.target = target
+    init(selector:String,viewClass:String = ""){
+        self.selector = selector
         self.viewClass = viewClass
     }
 }
 
 struct TapGestureAction{
-    var selector:Selector = ""
-    var target:String = ""
+    var selector:String = ""
     var tapNumber:NSInteger = 1
-    init(selector:String,tapNumber:String = "1",target:String = ""){
-        if selector.hasSuffix(".") {
-            var val = selector
-            val.removeAtIndex(advance(val.startIndex, count(val) - 1))
-            self.selector = Selector(val + ":")
-        }else{
-            self.selector = Selector(selector)
-        }
-        self.target = target
+    init(selector:String,tapNumber:String = "1"){
+        self.selector = selector
         self.tapNumber = tapNumber.integerValue
-    }
-}
-
-struct PanGestureAction {
-    var selector:Selector = ""
-    var target:String = ""
-    
-    init(selector:String,target:String = ""){
-        if selector.hasSuffix(".") {
-            var val = selector
-            val.removeAtIndex(advance(val.startIndex, count(val) - 1))
-            self.selector = Selector(val + ":")
-        }else{
-            self.selector = Selector(selector)
-        }
-        self.target = target
     }
 }
 
 struct SwipeGestureAction {
     
     var direction: UISwipeGestureRecognizerDirection
-    var selector:Selector
-    var target:String = ""
+    var selector:String
     var numberOfTouches:Int = 1
     
-    init(selector:String,direction:String,numberOfTouches:String = "1",target:String = ""){
-        if selector.hasSuffix(".") {
-            var val = selector
-            val.removeAtIndex(advance(val.startIndex, count(val) - 1))
-            self.selector = Selector(val + ":")
-        }else{
-            self.selector = Selector(selector)
-        }
-        self.target = target
+    init(selector:String,direction:String,numberOfTouches:String = "1"){
+        self.selector = selector
         self.numberOfTouches = numberOfTouches.integerValue
         switch direction.lowercaseString {
         case "up" :

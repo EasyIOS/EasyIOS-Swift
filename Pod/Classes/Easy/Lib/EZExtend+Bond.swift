@@ -53,6 +53,68 @@ public class TapGestureDynamic<T>: InternalDynamic<NSInteger>
     }
 }
 
+@objc class SwipeGestureDynamicHelper
+{
+    weak var view: UIView?
+    var listener:  ((NSInteger,UISwipeGestureRecognizerDirection) -> Void)?
+    var number:NSInteger = 1
+    var direction:UISwipeGestureRecognizerDirection
+    init(view: UIView,number:NSInteger,direction:UISwipeGestureRecognizerDirection) {
+        self.view = view
+        self.number = number
+        self.direction = direction
+        view.addSwipeGesture(direction, numberOfTouches: number, target: self, action: Selector("swipeHandle:"))
+    }
+    
+    func swipeHandle(view: UIView) {
+        self.listener?(self.number,self.direction)
+    }
+}
+
+public class SwipeGestureDynamic<T>: InternalDynamic<NSInteger>
+{
+    let helper: SwipeGestureDynamicHelper
+    public init(view: UIView,number:NSInteger,direction:UISwipeGestureRecognizerDirection) {
+        self.helper = SwipeGestureDynamicHelper(view: view,number:number,direction:direction)
+        super.init()
+        self.helper.listener =  { number,direction in
+            self.value = number
+        }
+    }
+}
+
+
+@objc class PanGestureDynamicHelper
+{
+    weak var view: UIView?
+    var listener:  ((NSInteger,UISwipeGestureRecognizerDirection) -> Void)?
+    var number:NSInteger = 1
+    var direction:UISwipeGestureRecognizerDirection
+    init(view: UIView,number:NSInteger,direction:UISwipeGestureRecognizerDirection) {
+        self.view = view
+        self.number = number
+        self.direction = direction
+        view.addSwipeGesture(direction, numberOfTouches: number, target: self, action: Selector("swipeHandle:"))
+    }
+    
+    func swipeHandle(view: UIView) {
+        self.listener?(self.number,self.direction)
+    }
+}
+
+public class PanGestureDynamic<T>: InternalDynamic<NSInteger>
+{
+    let helper: PanGestureDynamicHelper
+    public init(view: UIView,number:NSInteger,direction:UISwipeGestureRecognizerDirection) {
+        self.helper = PanGestureDynamicHelper(view: view,number:number,direction:direction)
+        super.init()
+        self.helper.listener =  { number,direction in
+            self.value = number
+        }
+    }
+}
+
+
 
 private var urlImageDynamicHandleUIImageView: UInt8 = 0
 extension UIImageView {

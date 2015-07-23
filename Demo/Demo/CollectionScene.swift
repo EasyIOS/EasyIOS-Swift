@@ -35,6 +35,7 @@ class CollectionScene: EUScene,UICollectionViewDelegate {
             }
         }
         
+
         // Do any additional setup after loading the view.
     }
 
@@ -42,31 +43,32 @@ class CollectionScene: EUScene,UICollectionViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    //接收xml里的下拉刷新事件
-    func handlePullRefresh (collectionView:UICollectionView){
-        self.sceneModel.req.requestNeedActive.value = true
-    }
-    
-    //接收xml里的上拉加载事件
-    func handleInfinite (collectionView:UICollectionView){
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW,
-            Int64(3.0 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            collectionView.infiniteScrollingView?.stopAnimating()
-            collectionView.infiniteScrollingView?.setEnded()
-        }
-    }
+
     
     override func eu_collectionViewDidLoad(collectionView: UICollectionView?) {
         self.collectionView = collectionView
         collectionView?.delegate = self
+        
+        
+        self.document.define("handlePullRefresh"){
+            self.sceneModel.req.requestNeedActive.value = true
+        }
+        
+        self.document.define("handleInfinite"){
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(3.0 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                self.collectionView?.infiniteScrollingView?.stopAnimating()
+                self.collectionView?.infiniteScrollingView?.setEnded()
+            }
+        }
+        
         self.sceneModel.viewModelList.map { (data:CollectionCellViewModel,index:Int) -> UICollectionViewCell in
             return collectionView!.dequeueReusableCell(
                 "cell",
                 forIndexPath:NSIndexPath(forItem: index, inSection: 0),
                 target: self,bind:data) as UICollectionViewCell
-            } ->> self.eu_collectionViewDataSource!
+        } ->> self.eu_collectionViewDataSource!
     }
 
     override func leftButtonTouch() {

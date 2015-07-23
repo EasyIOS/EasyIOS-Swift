@@ -313,4 +313,11 @@ extension UIView {
             block()
         }
     }
+    
+    public func whenSwipe(number:NSInteger = 1,direction:UISwipeGestureRecognizerDirection,block:()->Void){
+        self.userInteractionEnabled = true
+        SwipeGestureDynamic<NSInteger>(view: self,number:number,direction:direction) **->> Bond<NSInteger>{ value in
+            block()
+        }
+    }
 }

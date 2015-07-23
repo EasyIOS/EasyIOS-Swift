@@ -69,8 +69,6 @@ class ScrollViewProperty:ViewProperty{
                 self.pullToRefresh = PullRefreshAction(selector: values[0])
             }else if values.count == 2 {
                 self.pullToRefresh = PullRefreshAction(selector: values[0], viewClass: values[1])
-            }else if values.count >= 3 {
-                self.pullToRefresh = PullRefreshAction(selector: values[0], viewClass: values[1], target: values[2])
             }
         }
         
@@ -80,8 +78,6 @@ class ScrollViewProperty:ViewProperty{
                 self.infiniteScrolling = InfiniteScrollingAction(selector: values[0])
             }else if values.count == 2 {
                 self.infiniteScrolling = InfiniteScrollingAction(selector: values[0], viewClass: values[1])
-            }else if values.count >= 3 {
-                self.infiniteScrolling = InfiniteScrollingAction(selector: values[0], viewClass: values[1], target: values[2])
             }
         }
         

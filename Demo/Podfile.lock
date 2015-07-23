@@ -1,6 +1,6 @@
 PODS:
-  - Alamofire (1.2.2)
-  - Bond (3.7.4)
+  - Alamofire (1.2.3)
+  - Bond (3.9.0)
   - EasyIOS-Swift (1.0.1):
     - Alamofire
     - Bond
@@ -10,11 +10,11 @@ PODS:
     - SnapKit
     - TTTAttributedLabel
   - HanekeSwift (0.9.1)
-  - Kingfisher (1.4.1)
+  - Kingfisher (1.4.2)
   - ObjectMapper (0.12)
   - SnapKit (0.12.0)
   - SVProgressHUD (1.1.3)
-  - TTTAttributedLabel (1.13.3)
+  - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
   - EasyIOS-Swift (from `../`)
@@ -22,17 +22,17 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   EasyIOS-Swift:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 11a6022f5089887d92ffb5a3014c97a0a915ab98
-  Bond: f21b0fb5fe54fd36e2732d1b7e3c51ded0a47cb7
-  EasyIOS-Swift: 97467bb5341656ac5a2eb5e4e79b36572099b301
+  Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
+  Bond: 994ccc56aebfe2707d7b5e76f6d665a5beefa45b
+  EasyIOS-Swift: 380459fe557ed1bb18a8ef3935b666903c6fdee5
   HanekeSwift: 50d37bfbc4432edc649167e538c259feccb4a2bb
-  Kingfisher: 962a21cdc2a7b0fa63be3b2c45ea6f180feda535
+  Kingfisher: 4446782a827abbe2e6048a1fa741924a10e6ad7c
   ObjectMapper: ef4a369cbab75546029ceb7e8155772b5f8e8841
   SnapKit: 00c388aa3bf1944c1b55472f31e841f75bd83882
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
-  TTTAttributedLabel: 6f3174aef8e738f44dff97c2eb7d8184f6ab6277
+  TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
-COCOAPODS: 0.37.0.beta.1
+COCOAPODS: 0.37.2

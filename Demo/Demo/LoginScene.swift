@@ -15,6 +15,10 @@ class LoginScene: EUScene {
         super.viewDidLoad()
         self.showBarButton(.LEFT, title: "返回", fontColor: UIColor.greenColor())
         
+//        self.document.declare("login"){
+//            println("登陆回调")
+//        }
+        
         //在模拟器中调用下面这个方法可以生成一个加密文件
 //        EUI.encode("LoginScene", suffix: "xml", toPath: "/Users/zhuchao/Desktop/EncodeLoginScene.crypto")
         // Do any additional setup after loading the view, typically from a nib.
@@ -27,10 +31,6 @@ class LoginScene: EUScene {
     
     override func leftButtonTouch() {
         URLNavigation.dismissCurrentAnimated(true)
-    }
-
-    func login (){
-        //在这里进行登录操作
     }
 }
 

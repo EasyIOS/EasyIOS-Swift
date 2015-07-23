@@ -35,5 +35,5 @@ Pod::Spec.new do |s|
     s.dependency 'ObjectMapper'
     s.dependency 'TTTAttributedLabel'
 s.public_header_files = 'Pod/Classes/Easy/**/*.h','Pod/Classes/Extend/**/*.h','Pod/Classes/Private/**/*.h'
-s.frameworks = 'UIKit'
+s.frameworks = 'UIKit','JavaScriptCore'
 end

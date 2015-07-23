@@ -170,75 +170,79 @@ extension UIView {
         self.renderLayout()
     }
     
-    public func renderDataBinding(bind:NSObject?){
+    public func renderDataBinding(scene:EUScene,bind:NSObject?){
         for subView in self.subviews {
             var view = subView as! UIView
-            view.renderDataBinding(bind)
+            view.renderDataBinding(scene,bind: bind)
         }
+        var property =  self.tagProperty as ViewProperty
         
-        if let bindKey = self.tagProperty.bind["background-color"] {
+        if let bindKey = property.bind["background-color"] {
             if let color = bind!.valueForKey(bindKey) as? EZColor {
                 color.dym! ->> self.dynBackgroundColor
             }
         }
-        if let bindKey = self.tagProperty.bind["alpha"] {
+        if let bindKey = property.bind["alpha"] {
             if let alpha = bind!.valueForKey(bindKey) as? EZFloat {
                 alpha.dym! ->> self.dynAlpha
             }
         }
-        if let bindKey = self.tagProperty.bind["hidden"] {
+        if let bindKey = property.bind["hidden"] {
             if let hidden = bind!.valueForKey(bindKey) as? EZBool {
                 hidden.dym! ->> self.dynHidden
             }
         }
+        
+        if let selector = property.onTapBind {
+            self.whenTap(number: selector.tapNumber){
+                let script = Regex("\\{\\{(\\w+)\\}\\}").replace(selector.selector, withBlock: { (regx) -> String in
+                    var bindKey = regx.subgroupMatchAtIndex(0)?.trim
+                    if let value = bind!.valueForKey(bindKey!) as? String{
+                        return value
+                    }else if let value = bind!.valueForKey(bindKey!) as? Int{
+                        return String(value)
+                    }else if let value = bind!.valueForKey(bindKey!) as? Bool{
+                        return value ? "true" : "false"
+                    }
+                    return ""
+                })
+                scene.document.context.evaluateScript(script)
+            }
+        }
+        
+        if let selector = property.onSwipeBind {
+            self.whenSwipe(number: selector.numberOfTouches, direction: selector.direction){
+                let script = Regex("\\{\\{(\\w+)\\}\\}").replace(selector.selector, withBlock: { (regx) -> String in
+                    var bindKey = regx.subgroupMatchAtIndex(0)?.trim
+                    if let value = bind!.valueForKey(bindKey!) as? String{
+                        return value
+                    }else if let value = bind!.valueForKey(bindKey!) as? Int{
+                        return String(value)
+                    }else if let value = bind!.valueForKey(bindKey!) as? Bool{
+                        return value ? "true" : "false"
+                    }
+                    return ""
+                })
+                scene.document.context.evaluateScript(script)
+            }
+        }
+        
     }
 
     
     func renderGesture(scene:EUScene){
         var property =  self.tagProperty as ViewProperty
         
-        if let push = property.pushUrl {
-            self.whenTap(){
-                URLManager.pushURLString(push, animated: true)
-            }
-        }
-        
-        if let present = property.presentUrl {
-            self.whenTap(){
-                var viewController = UIViewController.initFromString(present, fromConfig: URLManager.shareInstance().config)
-                var nav = EZNavigationController(rootViewController: viewController)
-                URLNavigation.presentViewController(nav, animated: true)
-            }
-        }
-        
         if let selector = property.onTap {
-            var target:AnyObject!
-            if !isEmpty(selector.target){
-                target = scene.valueForKeyPath(selector.target)
-            }else {
-                target = scene
+            self.whenTap(number: selector.tapNumber){
+                scene.document.context.evaluateScript(selector.selector)
             }
-            self.addTapGesture(selector.tapNumber, target: target, action: selector.selector)
         }
         
         if let selector = property.onSwipe {
-            var target:AnyObject!
-            if !isEmpty(selector.target){
-                target = scene.valueForKeyPath(selector.target)
-            }else {
-                target = scene
+            self.whenSwipe(number: selector.numberOfTouches, direction: selector.direction){
+                scene.document.context.evaluateScript(selector.selector)
             }
-            self.addSwipeGesture(selector.direction, numberOfTouches: selector.numberOfTouches, target: target, action: selector.selector)
-        }
-        
-        if let selector = property.onPan {
-            var target:AnyObject!
-            if !isEmpty(selector.target){
-                target = scene.valueForKeyPath(selector.target)
-            }else {
-                target = scene
-            }
-            self.addPanGesture(target, action: selector.selector)
         }
         
     }
@@ -321,8 +325,8 @@ extension UIImageView {
         return UIImageView()
     }
     
-    override public func renderDataBinding(bind:NSObject?){
-        super.renderDataBinding(bind)
+    override public func renderDataBinding(scene:EUScene,bind:NSObject?){
+        super.renderDataBinding(scene,bind: bind)
         if let bindKey = self.tagProperty.bind["src"] {
             if let image = bind!.valueForKey(bindKey) as? EZImage {
                 image.dym! ->> self.dynImage
@@ -359,8 +363,8 @@ extension UILabel {
         return UILabel()
     }
     
-    override public func renderDataBinding(bind:NSObject?){
-        super.renderDataBinding(bind)
+    override public func renderDataBinding(scene:EUScene,bind:NSObject?){
+        super.renderDataBinding(scene,bind: bind)
         if let bindKey = self.tagProperty.bind["text"] {
             if let text = bind!.valueForKey(bindKey) as? EZAttributedString {
                 text.dym! ->> self.dynAttributedText
@@ -394,8 +398,8 @@ extension TTTAttributedLabel {
         return TTTAttributedLabel(frame: CGRectZero)
     }
     
-    override public func renderDataBinding(bind:NSObject?){
-        super.renderDataBinding(bind)
+    override public func renderDataBinding(scene:EUScene,bind:NSObject?){
+        super.renderDataBinding(scene,bind: bind)
         if let bindKey = self.tagProperty.bind["TTText"] {
             if let text = bind!.valueForKey(bindKey) as? EZAttributedString {
                 text.dym! ->> self.dynTTTAttributedText
@@ -430,8 +434,8 @@ extension UITextField {
         return UITextField()
     }
     
-    override public func renderDataBinding(bind:NSObject?){
-        super.renderDataBinding(bind)
+    override public func renderDataBinding(scene:EUScene,bind:NSObject?){
+        super.renderDataBinding(scene,bind:bind)
         if let bindKey = self.tagProperty.bind["text"] {
             if let text = bind!.valueForKey(bindKey) as? EZString {
                 text.dym! ->> self.dynText
@@ -454,15 +458,11 @@ extension UIButton {
     
     override func renderSelector(scene:EUScene){
         var property =  self.tagProperty as? ButtonProperty
-        
         if let selector = property?.onEvent {
-            var target:AnyObject!
-            if !isEmpty(selector.target){
-                target = scene.valueForKeyPath(selector.target)
-            }else {
-                target = scene
+            var d = self.dynEvent.filter(==, selector.event) as! InternalDynamic
+            d *->> Bond<UIControlEvents>{ event in
+                scene.document.context.evaluateScript(selector.selector)
             }
-            self.addTarget(target, action: selector.selector, forControlEvents: selector.event)
         }
     }
 }
@@ -483,7 +483,7 @@ extension UITableView {
         if let pro = property?.sectionView[tagId] {
             var view = pro.getView()
             view.renderTheView(target)
-            view.renderDataBinding(bind)
+            view.renderDataBinding(target,bind: bind)
             return view
         }
         return nil
@@ -522,7 +522,7 @@ extension UITableView {
             }, finally:nil)
         }
         if let view = cell.contentView.subviews.first as? UIView {
-            view.renderDataBinding(bind)
+            view.renderDataBinding(target,bind: bind)
         }
         return cell
     }
@@ -572,7 +572,7 @@ extension UICollectionView {
             }, finally: nil)
         }
         if let view = cell.contentView.subviews.first as? UIView {
-            view.renderDataBinding(bind)
+            view.renderDataBinding(target,bind:bind)
         }
         return cell
     }
@@ -592,37 +592,25 @@ extension UIScrollView {
         var property =  self.tagProperty as? ScrollViewProperty
         
         if let pullRefresh = property?.pullToRefresh {
-            var target:AnyObject!
-            if !isEmpty(pullRefresh.target){
-                target = scene.valueForKeyPath(pullRefresh.target)
-            }else {
-                target = scene
-            }
             if isEmpty(pullRefresh.viewClass) {
                 self.addPullToRefreshWithActionHandler(){
-                    NSThread.detachNewThreadSelector(pullRefresh.selector, toTarget:target, withObject: self)
+                    scene.document.context.evaluateScript(pullRefresh.selector)
                 }
             }else if let view =  NSObject(fromString: pullRefresh.viewClass) as? UIView {
                 self.addPullToRefreshWithActionHandler(customer:view) {
-                    NSThread.detachNewThreadSelector(pullRefresh.selector, toTarget:target, withObject: self)
+                    scene.document.context.evaluateScript(pullRefresh.selector)
                 }
             }
         }
         
         if let infiniteScrolling = property?.infiniteScrolling {
-            var target:AnyObject!
-            if !isEmpty(infiniteScrolling.target){
-                target = scene.valueForKeyPath(infiniteScrolling.target)
-            }else {
-                target = scene
-            }
             if isEmpty(infiniteScrolling.viewClass) {
                 self.addInfiniteScrollingWithActionHandler(){
-                    NSThread.detachNewThreadSelector(infiniteScrolling.selector, toTarget:target, withObject: self)
+                    scene.document.context.evaluateScript(infiniteScrolling.selector)
                 }
             }else if let view =  NSObject(fromString: infiniteScrolling.viewClass) as? UIView {
                 self.addInfiniteScrollingWithActionHandler(customer:view) {
-                    NSThread.detachNewThreadSelector(infiniteScrolling.selector, toTarget:target, withObject: self)
+                   scene.document.context.evaluateScript(infiniteScrolling.selector)
                 }
             }
         }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class ViewProperty :NSObject{
     
     var tag:GumboTag?
@@ -24,12 +25,11 @@ class ViewProperty :NSObject{
     var height:Constrain?
     var onTap:TapGestureAction?
     var onSwipe:SwipeGestureAction?
-    var onPan:PanGestureAction?
+    var onTapBind:TapGestureAction?
+    var onSwipeBind:SwipeGestureAction?
     var frame:CGRect?
     var bind = Dictionary<String,String>()
     var contentText:String?
-    var pushUrl:String?
-    var presentUrl:String?
     
     func getView() -> UIView{
         if self.tag == nil {
@@ -49,7 +49,7 @@ class ViewProperty :NSObject{
     }
     
     func renderTag(pelement:OGElement){
-        self.tagOut += ["id","style","align","margin","type","image-mode","name","width","height","class","ontap","onswipe","onpan","frame","reuseid","push","present"]
+        self.tagOut += ["id","style","align","margin","type","image-mode","name","width","height","class","ontap","onswipe","ontap-bind","onswipe-bind","frame","reuseid","push","present"]
         
         self.tag = pelement.tag
         
@@ -119,10 +119,8 @@ class ViewProperty :NSObject{
             var values = theGestureAction.trimArray
             if values.count == 1 {
                 self.onTap = TapGestureAction(selector: values[0])
-            }else if values.count == 2 {
+            }else if values.count >= 2 {
                 self.onTap = TapGestureAction(selector: values[0], tapNumber: values[1])
-            }else if values.count >= 3 {
-                self.onTap = TapGestureAction(selector: values[0], tapNumber: values[1], target: values[2])
             }
         }
         
@@ -130,29 +128,30 @@ class ViewProperty :NSObject{
             var values = theGestureAction.trimArray
             if values.count == 2 {
                 self.onSwipe = SwipeGestureAction(selector: values[0], direction: values[1])
-            }else if values.count == 3 {
+            }else if values.count >= 3 {
                 self.onSwipe = SwipeGestureAction(selector: values[0], direction: values[1], numberOfTouches: values[2])
-            }else if values.count >= 4 {
-                self.onSwipe = SwipeGestureAction(selector: values[0], direction: values[1], numberOfTouches: values[2], target: values[3])
             }
         }
         
-        if let theGestureAction = EUIParse.string(pelement, key: "onpan") {
+        
+        if let theGestureAction = EUIParse.string(pelement, key: "ontap-bind") {
             var values = theGestureAction.trimArray
             if values.count == 1 {
-                self.onPan = PanGestureAction(selector: values[0])
-            }else if values.count == 2 {
-                self.onPan = PanGestureAction(selector: values[0], target: values[1])
+                self.onTapBind = TapGestureAction(selector: values[0])
+            }else if values.count >= 2 {
+                self.onTapBind = TapGestureAction(selector: values[0], tapNumber: values[1])
             }
         }
         
-        if let push = EUIParse.string(pelement,key: "push") {
-            self.pushUrl = push
+        if let theGestureAction = EUIParse.string(pelement, key: "onswipe-bind") {
+            var values = theGestureAction.trimArray
+            if values.count == 2 {
+                self.onSwipeBind = SwipeGestureAction(selector: values[0], direction: values[1])
+            }else if values.count >= 3 {
+                self.onSwipeBind = SwipeGestureAction(selector: values[0], direction: values[1], numberOfTouches: values[2])
+            }
         }
         
-        if let present = EUIParse.string(pelement,key: "present") {
-            self.presentUrl = present
-        }
         
         for (key,value) in pelement.attributes {
             if contains(self.tagOut, key as! String) == false {
@@ -179,7 +178,7 @@ class ViewProperty :NSObject{
                     continue
                 }
             }
-            view.setValue((value as! String).anyValue(key.toKeyPath), forKeyPath: key.toKeyPath)
+            view.attr(key, value)
         }
     }
     

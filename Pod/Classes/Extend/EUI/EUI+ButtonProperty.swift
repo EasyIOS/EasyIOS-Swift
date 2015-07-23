@@ -92,13 +92,7 @@ class ButtonProperty:ViewProperty{
         if let theSelector = EUIParse.string(pelement, key: "onevent") {
             var values = theSelector.trimArrayBy(":")
             if values.count == 2 {
-                var event = values[0]
-                var secondArray = values[1].trimArray
-                if secondArray.count == 1 {
-                    self.onEvent = SelectorAction(selector: secondArray[0], event: event)
-                }else if values.count >= 2 {
-                    self.onEvent = SelectorAction(selector: secondArray[0], event: event, target: secondArray[1])
-                }
+                self.onEvent = SelectorAction(selector: values[1], event: values[0])
             }
         }
         

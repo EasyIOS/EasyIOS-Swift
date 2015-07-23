@@ -16,6 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        
+
+        
         CODE_KEY = "code"//错误码
         MSG_KEY = "msg" //网络请求的msg信息
         
