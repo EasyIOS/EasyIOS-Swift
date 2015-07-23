@@ -21,9 +21,19 @@ public func trimToArrayBy (str:String,by:String) -> Array<String>{
     }
 }
 
+
+
 extension String {
     public subscript (i: Int) -> String {
         return String(Array(self)[i])
+    }
+    
+    public var urlencode :String {
+        return self.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+    }
+    
+    public var urldecode :String {
+        return self.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
     }
     
     public var trim :String {
