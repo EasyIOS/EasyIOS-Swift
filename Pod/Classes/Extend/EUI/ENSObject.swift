@@ -13,9 +13,19 @@ import JavaScriptCore
     func val(keyPath:String) -> AnyObject?
     func attr(keyPath:String,_ value:AnyObject?)
     func attrs(dict:[NSObject : AnyObject]!)
+    func call(selector:String)
+    func call(selector:String,withObject object:AnyObject?)
 }
 
 public extension NSObject{
+    
+    public func call(selector:String){
+        NSThread.detachNewThreadSelector(Selector(selector), toTarget:self, withObject: nil)
+    }
+    
+    public func call(selector:String,withObject object:AnyObject?){
+        NSThread.detachNewThreadSelector(Selector(selector), toTarget:self, withObject: object)
+    }
     
     public func attr(key:String,_ value:AnyObject?) {
         SwiftTryCatch.try({

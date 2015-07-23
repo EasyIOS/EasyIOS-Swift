@@ -37,7 +37,7 @@ class MainScene: EUScene,UITableViewDelegate{
         tableView?.delegate = self
         
         //定义一个可以给JS调用的下拉刷新回调方法handlePullRefresh()
-        document.define("handlePullRefresh"){
+        define("handlePullRefresh"){
             let delayTime = dispatch_time(DISPATCH_TIME_NOW,
                 Int64(3.0 * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {

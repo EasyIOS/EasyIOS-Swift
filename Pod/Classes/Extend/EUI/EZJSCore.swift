@@ -37,17 +37,6 @@ public class JSURLManager:NSObject,JSURLManagerExport {
     }
 }
 
-
-@objc protocol JSDocummentExport:JSExport {
-    static func getElementById(id:String) -> UIView
-}
-
-public class Documment:NSObject,JSDocummentExport{
-    static public func getElementById(id:String) -> UIView {
-        return UIView.formTag(id)
-    }
-}
-
 public class EZJSContext:JSContext{
     
     override init(){
@@ -55,17 +44,15 @@ public class EZJSContext:JSContext{
         
         self.setObject(Console.self, forKeyedSubscript: "console")
         self.setObject(JSURLManager.self, forKeyedSubscript: "um")
-        self.setObject(Documment.self, forKeyedSubscript: "document")
-        
-        
-        
         
         class_addProtocol(EZAction.self, EZActionJSExport.self)
         self.setObject(EZAction.self, forKeyedSubscript: "EZAction")
         
-        
         class_addProtocol(UIColor.self, EUIColor.self)
         self.setObject(UIColor.self, forKeyedSubscript: "UIColor")
+        
+        class_addProtocol(UIImage.self, EUIImage.self)
+        self.setObject(UIImage.self, forKeyedSubscript: "UIImage")
         
         class_addProtocol(UIView.self, EUIView.self)
         self.setObject(UIView.self, forKeyedSubscript: "UIView")
@@ -79,6 +66,17 @@ public class EZJSContext:JSContext{
         class_addProtocol(UIButton.self, EUIButton.self)
         self.setObject(UIButton.self, forKeyedSubscript: "UIButton")
 
+        class_addProtocol(UILabel.self, EUILabel.self)
+        self.setObject(UILabel.self, forKeyedSubscript: "UILabel")
+
+        class_addProtocol(UIScrollView.self, EUIScrollView.self)
+        self.setObject(UIScrollView.self, forKeyedSubscript: "UIScrollView")
+
+        class_addProtocol(UITableView.self, EUITableView.self)
+        self.setObject(UITableView.self, forKeyedSubscript: "UITableView")
+        
+        class_addProtocol(UICollectionView.self, EUICollectionView.self)
+        self.setObject(UICollectionView.self, forKeyedSubscript: "UICollectionView")
         
         
         self.exceptionHandler = { context, exception in

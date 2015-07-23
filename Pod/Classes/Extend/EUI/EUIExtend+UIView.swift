@@ -61,6 +61,9 @@ extension EUScene{
             }
             self.view.subRender(self)
         }
+        
+        self.context.setObject(self, forKeyedSubscript: "document")
+        self.eval(self.scriptString)
         self.eu_viewDidLoad()
     }
     
@@ -206,7 +209,7 @@ extension UIView {
                     }
                     return ""
                 })
-                scene.document.context.evaluateScript(script)
+                scene.eval(script)
             }
         }
         
@@ -223,7 +226,7 @@ extension UIView {
                     }
                     return ""
                 })
-                scene.document.context.evaluateScript(script)
+                scene.eval(script)
             }
         }
         
@@ -235,13 +238,13 @@ extension UIView {
         
         if let selector = property.onTap {
             self.whenTap(number: selector.tapNumber){
-                scene.document.context.evaluateScript(selector.selector)
+                scene.eval(selector.selector)
             }
         }
         
         if let selector = property.onSwipe {
             self.whenSwipe(number: selector.numberOfTouches, direction: selector.direction){
-                scene.document.context.evaluateScript(selector.selector)
+                scene.eval(selector.selector)
             }
         }
         
@@ -461,7 +464,7 @@ extension UIButton {
         if let selector = property?.onEvent {
             var d = self.dynEvent.filter(==, selector.event) as! InternalDynamic
             d *->> Bond<UIControlEvents>{ event in
-                scene.document.context.evaluateScript(selector.selector)
+                scene.eval(selector.selector)
             }
         }
     }
@@ -594,11 +597,11 @@ extension UIScrollView {
         if let pullRefresh = property?.pullToRefresh {
             if isEmpty(pullRefresh.viewClass) {
                 self.addPullToRefreshWithActionHandler(){
-                    scene.document.context.evaluateScript(pullRefresh.selector)
+                    scene.eval(pullRefresh.selector)
                 }
             }else if let view =  NSObject(fromString: pullRefresh.viewClass) as? UIView {
                 self.addPullToRefreshWithActionHandler(customer:view) {
-                    scene.document.context.evaluateScript(pullRefresh.selector)
+                    scene.eval(pullRefresh.selector)
                 }
             }
         }
@@ -606,11 +609,11 @@ extension UIScrollView {
         if let infiniteScrolling = property?.infiniteScrolling {
             if isEmpty(infiniteScrolling.viewClass) {
                 self.addInfiniteScrollingWithActionHandler(){
-                    scene.document.context.evaluateScript(infiniteScrolling.selector)
+                    scene.eval(infiniteScrolling.selector)
                 }
             }else if let view =  NSObject(fromString: infiniteScrolling.viewClass) as? UIView {
                 self.addInfiniteScrollingWithActionHandler(customer:view) {
-                   scene.document.context.evaluateScript(infiniteScrolling.selector)
+                   scene.eval(infiniteScrolling.selector)
                 }
             }
         }

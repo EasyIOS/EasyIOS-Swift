@@ -34,8 +34,6 @@ class CollectionScene: EUScene,UICollectionViewDelegate {
                 return
             }
         }
-        
-
         // Do any additional setup after loading the view.
     }
 
@@ -50,11 +48,11 @@ class CollectionScene: EUScene,UICollectionViewDelegate {
         collectionView?.delegate = self
         
         
-        self.document.define("handlePullRefresh"){
+        define("handlePullRefresh"){
             self.sceneModel.req.requestNeedActive.value = true
         }
         
-        self.document.define("handleInfinite"){
+        define("handleInfinite"){
             let delayTime = dispatch_time(DISPATCH_TIME_NOW,
                 Int64(3.0 * Double(NSEC_PER_SEC)))
             dispatch_after(delayTime, dispatch_get_main_queue()) {

@@ -8,17 +8,36 @@
 
 import UIKit
 import TTTAttributedLabel
+import JavaScriptCore
 
 public var LIVE_LOAD_PATH = __FILE__.stringByDeletingLastPathComponent
-
 public var CRTPTO_KEY = ""
 
-public class EUScene: EZScene {
+
+@objc protocol EUSceneExport:JSExport,ENSObject {
+    func getElementById(id:String) -> UIView
+}
+
+public class EUScene: EZScene,EUSceneExport{
     public var SUFFIX = "xml"
     public var eu_subViews:[UIView]?
     public var scriptString:String?
     
-    public var document = EZJSDocument()
+    public var context = EZJSContext()
+    
+    public func define(funcName:String,actionBlock:@objc_block ()->Void){
+        context.define(funcName, actionBlock: actionBlock)
+    }
+    
+    public func eval(script: String?) -> JSValue?{
+        var result:JSValue?
+        SwiftTryCatch.try({
+            result = self.context.evaluateScript(script)
+            }, catch: { (error) in
+                println("JS Error:\(error.description)")
+            }, finally: nil)
+        return result
+    }
     
     override public func loadView() {
         super.loadView()
@@ -39,11 +58,7 @@ public class EUScene: EZScene {
     }
     
     public func eu_viewDidLoad(){
-        SwiftTryCatch.try({
-            self.document.context.evaluateScript(self.scriptString)
-            }, catch: { (error) in
-                println("JS Error:\(error.description)")
-            }, finally: nil)
+
     }
 
     public func eu_tableViewDidLoad(tableView:UITableView?){
@@ -52,6 +67,10 @@ public class EUScene: EZScene {
     
     public func eu_collectionViewDidLoad(collectionView:UICollectionView?){
         
+    }
+    
+    public func getElementById(id:String) -> UIView {
+        return UIView.formTag(id)
     }
     
 }
