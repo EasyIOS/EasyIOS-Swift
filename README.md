@@ -43,12 +43,13 @@ EasyIOS For Swift
 
 ```HTML
 <body>
-    <div id="tableview" align="64 0 0 0" content-inset="{0,0,0,0}" type="UITableView"  estimated-row-height="100"  separator-style="None" pull-to-refresh="handlePullRefresh." infinite-scrolling="handleInfinite. PullFooter">
-        <div align="0 0 0 0" type="cell" id="cell" >
+    <div id="tableview" align="64 0 0 0" content-inset="{0,0,0,0}" type="UITableView"  estimated-row-height="100"  separator-style="None" pull-to-refresh="handlePullRefresh()" infinite-scrolling="handleInfinite() PullFooter">
+        <div align="0 0 0 0" type="cell" id="cell" ontap-bind="um.push('{{link}}',true)" >
             <img id="avatar" align="10 10 -10 *" clips-to-bounds="YES" width="45" height="45" layer_corner-radius="5" src="{{srcUrl}}" />
             <span align="top:2 avatar;right:-10" margin="left:12 avatar"  font="15 system" id="title">{{title}}</span>
             <span align="bottom:0 avatar;right:-10" margin="left:12 avatar" font="13 system" text-color="#ACACAC" id="subTitle" style="color:#ACACAC;" link-style="color:green;" >{{subTitle}}</span>
         </div>
+        
         <div type="section" id="bgView" background-color="#F2F1F6" >
             <span align="left:15;center-y:0" font="14 system">{{title}}</span>
         </div>
@@ -133,7 +134,7 @@ EasyIOS For Swift
 
 ```HTML
 <body>
-    <div id="collectionView" align="0 0 0 0" type="UICollectionView" flow-layout="scroll-direction:Vertical;item-size:{300,50};section-inset:{3,3,0,3};minimum-interitem-spacing:3;minimum-line-spacing:3" content-inset="{64,0,0,0}" background-color="white" pull-to-refresh="handlePullRefresh." infinite-scrolling="handleInfinite.">
+    <div id="collectionView" align="0 0 0 0" type="UICollectionView" flow-layout="scroll-direction:Vertical;item-size:{300,50};section-inset:{3,3,0,3};minimum-interitem-spacing:3;minimum-line-spacing:3" content-inset="{64,0,0,0}" background-color="white" pull-to-refresh="handlePullRefresh()" infinite-scrolling="handleInfinite()">
         <div align="0 0 0 0" type="cell"  id="cell"  background-color="red">
             <span align="10 10 -10 -10" font="10 system">{{name}}</span>
         </div>
@@ -141,6 +142,18 @@ EasyIOS For Swift
 </body>
 ```
 
+## Declare JS funciton By Swfit
+
+```swift
+        //定义一个可以给JS调用的下拉刷新回调方法handlePullRefresh()
+        define("handlePullRefresh"){
+            let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+                Int64(3.0 * Double(NSEC_PER_SEC)))
+            dispatch_after(delayTime, dispatch_get_main_queue()) {
+                tableView?.pullToRefreshView?.stopAnimating()
+            }
+        }
+```
 
 ## MVVM
 
