@@ -75,7 +75,7 @@ public class EZScene: UIViewController {
         self.extendedLayoutIncludesOpaqueBars = true
         self.edgesForExtendedLayout = UIRectEdge.All
         view.snp_makeConstraints { (make) -> Void in
-            make.edges.equalTo(view.superview!).insets(
+            make.edges.equalTo(view.superview!).inset(
                 EdgeInsetsMake((extend == .TOP||extend == .TOP_BOTTOM) ? 64:0, 0,(extend == .BOTTOM||extend == .TOP_BOTTOM) ? 49:0, 0)
             )
         }

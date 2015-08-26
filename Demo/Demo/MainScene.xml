@@ -1,6 +1,6 @@
 <body>
     <div id="tableview" align="64 0 0 0" content-inset="{0,0,0,0}" type="UITableView"  estimated-row-height="100"  separator-style="None" pull-to-refresh="handlePullRefresh()" infinite-scrolling="handleInfinite() PullFooter">
-        <div align="0 0 0 0" type="cell" id="cell"  ontap-bind="um.push('{{link}}',true)" >
+        <div align="0 0 0 0" type="cell" id="cell" ontap-bind="um.push('{{link}}',true)" >
             <img id="avatar" align="10 10 -10 *" clips-to-bounds="YES" width="45" height="45" layer_corner-radius="5" src="{{srcUrl}}" />
             <span align="top:2 avatar;right:-10" margin="left:12 avatar"  font="15 system" id="title">{{title}}</span>
             <span align="bottom:0 avatar;right:-10" margin="left:12 avatar" font="13 system" text-color="#ACACAC" id="subTitle" style="color:#ACACAC;" link-style="color:green;" >{{subTitle}}</span>

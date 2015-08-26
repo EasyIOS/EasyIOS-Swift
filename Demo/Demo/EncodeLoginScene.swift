@@ -12,16 +12,14 @@ import EasyIOS
 class EncodeLoginScene: EUScene {
     
     override func loadView() {
-        
         self.SUFFIX = "crypto"  //修改后缀为加密版本的
         super.loadView()
-        
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showBarButton(.LEFT, title: "返回", fontColor: UIColor.greenColor())
-        
-   }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

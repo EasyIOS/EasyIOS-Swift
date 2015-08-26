@@ -28,11 +28,11 @@ extension String {
         return String(Array(self)[i])
     }
     
-    public var urlencode :String {
+    public var urlencode :String? {
         return self.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
     }
     
-    public var urldecode :String {
+    public var urldecode :String? {
         return self.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
     }
     
@@ -110,7 +110,7 @@ extension String {
         }
     }
     
-    public var MD5 :  String {
+    public var MD5 : String {
         var data = self.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         return data!.MD5String
     }

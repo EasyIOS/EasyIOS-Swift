@@ -15,9 +15,10 @@ class FeedModel :Mappable{
     var url:String?
     var name:String?
     
-    required init?(_ map: Map) {
-        mapping(map)
+    static func newInstance(map: Map) -> Mappable? {
+        return FeedModel()
     }
+
     func mapping(map: Map) {
         url    <- map["url"]
         name   <- map["name"]
@@ -26,9 +27,11 @@ class FeedModel :Mappable{
 
 class FeedList:Mappable {
     var list:[FeedModel]?
-    required init?(_ map: Map) {
-        mapping(map)
+    
+    static func newInstance(map: Map) -> Mappable? {
+        return FeedList()
     }
+
     func mapping(map: Map) {
         list <- map["list"]
     }
