@@ -24,6 +24,7 @@ EasyIOS For Swift
 
 * MVVM : `Model-View-ViewModel` inspired by [Functional Reactive Programming](http://en.wikipedia.org/wiki/Functional_reactive_programming) 
 * HTML To Native : Transform HTML&CSS to Native Control,
+* JavaScript and Native Bridge: We can declare the js function in native and call the js function in html
 * DataBinding : We can use the SwiftBond to Bind the data via swift,and use the EZViewModel to Bind the data via html.example `{{title}}`
 * Reflect Cocoa Touch : Reflect all the Cocoa Touch Api ,we can use the Cocoa Touch Api via HTML 
 * AutoLayout : The HTML layout based on the `AutoLayout`
@@ -55,32 +56,53 @@ EasyIOS For Swift
 </body>
 ```
 
-* UIScrollView With CSS
+* UIScrollView With CSS and JS
     * Use the CSS by `@` for example `@contentAlign`.
    
 ```HTML
 <style>
     .contentAlign{
-    edge:0 0 0 0;left:0 root;right:0 root;
+        edge:0 0 0 0;
+    left:0 root;
+        right:0 root;
     }
     .inputStyle{
-    font-size:15;color:#999999;
+        font-size:15;color:#999999;
     }
 </style>
 <body>
     <div align="0 0 0 0" type="UIScrollView" background-color="#F3F3F3">
         <div align="@contentAlign">
-            <img id="logo" image="login-logo" user-interaction-enabled="YES" present="demo://login" align="center-x:0;top:110;"/>
+            <img id="logo" image="login-logo" user-interaction-enabled="YES" ontap="tap()" align="center-x:0;top:110;"/>
             <div id="username" layer_corner-radius="8" background-color="white" align="* 15 * -15" margin="top:30 logo" height="45">
                 <input class="userTextField" id="userTextField" align="edge:10 10 -10 -10;" placeholder-style="@inputStyle" keyboard-type="EmailAddress" style="@inputStyle" placeholder="上面的logo可以被点击"/>
             </div>
             <div id="password" layer_corner-radius="8" background-color="white" align="* 15 * -15" margin="top:13 username" height="45">
                 <input id="passwordTextField" secure-text-entry="YES" align="10 10 -10 -10" placeholder="密码" placeholder-style="@inputStyle" style="@inputStyle" />
             </div>
-            <button id="submit" style="color:white;font-size:20;" background-color="#3FBCFB" align="* 15 -10 -15" margin="top:25 password" height="45" layer_corner-radius="8" onEvent="touch-up-inside:login">登陆</button>
+            <button id="submit" style="color:white;font-size:20;" background-color="#3FBCFB" align="* 15 -10 -15" margin="top:25 password" height="45" layer_corner-radius="8" onEvent="touch-up-inside:login()">Login</button>
         </div>
     </div>
 </body>
+
+<script>
+    function tap(){
+        um.present('demo://login',true);
+    };
+    
+    function login(){
+        var password = document.getElementById("passwordTextField");
+        password.attrs({
+            placeholder:"hello",
+            secureTextEntry:"NO"
+        });
+        
+<!--        var logo = document.getElementById("logo")-->
+<!--        password.callWithObject("test:",logo);-->
+
+        console.log(password.val("text"));
+    }
+</script>
 ```
 
 * HTML Label and reusable html
@@ -106,7 +128,6 @@ EasyIOS For Swift
     </div>
 </body>
 ```
-
 
 * UICollectionView with FlowLayout
 

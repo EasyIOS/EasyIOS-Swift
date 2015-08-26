@@ -30,8 +30,5 @@ class EncodeLoginScene: EUScene {
         URLNavigation.dismissCurrentAnimated(true)
     }
     
-    func login (){
-        //在这里进行登录操作
-    }
 }
 

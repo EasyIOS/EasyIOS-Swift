@@ -15,7 +15,7 @@ class LoginScene: EUScene {
         super.viewDidLoad()
         self.showBarButton(.LEFT, title: "返回", fontColor: UIColor.greenColor())
         
-//        self.document.declare("login"){
+//        define("login"){
 //            println("登陆回调")
 //        }
         
