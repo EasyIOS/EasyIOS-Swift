@@ -14,9 +14,7 @@ public class EZNavigationController: UINavigationController,UINavigationControll
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        weak var weekSelf = self
-        self.interactivePopGestureRecognizer?.delegate = weekSelf
-        self.delegate = weekSelf
+        self.configGestureRecognizer()
         // Do any additional setup after loading the view.
     }
 
@@ -24,7 +22,28 @@ public class EZNavigationController: UINavigationController,UINavigationControll
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    public func configGestureRecognizer() {
+        if let target = self.interactivePopGestureRecognizer.delegate {
+            var pan = UIPanGestureRecognizer(target: target, action: Selector("handleNavigationTransition:"))
+            pan.delegate = self
+            self.view.addGestureRecognizer(pan)
+        }
+        //禁掉系统的侧滑手势
+         weak var weekSelf = self
+        self.interactivePopGestureRecognizer.enabled = false;
+        self.interactivePopGestureRecognizer.delegate = weekSelf;
+        
+    }
 
+    public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer != self.interactivePopGestureRecognizer && self.viewControllers.count > 1 && self.popGestureRecognizerEnabled{
+            return true
+        }else{
+            return false
+        }
+    }
+    
     override public func  pushViewController(viewController: UIViewController, animated: Bool) {
         self.interactivePopGestureRecognizer?.enabled = false
         super.pushViewController(viewController, animated: animated)
@@ -36,4 +55,6 @@ public class EZNavigationController: UINavigationController,UINavigationControll
             self.interactivePopGestureRecognizer?.enabled = true
         }
     }
+    
+    
 }
