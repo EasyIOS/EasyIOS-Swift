@@ -23,6 +23,7 @@ EasyIOS Swift版本新鲜出炉！
 
 * MVVM : `Model-View-ViewModel` 实现代码分离，分离ViewController中的大量逻辑代码，解决ViewController承担了过多角色而造成的代码质量低下。增加视图与模型的绑定特性。 
 * HTML To Native : 利用类似HTML的语言来对UI进行布局，简单易学，可重用
+* JavaScript and Native Bridge: 实现在Swift代码中声明一个可以给JS调用的函数，同样JS函数也可以被Swift执行
 * DataBinding : 采用了第三方库`SwiftBond`,可以实现数据绑定操作，同样HTML里也可以进行数据绑定操作，识别标签是双大括号比如`{{title}}`
 * Reflect Cocoa Touch : 可以反射所有Cocoa Touch中UIKit的所有属性，目前实现了一部分，后面大家一起来维护，增加更多API
 * AutoLayout : 在HTML进行`Autolayout`布局，真的很简单！
@@ -54,32 +55,53 @@ EasyIOS Swift版本新鲜出炉！
 </body>
 ```
 
-* UIScrollView With CSS
+* UIScrollView With CSS and JS
     * Use the CSS by `@` for example `@contentAlign`.
    
 ```HTML
 <style>
     .contentAlign{
-    edge:0 0 0 0;left:0 root;right:0 root;
+        edge:0 0 0 0;
+    left:0 root;
+        right:0 root;
     }
     .inputStyle{
-    font-size:15;color:#999999;
+        font-size:15;color:#999999;
     }
 </style>
 <body>
     <div align="0 0 0 0" type="UIScrollView" background-color="#F3F3F3">
         <div align="@contentAlign">
-            <img id="logo" image="login-logo" user-interaction-enabled="YES" present="demo://login" align="center-x:0;top:110;"/>
+            <img id="logo" image="login-logo" user-interaction-enabled="YES" ontap="tap()" align="center-x:0;top:110;"/>
             <div id="username" layer_corner-radius="8" background-color="white" align="* 15 * -15" margin="top:30 logo" height="45">
                 <input class="userTextField" id="userTextField" align="edge:10 10 -10 -10;" placeholder-style="@inputStyle" keyboard-type="EmailAddress" style="@inputStyle" placeholder="上面的logo可以被点击"/>
             </div>
             <div id="password" layer_corner-radius="8" background-color="white" align="* 15 * -15" margin="top:13 username" height="45">
                 <input id="passwordTextField" secure-text-entry="YES" align="10 10 -10 -10" placeholder="密码" placeholder-style="@inputStyle" style="@inputStyle" />
             </div>
-            <button id="submit" style="color:white;font-size:20;" background-color="#3FBCFB" align="* 15 -10 -15" margin="top:25 password" height="45" layer_corner-radius="8" onEvent="touch-up-inside:login">登陆</button>
+            <button id="submit" style="color:white;font-size:20;" background-color="#3FBCFB" align="* 15 -10 -15" margin="top:25 password" height="45" layer_corner-radius="8" onEvent="touch-up-inside:login()">Login</button>
         </div>
     </div>
 </body>
+
+<script>
+    function tap(){
+        um.present('demo://login',true);
+    };
+    
+    function login(){
+        var password = document.getElementById("passwordTextField");
+        password.attrs({
+            placeholder:"hello",
+            secureTextEntry:"NO"
+        });
+        
+<!--        var logo = document.getElementById("logo")-->
+<!--        password.callWithObject("test:",logo);-->
+
+        console.log(password.val("text"));
+    }
+</script>
 ```
 
 * HTML Label and reusable html
