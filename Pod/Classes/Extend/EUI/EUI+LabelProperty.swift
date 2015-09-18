@@ -18,13 +18,13 @@ class LabelProperty:ViewProperty{
     
     override func view() -> UIView{
         if isEmpty(self.style) {
-            var view = UILabel()
+            let view = UILabel()
             view.tagProperty = self
             view.text = self.contentText
             self.renderViewStyle(view)
             return view
         }else{
-            var view = TTTAttributedLabel(frame: CGRectZero)
+            let view = TTTAttributedLabel(frame: CGRectZero)
             view.tagProperty = self
             if self.linkStyle.count > 0 {
                 view.linkAttributes = self.linkStyle
@@ -71,7 +71,7 @@ class LabelProperty:ViewProperty{
     }
     
     func formatLink(linkStyle:String) -> [NSObject:AnyObject]{
-        var linkArray = linkStyle.trimArrayBy(";")
+        let linkArray = linkStyle.trimArrayBy(";")
         var dict = Dictionary<NSObject,AnyObject>()
         for str in linkArray {
             var strArray = str.trimArrayBy(":")

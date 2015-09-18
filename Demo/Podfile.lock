@@ -1,7 +1,7 @@
 PODS:
-  - Alamofire (1.3.1)
-  - Bond (3.10.0)
-  - EasyIOS-Swift (1.0.1):
+  - Alamofire (2.0.1)
+  - Bond (4.0.0-beta3)
+  - EasyIOS-Swift (1.0.2):
     - Alamofire
     - Bond
     - HanekeSwift
@@ -10,29 +10,39 @@ PODS:
     - SnapKit
     - TTTAttributedLabel
   - HanekeSwift (0.9.1)
-  - Kingfisher (1.4.5)
-  - ObjectMapper (0.15)
-  - SnapKit (0.13.0)
+  - Kingfisher (1.5.0)
+  - ObjectMapper (0.17)
+  - SnapKit (0.14.0)
   - SVProgressHUD (1.1.3)
   - TTTAttributedLabel (1.13.4)
 
 DEPENDENCIES:
+  - Bond (~> 4.0.0-beta3)
   - EasyIOS-Swift (from `../`)
+  - HanekeSwift (from `https://github.com/meteochu/HanekeSwift`, branch `swift-2.0`)
   - SVProgressHUD (~> 1.1.3)
 
 EXTERNAL SOURCES:
   EasyIOS-Swift:
     :path: "../"
+  HanekeSwift:
+    :branch: swift-2.0
+    :git: https://github.com/meteochu/HanekeSwift
+
+CHECKOUT OPTIONS:
+  HanekeSwift:
+    :commit: f87220fccba7810955fe5392ebd492a5c9baf050
+    :git: https://github.com/meteochu/HanekeSwift
 
 SPEC CHECKSUMS:
-  Alamofire: e4ab637e3195b645c814b87a652373439e59f2a4
-  Bond: c873dba04a09dde9e422242420979aa8e4c9e133
-  EasyIOS-Swift: 380459fe557ed1bb18a8ef3935b666903c6fdee5
+  Alamofire: 1d8e208d616fbbfd2391b15eae766d07c96cdc49
+  Bond: bcc6816bb5b22c907197d5b4931cbcab5545d0a4
+  EasyIOS-Swift: 764cee947404d2d7361856cb917ec40ef6515596
   HanekeSwift: 50d37bfbc4432edc649167e538c259feccb4a2bb
-  Kingfisher: 22fa7d41c83b214c19fbb82a77a9db52300b3719
-  ObjectMapper: 0656dc1c155825897e5acfcd25362c6b61786dcb
-  SnapKit: 69fe274c71511df89a5591c11437a8b826bfa9eb
+  Kingfisher: cbb280faba0e9ae0a73d2c51072f7dd94ccfe640
+  ObjectMapper: fa286b7cb5a398f1b0d8d64d0dd33fd1b307022c
+  SnapKit: f42352ef34953866da0de1e1009c2ff82588a95e
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.2

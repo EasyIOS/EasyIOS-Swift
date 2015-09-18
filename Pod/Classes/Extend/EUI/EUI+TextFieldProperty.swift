@@ -15,11 +15,11 @@ class TextFieldProperty:ViewProperty{
     var keyboardType = UIKeyboardType.Default
     
     override func view() -> UITextField{
-        var view = UITextField()
+        let view = UITextField()
         view.tagProperty = self
         view.keyboardType = self.keyboardType
         
-        var str = NSAttributedString(fromHTMLData:self.text, attributes: ["html":self.style])
+        let str = NSAttributedString(fromHTMLData:self.text, attributes: ["html":self.style])
         view.defaultTextAttributes = str.attributesAtIndex(0, effectiveRange:nil)
         view.attributedPlaceholder = NSAttributedString(fromHTMLData: self.placeholder, attributes: ["html":self.placeholderStyle])
         
@@ -33,7 +33,7 @@ class TextFieldProperty:ViewProperty{
         super.renderTag(pelement)
         if let text = EUIParse.string(pelement, key: "text"),
            let newHtml = Regex("\\{\\{(\\w+)\\}\\}").replace(text, withBlock: { (regx) -> String in
-                var keyPath = regx.subgroupMatchAtIndex(0)?.trim
+                let keyPath = regx.subgroupMatchAtIndex(0)?.trim
                 self.bind["text"] = keyPath
                 return ""
             }) {

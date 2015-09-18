@@ -11,9 +11,9 @@ import Foundation
 extension NSDate {
     //format :yyyy-MM-dd
     public func formatTo(format:String) -> String{
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = format
-        var currentDateStr = dateFormatter.stringFromDate(self)
+        let currentDateStr = dateFormatter.stringFromDate(self)
         return currentDateStr
     }
 }

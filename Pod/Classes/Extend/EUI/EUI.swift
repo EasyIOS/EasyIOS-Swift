@@ -14,6 +14,7 @@ public class EUI: NSObject {
         if  NSFileManager.defaultManager().fileExistsAtPath(path) == false{
             return
         }
+        
         if let str = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
             if let encrypt = DesEncrypt.encryptWithText(str, key: CRTPTO_KEY) {
                 var error:NSError?
@@ -26,9 +27,9 @@ public class EUI: NSObject {
         }
     }
     
-    public class func setLiveLoad(filePath:String,controller:EUScene,suffix:String){
+    public class func setLiveLoad(filePath:NSURL,controller:EUScene,suffix:String){
         if IsSimulator && suffix == "xml"{
-            var paths = self.loadLiveFile(filePath, controller: controller,suffix:suffix)
+            let paths = self.loadLiveFile(filePath, controller: controller,suffix:suffix)
             if paths?.count > 0 {
                 for path in paths! {
                     watchForChangesToFilePath(path) {
@@ -44,16 +45,17 @@ public class EUI: NSObject {
         controller.eu_viewWillLoad()
     }
     
-    private class func loadLiveFile(filePath:String,controller:EUScene,suffix:String) -> [String]?{
+    private class func loadLiveFile(filePath:NSURL,controller:EUScene,suffix:String) -> [String]?{
         var fileName = controller.nameOfClass
         
-        var path = filePath.stringByAppendingPathComponent(fileName+"."+suffix)
-        if  NSFileManager.defaultManager().fileExistsAtPath(path) == false{
+        var path = filePath.URLByAppendingPathComponent(fileName+"."+suffix)
+        if  NSFileManager.defaultManager().fileExistsAtPath(path.absoluteString) == false{
             return nil
         }
         var paths = Array<String>()
-        paths.append(path)
-        if let html = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
+        paths.append(path.absoluteString)
+        
+        if let html = String(contentsOfFile: path, encoding: NSUTF8StringEncoding) {
             
             var finalHtml = html
             if let newHtml = Regex("@import\\(([^\\)]*)\\)").replace(finalHtml,withBlock: { (regx) -> String in
@@ -98,15 +100,15 @@ public class EUI: NSObject {
                 finalHtml = cleanHtml
             }
             
-            SwiftTryCatch.try({
+            SwiftTryCatch.dotry({
                 var body = EUIParse.ParseHtml(finalHtml)
                 var views = [UIView]()
                 for aview in body {
                     views.append(aview.getView())
                 }
                 controller.eu_subViews = views
-            }, catch: { (error) in
-                println(controller.nameOfClass + "Error:\(error.description)")
+            }, getCatch: { (error) in
+                print(controller.nameOfClass + "Error:\(error.description)")
             }, finally: nil)
         }
         return paths
@@ -170,15 +172,15 @@ public class EUI: NSObject {
                 finalHtml = cleanHtml
             }
             
-            SwiftTryCatch.try({
+            SwiftTryCatch.dotry({
                 var body = EUIParse.ParseHtml(finalHtml)
                 var views = [UIView]()
                 for aview in body {
                     views.append(aview.getView())
                 }
                 controller.eu_subViews = views
-                }, catch: { (error) in
-                    println(controller.nameOfClass + "Error:\(error.description)")
+                }, getCatch: { (error) in
+                    print(controller.nameOfClass + "Error:\(error.description)")
                 }, finally: nil)
         }
     }

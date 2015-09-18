@@ -181,7 +181,7 @@ extension UIView {
     // MARK: Anchor Extensions
     
     public func setAnchorPosition (anchorPosition: AnchorPosition) {
-        println(anchorPosition.rawValue)
+        print(anchorPosition.rawValue)
         self.layer.anchorPoint = anchorPosition.rawValue
     }
     
@@ -306,18 +306,18 @@ extension UIView {
             let pan = UIPanGestureRecognizer (target: target, action: action)
             self.addGestureRecognizer(pan)
     }
-    
-    public func whenTap(number:NSInteger = 1,block:()->Void){
-        self.userInteractionEnabled = true
-        TapGestureDynamic<NSInteger>(view: self,number:number) **->> Bond<NSInteger>{ value in
-            block()
-        }
-    }
-    
-    public func whenSwipe(number:NSInteger = 1,direction:UISwipeGestureRecognizerDirection,block:()->Void){
-        self.userInteractionEnabled = true
-        SwipeGestureDynamic<NSInteger>(view: self,number:number,direction:direction) **->> Bond<NSInteger>{ value in
-            block()
-        }
-    }
+    //TODO
+//    public func whenTap(number:NSInteger = 1,block:()->Void){
+//        self.userInteractionEnabled = true
+//        TapGestureDynamic<NSInteger>(view: self,number:number) **->> Bond<NSInteger>{ value in
+//            block()
+//        }
+//    }
+//    
+//    public func whenSwipe(number:NSInteger = 1,direction:UISwipeGestureRecognizerDirection,block:()->Void){
+//        self.userInteractionEnabled = true
+//        SwipeGestureDynamic<NSInteger>(view: self,number:number,direction:direction) **->> Bond<NSInteger>{ value in
+//            block()
+//        }
+//    }
 }

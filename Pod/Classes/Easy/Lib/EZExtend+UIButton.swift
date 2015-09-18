@@ -31,7 +31,7 @@ extension UIButton{
     }
     
     public convenience init(navTitle: String,color: UIColor){
-        var titleSize = navTitle.boundingRectWithSize(CGSizeMake(999999.0, NAV_BAR_HEIGHT), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: Dictionary(dictionaryLiteral: (NSFontAttributeName,UIFont.systemFontOfSize(16.0))), context: nil).size
+        let titleSize = navTitle.boundingRectWithSize(CGSizeMake(999999.0, NAV_BAR_HEIGHT), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: Dictionary(dictionaryLiteral: (NSFontAttributeName,UIFont.systemFontOfSize(16.0))), context: nil).size
         var buttonFrame = CGRectMake(CGFloat(0.0), CGFloat(0.0), titleSize.width, NAV_BAR_HEIGHT)
         if  buttonFrame.size.width < NAV_BUTTON_MIN_WIDTH
         {
@@ -51,7 +51,7 @@ extension UIButton{
     
     public func setBackgroundImageWithColor(color: UIColor?, forState state: UIControlState){
         if let c = color {
-            var image = UIImage.imageWithColor(c, size: CGSizeMake(1, 1))
+            let image = UIImage.imageWithColor(c, size: CGSizeMake(1, 1))
             self.setBackgroundImage(image, forState: state)
         }
     }

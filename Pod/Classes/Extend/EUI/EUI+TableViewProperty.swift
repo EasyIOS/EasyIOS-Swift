@@ -19,7 +19,7 @@ class TableViewProperty:ScrollViewProperty{
     var separatorStyle = UITableViewCellSeparatorStyle.SingleLine
 
     override func view() -> UITableView{
-        var view = UITableView(frame: CGRectZero, style: self.tableViewStyle)
+        let view = UITableView(frame: CGRectZero, style: self.tableViewStyle)
         view.tagProperty = self
         view.rowHeight = self.rowHeight
         view.separatorStyle = self.separatorStyle;
@@ -29,7 +29,7 @@ class TableViewProperty:ScrollViewProperty{
         }
 
         self.renderViewStyle(view)
-        for (reuseId,cell) in self.reuseCell {
+        for (reuseId,_) in self.reuseCell {
             view.registerClass(UITableViewCell.self, forCellReuseIdentifier: reuseId)
         }
         return view
@@ -73,7 +73,7 @@ class TableViewProperty:ScrollViewProperty{
     override func childLoop(pelement: OGElement) {
         for element in pelement.children {
             if element.isKindOfClass(OGElement) {
-                var ele = element as! OGElement
+                let ele = element as! OGElement
                 if let type = EUIParse.string(ele, key: "type"),
                     let tagId = EUIParse.string(ele, key: "id"),
                     let property = EUIParse.loopElement(ele){

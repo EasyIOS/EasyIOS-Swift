@@ -25,7 +25,7 @@ import SystemConfiguration
 import Foundation
 
 let ReachabilityChangedNotification = "ReachabilityChangedNotification"
-public enum NetworkStatus: Printable {
+public enum NetworkStatus: CustomStringConvertible {
     
     case NotReachable, ReachableViaWiFi, ReachableViaWWAN
     
@@ -40,7 +40,7 @@ public enum NetworkStatus: Printable {
         }
     }
 }
-class Reachability: NSObject, Printable {
+class Reachability: NSObject, CustomStringConvertible {
     
     typealias NetworkReachable = (Reachability) -> ()
     typealias NetworkUneachable = (Reachability) -> ()

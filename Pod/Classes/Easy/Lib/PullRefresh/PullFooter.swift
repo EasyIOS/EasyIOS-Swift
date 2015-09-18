@@ -62,7 +62,7 @@ public class PullFooter : Footer {
         }
     }
     
-    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    public func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         var scrollView = object as! UIScrollView
         if keyPath == "contentSize" && scrollView.contentSize.height > scrollView.bounds.size.height && scrollView.bounds.size.height > 0  {
             scrollView.infiniteScrollingView!.frame = CGRectMake(0, scrollView.contentSize.height, scrollView.superview!.size.width,EZInfiniteScrollingViewHeight)

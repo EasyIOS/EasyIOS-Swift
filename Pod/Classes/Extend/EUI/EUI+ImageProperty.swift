@@ -11,7 +11,7 @@ import Foundation
 class ImageProperty:ViewProperty{
     var src = ""
     override func view() -> UIImageView{
-        var view = UIImageView()
+        let view = UIImageView()
         view.tagProperty = self
         if !isEmpty(self.src) {
             if self.src.hasPrefix("http") {

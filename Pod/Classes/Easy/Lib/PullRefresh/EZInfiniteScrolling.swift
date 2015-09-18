@@ -31,7 +31,7 @@ public class Footer:UIView {
     
     public func resetScrollViewContentInset(scrollView:UIScrollView){
         var currentInsets = scrollView.contentInset
-        var newBottom = scrollView.infiniteScrollingView!.originalBottomInset + scrollView.infiniteScrollingView!.extendBottom;
+        let newBottom = scrollView.infiniteScrollingView!.originalBottomInset + scrollView.infiniteScrollingView!.extendBottom;
         if newBottom != currentInsets.bottom {
             currentInsets.bottom = newBottom
             self.setScrollViewContentInset(currentInsets, scrollView: scrollView)
@@ -40,7 +40,7 @@ public class Footer:UIView {
     
     public func setScrollViewContentInsetForLoading(scrollView:UIScrollView){
         var currentInsets = scrollView.contentInset
-        var newBottom  = scrollView.infiniteScrollingView!.originalBottomInset + scrollView.infiniteScrollingView!.extendBottom + EZInfiniteScrollingViewHeight;
+        let newBottom  = scrollView.infiniteScrollingView!.originalBottomInset + scrollView.infiniteScrollingView!.extendBottom + EZInfiniteScrollingViewHeight;
         if newBottom != currentInsets.bottom {
             currentInsets.bottom = newBottom
             self.setScrollViewContentInset(currentInsets, scrollView: scrollView)
@@ -57,7 +57,7 @@ public class Footer:UIView {
 }
 
 public class EZInfiniteScrollingView :UIView {
-    public var state = InternalDynamic<EZInfiniteScrollingState>(.Stopped)
+    public var state = Observable<EZInfiniteScrollingState>(EZInfiniteScrollingState.Stopped)
     public var extendBottom:CGFloat = 0.0
     public var originalBottomInset:CGFloat = 0.0
     private var infiniteScrollingHandler:(Void -> ())?
@@ -65,12 +65,18 @@ public class EZInfiniteScrollingView :UIView {
     
     private func commonInit(){
         self.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        self.state *->> Bond<EZInfiniteScrollingState>{[unowned self] state in
+        self.state.observe{ [unowned self] state in
             if state == .Loading && self.oldState == .Triggered {
                 self.infiniteScrollingHandler?()
             }
             self.oldState = state
         }
+//        self.state *->> Bond<EZInfiniteScrollingState>{[unowned self] state in
+//            if state == .Loading && self.oldState == .Triggered {
+//                self.infiniteScrollingHandler?()
+//            }
+//            self.oldState = state
+//        }
     }
     
     override init(frame: CGRect) {
@@ -79,7 +85,7 @@ public class EZInfiniteScrollingView :UIView {
     }
     
     required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
         self.commonInit()
     }
     
@@ -89,8 +95,8 @@ public class EZInfiniteScrollingView :UIView {
                 view.removeFromSuperview()
             }
             self.addSubview(customView)
-            var viewBounds = customView.bounds;
-            var origin = CGPointMake(
+            let viewBounds = customView.bounds;
+            let origin = CGPointMake(
                 CGFloat(roundf(Float(self.bounds.size.width-viewBounds.size.width)/2)),
                 CGFloat(roundf(Float(self.bounds.size.height-viewBounds.size.height)/2)))
             customView.frame =  CGRectMake(origin.x, origin.y, viewBounds.size.width, viewBounds.size.height)
@@ -98,37 +104,37 @@ public class EZInfiniteScrollingView :UIView {
     }
     
     public func resetState(){
-        self.state.value = .Stopped;
+        self.state.value = EZInfiniteScrollingState.Stopped;
     }
     
     public func startAnimating(){
-        self.state.value = .Loading;
+        self.state.value = EZInfiniteScrollingState.Loading;
     }
     
     public func stopAnimating(){
-        self.state.value = .Stopped;
+        self.state.value = EZInfiniteScrollingState.Stopped;
     }
     
     public func setEnded(){
-        self.state.value = .Ended;
+        self.state.value = EZInfiniteScrollingState.Ended;
     }
     
     
-    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    public  func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
         var scrollView = object as! UIScrollView
         if keyPath == "contentOffset" && scrollView.showsInfiniteScrolling {
             if self.state.value != .Loading && self.state.value != .Ended  && scrollView.contentSize.height > 0{
                 var scrollViewContentHeight = scrollView.contentSize.height;
                 var scrollOffsetThreshold =  scrollViewContentHeight - scrollView.bounds.size.height + self.extendBottom
                 
-                if !scrollView.dragging && self.state.value == .Triggered {
-                    self.state.value = .Loading
+                if !scrollView.dragging && self.state.value == EZInfiniteScrollingState.Triggered {
+                    self.state.value = EZInfiniteScrollingState.Loading
                 }else if scrollView.dragging && self.state.value == .Pulling && scrollView.contentOffset.y - scrollOffsetThreshold > EZInfiniteScrollingViewHeight {
-                    self.state.value = .Triggered
+                    self.state.value = EZInfiniteScrollingState.Triggered
                 }else if scrollView.contentOffset.y - scrollOffsetThreshold <= 1 && self.state.value != .Stopped {
-                    self.state.value = .Stopped
+                    self.state.value = EZInfiniteScrollingState.Stopped
                 }else if scrollView.contentOffset.y - scrollOffsetThreshold > 0 && scrollView.contentOffset.y - scrollOffsetThreshold < EZInfiniteScrollingViewHeight  {
-                    self.state.value = .Pulling
+                    self.state.value = EZInfiniteScrollingState.Pulling
                 }
             }
         }else if keyPath == "contentSize" && scrollView.contentSize.height >= scrollView.bounds.size.height && scrollView.showsInfiniteScrolling == false  {
@@ -148,7 +154,7 @@ extension UIScrollView {
                 return nil
             }
         }set (value){
-            objc_setAssociatedObject(self, &InfiniteScrollingViewHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &InfiniteScrollingViewHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     

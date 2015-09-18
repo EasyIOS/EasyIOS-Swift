@@ -10,11 +10,11 @@ import Foundation
 import JavaScriptCore
 
 @objc public protocol ENSObject:JSExport{
-    func val(keyPath:String) -> AnyObject?
-    func attr(keyPath:String,_ value:AnyObject?)
-    func attrs(dict:[NSObject : AnyObject]!)
-    func call(selector:String)
-    func call(selector:String,withObject object:AnyObject?)
+    optional func val(keyPath:String) -> AnyObject?
+    optional func attr(keyPath:String,_ value:AnyObject?)
+    optional func attrs(dict:[NSObject : AnyObject]!)
+    optional func call(selector:String)
+    optional func call(selector:String,withObject object:AnyObject?)
 }
 
 public extension NSObject{
@@ -28,31 +28,59 @@ public extension NSObject{
     }
     
     public func attr(key:String,_ value:AnyObject?) {
-        SwiftTryCatch.try({
+        
+//        do {
+//            try {
+//                if let str = value as? String {
+//                    self.setValue(str.anyValue(key.toKeyPath), forKeyPath: key.toKeyPath)
+//                }else{
+//                    self.setValue(value, forKeyPath: key.toKeyPath)
+//                }
+//            }
+//        } catch {
+//          println("JS Error:")
+//        }
+        SwiftTryCatch.dotry({
             if let str = value as? String {
                 self.setValue(str.anyValue(key.toKeyPath), forKeyPath: key.toKeyPath)
             }else{
                 self.setValue(value, forKeyPath: key.toKeyPath)
             }
-        }, catch: { (error) in
-            println("JS Error:\(error.description)")
+        }, getCatch: { (error) in
+            print("JS Error:\(error.description)")
         }, finally: nil)
     }
     
-    public func attrs(dict:[NSObject : AnyObject]!){
-        SwiftTryCatch.try({
+    public func attrs(dict:[String : AnyObject]!){
+        
+//        do {
+//            try self.setValuesForKeysWithDictionary(dict)
+//        } catch {
+//            print("JS Error:")
+//        }
+        
+        SwiftTryCatch.dotry({
             self.setValuesForKeysWithDictionary(dict)
-        }, catch: { (error) in
-            println("JS Error:\(error.description)")
+        }, getCatch: { (error) in
+            print("JS Error:\(error.description)")
         }, finally: nil)
     }
     
     public func val(key:String) -> AnyObject? {
         var result:AnyObject?
-        SwiftTryCatch.try({
+        
+//        
+//        do {
+//            try result = self.valueForKeyPath(key.toKeyPath)
+//        } catch {
+//            print("JS Error:")
+//        }
+        
+        
+        SwiftTryCatch.dotry({
             result = self.valueForKeyPath(key.toKeyPath)
-            }, catch: { (error) in
-                println("JS Error:\(error.description)")
+            }, getCatch: { (error) in
+                print("JS Error:\(error.description)")
             }, finally: nil)
         return result
     }

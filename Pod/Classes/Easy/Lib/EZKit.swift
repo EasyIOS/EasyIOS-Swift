@@ -123,7 +123,7 @@ public class BlockButton: UIButton {
     }
     
     required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
     
     var actionBlock: ((sender: BlockButton) -> ())? {
@@ -155,7 +155,7 @@ public class BlockWebView: UIWebView, UIWebViewDelegate {
     }
     
     public required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
     
     
@@ -208,18 +208,19 @@ extension NSObject{
 
     
     public func listProperties() -> Dictionary<String,AnyObject>{
-        var mirror=reflect(self)
-        var modelDictionary = Dictionary<String,AnyObject>()
+        var mirror = Mirror(reflecting: self)
         
-        for (var i=0;i<mirror.count;i++)
-        {
-            if (mirror[i].0 != "super")
-            {
-                if let nsValue = nsValueForAny(mirror[i].1.value) {
-                    modelDictionary.updateValue(nsValue, forKey: mirror[i].0)
-                }
-            }
-        }
+        var modelDictionary = Dictionary<String,AnyObject>()
+        //TODO
+//        for (var i=0;i< mirror.count;i++)
+//        {
+//            if (mirror[i].0 != "super")
+//            {
+//                if let nsValue = nsValueForAny(mirror[i].1.value) {
+//                    modelDictionary.updateValue(nsValue, forKey: mirror[i].0)
+//                }
+//            }
+//        }
         return modelDictionary
     }
     

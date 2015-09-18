@@ -10,7 +10,8 @@ import UIKit
 import TTTAttributedLabel
 import JavaScriptCore
 
-public var LIVE_LOAD_PATH = __FILE__.stringByDeletingLastPathComponent
+
+public var LIVE_LOAD_PATH = NSURL(fileURLWithPath:__FILE__).URLByDeletingLastPathComponent!
 public var CRTPTO_KEY = ""
 
 
@@ -25,16 +26,16 @@ public class EUScene: EZScene,EUSceneExport{
     
     public var context = EZJSContext()
     
-    public func define(funcName:String,actionBlock:@objc_block ()->Void){
+    public func define(funcName:String,actionBlock:@convention(block) ()->Void){
         context.define(funcName, actionBlock: actionBlock)
     }
     
     public func eval(script: String?) -> JSValue?{
         var result:JSValue?
-        SwiftTryCatch.try({
+        SwiftTryCatch.dotry({
             result = self.context.evaluateScript(script)
-            }, catch: { (error) in
-                println("JS Error:\(error.description)")
+            }, getCatch: { (error) in
+                print("JS Error:\(error.description)")
             }, finally: nil)
         return result
     }
@@ -72,5 +73,6 @@ public class EUScene: EZScene,EUSceneExport{
     public func getElementById(id:String) -> UIView {
         return UIView.formTag(id)
     }
+    
     
 }

@@ -25,15 +25,16 @@ public func trimToArrayBy (str:String,by:String) -> Array<String>{
 
 extension String {
     public subscript (i: Int) -> String {
-        return String(Array(self)[i])
+        return String(Array(arrayLiteral: self)[i])
     }
     
     public var urlencode :String? {
-        return self.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        return self.stringByAddingPercentEncodingWithAllowedCharacters( NSCharacterSet.URLQueryAllowedCharacterSet())
+        
     }
     
     public var urldecode :String? {
-        return self.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        return self.stringByAddingPercentEncodingWithAllowedCharacters( NSCharacterSet.URLQueryAllowedCharacterSet())
     }
     
     public var trim :String {
@@ -45,11 +46,11 @@ extension String {
     }
     
     public func trimArrayBy (str:String) -> Array<String> {
-        return trimToArrayBy(self,str)
+        return trimToArrayBy(self,by: str)
     }
     
     public var toKeyPath :String {
-        var keyArray = self.trim.componentsSeparatedByString("-")
+        let keyArray = self.trim.componentsSeparatedByString("-")
         var str = ""
         var index = 0
         for akey in keyArray {
@@ -89,7 +90,7 @@ extension String {
     }
     
     public var anyValue :AnyObject{
-        var str = self.trim
+        let str = self.trim
         
         if str.hasSuffix(".cg"){
             if let color = UIColor(CSS: Regex(".cg").replace(str, withTemplate: "")){
@@ -97,7 +98,7 @@ extension String {
             }
         }
         
-        if contains(["YES","NO","TRUE","FALSE"], str.uppercaseString) {
+        if ["YES","NO","TRUE","FALSE"].contains(str.uppercaseString) {
             return str.boolValue
         }else if let color = UIColor(CSS: str){
             return color
@@ -111,7 +112,7 @@ extension String {
     }
     
     public var MD5 : String {
-        var data = self.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        let data = self.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         return data!.MD5String
     }
     

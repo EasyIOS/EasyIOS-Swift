@@ -33,7 +33,7 @@ public struct RegexMatch {
     
     public var entireMatch: String? {
         get {
-            return safeSubstring(sourceString, cocoaMatch.range)
+            return safeSubstring(sourceString, range: cocoaMatch.range)
         }
     }
     
@@ -49,6 +49,6 @@ public struct RegexMatch {
     
     public func subgroupMatchAtIndex(index: Int) -> String? {
         let range = cocoaMatch.rangeAtIndex(index + 1)
-        return safeSubstring(sourceString, range)
+        return safeSubstring(sourceString, range: range)
     }
 }

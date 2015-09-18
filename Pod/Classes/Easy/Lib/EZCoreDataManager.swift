@@ -28,9 +28,9 @@ public class EZCoreDataManager {
             }
         }
         set(value){
-            objc_setAssociatedObject(self, &databaseNameHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-            objc_setAssociatedObject(self, &managedObjectContextHandle, nil, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, nil, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &databaseNameHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &managedObjectContextHandle, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
@@ -43,9 +43,9 @@ public class EZCoreDataManager {
             }
         }
         set(value) {
-            objc_setAssociatedObject(self, &modelNameHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-            objc_setAssociatedObject(self, &managedObjectContextHandle, nil, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, nil, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &modelNameHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &managedObjectContextHandle, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, nil, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
@@ -56,12 +56,12 @@ public class EZCoreDataManager {
             } else {
                 let c = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
                 c.persistentStoreCoordinator = persistentStoreCoordinator
-                objc_setAssociatedObject(self, &managedObjectContextHandle, c, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                objc_setAssociatedObject(self, &managedObjectContextHandle, c, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 return c
             }
         }
         set (value){
-            objc_setAssociatedObject(self, &managedObjectContextHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &managedObjectContextHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
@@ -71,11 +71,11 @@ public class EZCoreDataManager {
                 return store
             } else {
                 let p = self.persistentStoreCoordinator(NSSQLiteStoreType, storeURL: self.sqliteStoreURL)
-                objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, p, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, p, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 return p
             }
         }set(value){
-            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &persistentStoreCoordinatorHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 
@@ -85,7 +85,7 @@ public class EZCoreDataManager {
         } else {
             let modelURL = NSBundle.mainBundle().URLForResource(self.modelName, withExtension: "momd")
             let model = NSManagedObjectModel(contentsOfURL: modelURL!)
-            objc_setAssociatedObject(self, &managedObjectModelHandle, model, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &managedObjectModelHandle, model, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return model!
         }
     }
@@ -111,26 +111,35 @@ public class EZCoreDataManager {
     
     private func persistentStoreCoordinator(storeType: String, storeURL: NSURL?) -> NSPersistentStoreCoordinator {
         let c = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let error = NSErrorPointer()
-        if c.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: [NSMigratePersistentStoresAutomaticallyOption:true,NSInferMappingModelAutomaticallyOption:true], error: error) == nil {
-            println("ERROR WHILE CREATING PERSISTENT STORE COORDINATOR! " + error.debugDescription)
+        
+        do {
+            try c.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: [NSMigratePersistentStoresAutomaticallyOption:true,NSInferMappingModelAutomaticallyOption:true])
+        }catch{
+            print("ERROR WHILE CREATING PERSISTENT STORE COORDINATOR! " )
         }
+
         return c
     }
     
     private static var applicationDocumentsDirectory:NSURL {
-        return NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last as! NSURL
+        return NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last!
     }
     
     private static var applicationSupportDirectory:NSURL {
-        return (NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last as! NSURL).URLByAppendingPathComponent(EZCoreDataManager.appName)
+        return (NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask).last!).URLByAppendingPathComponent(EZCoreDataManager.appName)
     }
     
     private static func createApplicationSupportDirIfNeeded(dir: NSURL) {
-        if NSFileManager.defaultManager().fileExistsAtPath(dir.absoluteString!) {
+        if NSFileManager.defaultManager().fileExistsAtPath(dir.absoluteString) {
             return
         }
-        NSFileManager.defaultManager().createDirectoryAtURL(dir, withIntermediateDirectories: true, attributes: nil, error: nil)
+        
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(dir, withIntermediateDirectories: true, attributes: nil)
+        }catch {
+            //TODO
+        }
+        
     }
     // singleton
     public static let sharedManager = EZCoreDataManager()
@@ -153,15 +162,16 @@ public extension NSManagedObjectContext {
         if !self.hasChanges {
             return true
         }
-        let error = NSErrorPointer()
-        let save = self.save(error)
-        
-        if (!save) {
-            println("Unresolved error in saving context for entity:")
-            println(self)
-            println("!\nError: " + error.debugDescription)
-            return false
-        }
+//         //TODO
+//        let error = NSErrorPointer()
+//        let save = self.save(error)
+//        
+//        if (!save) {
+//            print("Unresolved error in saving context for entity:")
+//            print(self)
+//            print("!\nError: " + error.debugDescription)
+//            return false
+//        }
         return true
     }
 }
@@ -282,7 +292,14 @@ public extension NSFetchRequest{
     }
     
     public func get() -> [NSManagedObject]{
-        return NSManagedObjectContext.defaultContext.executeFetchRequest(self, error: nil) as! [NSManagedObject] 
+        
+        var object = Array<NSManagedObject>()
+        do{
+            object = try NSManagedObjectContext.defaultContext.executeFetchRequest(self) as! [NSManagedObject]
+        }catch{
+            
+        }
+        return object
     }
     
     public func count() -> Int {

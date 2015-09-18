@@ -16,11 +16,11 @@ class CollectionViewProperty: ScrollViewProperty {
     var layout:String?
     
     override func view() -> UICollectionView{
-        var view = UICollectionView(frame: CGRectZero, collectionViewLayout: self.getLayout())
+        let view = UICollectionView(frame: CGRectZero, collectionViewLayout: self.getLayout())
         view.tagProperty = self
         
         self.renderViewStyle(view)
-        for (reuseId,cell) in self.reuseCell {
+        for (reuseId,_) in self.reuseCell {
             view.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseId)
         }
         return view
@@ -31,11 +31,11 @@ class CollectionViewProperty: ScrollViewProperty {
         
         super.renderTag(pelement)
         if let layout = EUIParse.string(pelement, key: "flow-layout") {
-            var dict = layout.trimArrayBy(";")
+            let dict = layout.trimArrayBy(";")
             for value in dict {
                 var array = value.trimArrayBy(":")
-                var key = array[0] as String
-                var val = array[1] as String
+                let key = array[0] as String
+                let val = array[1] as String
                 self.flowLayout[key.toKeyPath] = val
             }
         }
@@ -49,7 +49,7 @@ class CollectionViewProperty: ScrollViewProperty {
             return nsobject
         }
         
-        var layout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         for (key,value) in self.flowLayout{
             if key == "minimumLineSpacing" || key == "minimumInteritemSpacing"{
                 layout.setValue(value.floatValue, forKeyPath: key)
@@ -77,7 +77,7 @@ class CollectionViewProperty: ScrollViewProperty {
     override func childLoop(pelement: OGElement) {
         for element in pelement.children {
             if element.isKindOfClass(OGElement) {
-                var ele = element as! OGElement
+                let ele = element as! OGElement
                 if let type = EUIParse.string(ele, key: "type"),
                     let tagId = EUIParse.string(ele, key: "id"),
                     let property = EUIParse.loopElement(ele){

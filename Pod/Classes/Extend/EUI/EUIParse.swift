@@ -11,8 +11,8 @@ import SnapKit
 
 class EUIParse: NSObject {
     class func ParseHtml(html:String) -> [ViewProperty]{
-        var data = ObjectiveGumbo.parseDocumentWithString(html)
-        var body = data.elementsWithTag(GUMBO_TAG_BODY).first as! OGElement
+        let data = ObjectiveGumbo.parseDocumentWithString(html)
+        let body = data.elementsWithTag(GUMBO_TAG_BODY).first as! OGElement
         var viewArray = [ViewProperty]()
         for element in body.children {
             if element.isKindOfClass(OGElement) {
@@ -29,14 +29,14 @@ class EUIParse: NSObject {
         var tagProperty:ViewProperty?
         var type:String?
         
-        switch (pelement.tag.value){
-            case GUMBO_TAG_IMG.value :
+        switch (pelement.tag.rawValue){
+            case GUMBO_TAG_IMG.rawValue :
                 type = "UIImageView"
-            case GUMBO_TAG_SPAN.value :
+            case GUMBO_TAG_SPAN.rawValue :
                 type = "UILabel"
-            case GUMBO_TAG_BUTTON.value :
+            case GUMBO_TAG_BUTTON.rawValue :
                 type = "UIButton"
-            case GUMBO_TAG_INPUT.value :
+            case GUMBO_TAG_INPUT.rawValue :
                 type = "UITextField"
             default :
                 type = self.string(pelement,key:"type")
@@ -83,13 +83,13 @@ class EUIParse: NSObject {
             return nil
         }
         var style = Array<Constrain>()
-        var origin = element.attributes?[key] as! String
-        var firstArray = origin.trimArrayBy(";")
+        let origin = element.attributes?[key] as! String
+        let firstArray = origin.trimArrayBy(";")
         
         for str in firstArray {
             var secondArray = str.trimArrayBy(":")
             if secondArray.count == 2 {
-                var raw = secondArray[0] as String
+                let raw = secondArray[0] as String
                 let rawKey = CSS(rawValue: key+"-"+raw.trim)
                 if rawKey == nil {
                     continue
@@ -124,7 +124,7 @@ class EUIParse: NSObject {
                             style.append(Constrain(name:.AlignRight,value: values[3].trim.floatValue))
                         }
                     default :
-                        println(raw.trim + " is jumped")
+                        print(raw.trim + " is jumped")
                     }
 
                 }else if key == "margin" {
@@ -136,7 +136,7 @@ class EUIParse: NSObject {
                             style.append(Constrain(name:rawKey!,value: values[0].trim.floatValue,target:values[1].trim))
                         }
                     default :
-                        println(raw.trim + " is jumped")
+                        print(raw.trim + " is jumped")
                     }
 
                 }

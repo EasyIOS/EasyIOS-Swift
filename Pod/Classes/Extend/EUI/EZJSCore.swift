@@ -9,7 +9,7 @@ import JavaScriptCore
 @objc public class Console:NSObject,ConsoleExport {
     static public func log(object:AnyObject?){
         if let obj: AnyObject = object{
-            println(obj)
+            print(obj)
         }
     }
 }
@@ -80,7 +80,7 @@ public class EZJSContext:JSContext{
         
         
         self.exceptionHandler = { context, exception in
-            println("JS Error: \(exception)")
+            print("JS Error: \(exception)")
         }
     }
     
@@ -89,7 +89,7 @@ public class EZJSContext:JSContext{
     }
 
     
-    public func define(funcName:String,actionBlock:@objc_block ()->Void){
+    public func define(funcName:String,actionBlock:@convention(block) ()->Void){
         self.setObject(unsafeBitCast(actionBlock, AnyObject.self), forKeyedSubscript:funcName)
     }
 }

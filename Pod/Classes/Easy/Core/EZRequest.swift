@@ -30,7 +30,7 @@ public class EZRequest: NSObject {
     public var params = Dictionary<String,AnyObject>() //使用字典参数
     public var responseString:String? // 获取的字符串数据
     public var error:NSError? //请求的错误
-    public var state = InternalDynamic<RequestState>(.Default) //Request状态
+    public var state = Observable<RequestState>(.Default) //Request状态
     public var url:NSURL? //请求的链接
     public var message:String? //错误消息或者服务器返回的MSG
     public var codeKey:Int?  // 错误码返回
@@ -64,20 +64,19 @@ public class EZRequest: NSObject {
     public var sessionConfiguration:NSURLSessionConfiguration?
     public var op:Request?
     
-    public var requestNeedActive: Dynamic<Bool> {
+    public var requestNeedActive: Observable<Bool> {
         if let d: AnyObject = objc_getAssociatedObject(self, &enabledDynamicHandleRequest) {
-            return (d as? Dynamic<Bool>)!
+            return (d as? Observable<Bool>)!
         } else {
-            let d = InternalDynamic<Bool>(false)
-            let bond = Bond<Bool>() { [weak self] v in if let s = self {
+            let d = Observable<Bool>(false)
+            objc_setAssociatedObject(self, &enabledDynamicHandleRequest, d, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            
+            d.observe{[weak self] v in if let s = self {
                 if v {
                     d.value = false
                     s.requestBlock?()
                 }
-            }}
-            d.bindTo(bond, fire: false, strongly: false)
-            d.retain(bond)
-            objc_setAssociatedObject(self, &enabledDynamicHandleRequest, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            }
             return d
         }
     }
@@ -86,15 +85,15 @@ public class EZRequest: NSObject {
     var dataFromCache = false
 
     
-    public var requestKey :String {
+     var requestKey :String {
         return self.nameOfClass
     }
     
-    public class var requestKey:String {
-        return self.nameOfClass
-    }
+//    public class var requestKey:String {
+//        return self.nameOfClass
+//    }
     
-    public var requestParams :Dictionary<String,AnyObject>{
+     var requestParams :Dictionary<String,AnyObject>{
         return self.listProperties()
     }
     
@@ -120,27 +119,27 @@ public class EZRequest: NSObject {
     //the key for cache
     public var cacheKey :String{
         if self.method == .GET {
-            return self.url!.absoluteString!.MD5
+            return self.url!.absoluteString.MD5
         }else if !isEmpty(self.requestParams) {
-            return (self.url!.absoluteString! + self.requestParams.joinPath).MD5
+            return (self.url!.absoluteString + self.requestParams.joinPath).MD5
         }else{
-            return self.url!.absoluteString!.MD5
+            return self.url!.absoluteString.MD5
         }
     }
     
     public func suspend() {
         self.op?.suspend()
-        self.state.value = .Suspend
+        self.state.value = RequestState.Suspend
     }
     
     public func resume() {
         self.op?.resume()
-        self.state.value = .Sending
+        self.state.value = RequestState.Sending
     }
     
     public func cancel() {
         self.op?.cancel()
-        self.state.value = .Cancle
+        self.state.value = RequestState.Cancle
     }
     
     public var manager:Manager {
@@ -148,14 +147,14 @@ public class EZRequest: NSObject {
             if let reqManager = objc_getAssociatedObject(self, &managerHandle) as? Manager {
                 return reqManager
             }else if let configuration = sessionConfiguration{
-                var aManager = Alamofire.Manager(configuration: configuration)
-                objc_setAssociatedObject(self, &managerHandle, aManager, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+                let aManager = Alamofire.Manager(configuration: configuration)
+                objc_setAssociatedObject(self, &managerHandle, aManager, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
                 return aManager
             }else{
                 return Alamofire.Manager.sharedInstance
             }
         }set(aManager){
-            objc_setAssociatedObject(self, &managerHandle, aManager, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &managerHandle, aManager, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }

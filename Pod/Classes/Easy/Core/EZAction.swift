@@ -63,81 +63,83 @@ public class EZAction: NSObject {
                 url = url + req.appendPathInfo
             }
         }
-        req.state.value = .Sending
+        req.state.value = RequestState.Sending
         
-        req.op = req.manager
-            .request(req.method, url, parameters: requestParams, encoding: req.parameterEncoding)
-            .validate(statusCode: 200..<300)
-            .validate(contentType: req.acceptableContentTypes)
-            .responseString { (_, _, string, _) in
-                req.responseString = string
-            }.responseJSON { (_, _, json, error)  in
-                if json == nil{
-                    req.error = error
-                    self.failed(req)
-                }else{
-                    req.output = json as! Dictionary<String, AnyObject>
-                    self.checkCode(req)
-                }
-            }
-        req.url = req.op?.request.URL
+        //TODO
+//        req.op = req.manager
+//            .request(req.method, url, parameters: requestParams, encoding: req.parameterEncoding)
+//            .validate(statusCode: 200..<300)
+//            .validate(contentType: req.acceptableContentTypes)
+//            .responseString { (_, _, string, _) in
+//                req.responseString = string
+//            }.responseJSON { (_, _, json, error)  in
+//                if json == nil{
+//                    req.error = error
+//                    self.failed(req)
+//                }else{
+//                    req.output = json as! Dictionary<String, AnyObject>
+//                    self.checkCode(req)
+//                }
+//            }
+        req.url = req.op?.request!.URL
         self.getCacheJson(req)
     }
     
     public class func Upload (req :EZRequest){
         req.state.value = .Sending
-        req.op = req.manager
-            .upload(.POST, req.uploadUrl, data: req.uploadData!)
-            .validate(statusCode: 200..<300)
-            .validate(contentType: req.acceptableContentTypes)
-            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-                req.totalBytesWritten = Double(totalBytesWritten)
-                req.totalBytesExpectedToWrite = Double(totalBytesExpectedToWrite)
-                req.progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
-            }
-            .responseString { (_, _, string, _) in
-                req.responseString = string!
-            }.responseJSON { (_, _, json, error) in
-                if error != nil{
-                    req.error = error
-                    self.failed(req)
-                }else{
-                    req.output = json as! Dictionary<String, AnyObject>
-                    self.checkCode(req)
-                }
-            }
-        req.url = req.op?.request.URL
+        //TODO
+//        req.op = req.manager
+//            .upload(.POST, req.uploadUrl, data: req.uploadData!)
+//            .validate(statusCode: 200..<300)
+//            .validate(contentType: req.acceptableContentTypes)
+//            .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+//                req.totalBytesWritten = Double(totalBytesWritten)
+//                req.totalBytesExpectedToWrite = Double(totalBytesExpectedToWrite)
+//                req.progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
+//            }
+//            .responseString { (_, _, string, _) in
+//                req.responseString = string!
+//            }.responseJSON { (_, _, json, error) in
+//                if error != nil{
+//                    req.error = error
+//                    self.failed(req)
+//                }else{
+//                    req.output = json as! Dictionary<String, AnyObject>
+//                    self.checkCode(req)
+//                }
+//            }
+        req.url = req.op?.request!.URL
     }
     
     public class func Download (req :EZRequest){
         req.state.value = .Sending
         let destination = Alamofire.Request.suggestedDownloadDestination(directory: .DocumentDirectory, domain: .UserDomainMask)
 
-        req.op = req.manager
-            .download(.GET, req.downloadUrl, destination: { (temporaryURL, response) in
-            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory,
-                    inDomains: .UserDomainMask)[0]
-                as? NSURL {
-                    return directoryURL.URLByAppendingPathComponent(req.targetPath + response.suggestedFilename!)
-            }
-            return temporaryURL
-        })
-            .validate(statusCode: 200..<300)
-            .progress { (bytesRead, totalBytesRead, totalBytesExpectedToRead) in
-                req.totalBytesRead = Double(totalBytesRead)
-                req.totalBytesExpectedToRead = Double(totalBytesExpectedToRead)
-                req.progress = Double(totalBytesRead) / Double(totalBytesExpectedToRead)
-            }
-            .response { (request, response, _, error) in
-                if error != nil{
-                    req.error = error
-                    self.failed(req)
-                }else{
-                    req.responseString = "\(response)"
-                    req.state.value = .Success
-                }
-            }
-        req.url = req.op?.request.URL
+        //TODO
+//        req.op = req.manager
+//            .download(.GET, req.downloadUrl, destination: { (temporaryURL, response) in
+//            if let directoryURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory,
+//                    inDomains: .UserDomainMask)[0] {
+//                    return directoryURL.URLByAppendingPathComponent(req.targetPath + response.suggestedFilename!)
+//            }
+//            return temporaryURL
+//        })
+//            .validate(statusCode: 200..<300)
+//            .progress { (bytesRead, totalBytesRead, totalBytesExpectedToRead) in
+//                req.totalBytesRead = Double(totalBytesRead)
+//                req.totalBytesExpectedToRead = Double(totalBytesExpectedToRead)
+//                req.progress = Double(totalBytesRead) / Double(totalBytesExpectedToRead)
+//            }
+//            .response { (request, response, _, error) in
+//                if error != nil{
+//                    req.error = error
+//                    self.failed(req)
+//                }else{
+//                    req.responseString = "\(response)"
+//                    req.state.value = .Success
+//                }
+//            }
+        req.url = req.op?.request!.URL
     }
     
     private class func cacheJson (req: EZRequest) {
@@ -206,7 +208,7 @@ public class EZAction: NSObject {
     }
     
     private class func failed (req: EZRequest) {
-        req.message = req.error?.userInfo?["NSLocalizedDescription"] as? String
+        req.message = req.error?.userInfo["NSLocalizedDescription"] as? String
         req.state.value = .Failed
         EZPrintln(req.message)
     }
@@ -231,23 +233,24 @@ public class EZAction: NSObject {
         }
     }
     */
-    public class var networkReachability: InternalDynamic<NetworkStatus> {
-        if let d: AnyObject = objc_getAssociatedObject(self, &networkReachabilityHandle) {
-            return (d as? InternalDynamic<NetworkStatus>)!
-        } else {
-            let reachability = Reachability.reachabilityForInternetConnection()
-            let d = InternalDynamic<NetworkStatus>(reachability.currentReachabilityStatus)
-            reachability.whenReachable = { reachability in
-                d.value = reachability.currentReachabilityStatus
-            }
-            reachability.whenUnreachable = { reachability in
-                d.value = reachability.currentReachabilityStatus
-            }
-            reachability.startNotifier()
-            objc_setAssociatedObject(self, &networkReachabilityHandle, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-            return d
-        }
-    }
+    //TODO
+//    public class var networkReachability: InternalDynamic<NetworkStatus> {
+//        if let d: AnyObject = objc_getAssociatedObject(self, &networkReachabilityHandle) {
+//            return (d as? InternalDynamic<NetworkStatus>)!
+//        } else {
+//            let reachability = Reachability.reachabilityForInternetConnection()
+//            let d = InternalDynamic<NetworkStatus>(reachability.currentReachabilityStatus)
+//            reachability.whenReachable = { reachability in
+//                d.value = reachability.currentReachabilityStatus
+//            }
+//            reachability.whenUnreachable = { reachability in
+//                d.value = reachability.currentReachabilityStatus
+//            }
+//            reachability.startNotifier()
+//            objc_setAssociatedObject(self, &networkReachabilityHandle, d, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+//            return d
+//        }
+//    }
     
 }
 

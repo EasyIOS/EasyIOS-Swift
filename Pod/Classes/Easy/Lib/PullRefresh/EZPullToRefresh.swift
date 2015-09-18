@@ -56,7 +56,7 @@ public class Header : UIView {
 
 public class EZPullToRefreshView : UIView {
     
-    public var state = InternalDynamic<EZPullToRefreshState>(.Stopped)
+    public var state = Observable<EZPullToRefreshState>(EZPullToRefreshState.Stopped)
     public var originalTopInset:CGFloat = 0.0
     public var originalBottomInset:CGFloat = 0.0
     public var originalOffset:CGFloat = 0.0
@@ -65,7 +65,7 @@ public class EZPullToRefreshView : UIView {
     
     private func commonInit(){
         self.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        self.state *->> Bond<EZPullToRefreshState>{[unowned self] state in
+        self.state.observe{[unowned self] state in
             if state == .Loading && self.oldState == .Triggered {
                 self.pullToRefreshActionHandler?()
             }
@@ -79,7 +79,7 @@ public class EZPullToRefreshView : UIView {
     }
     
     required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
         self.commonInit()
     }
     
@@ -135,7 +135,7 @@ extension UIScrollView {
                 return nil
             }
         }set (value){
-            objc_setAssociatedObject(self, &PullToRefreshViewHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &PullToRefreshViewHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     

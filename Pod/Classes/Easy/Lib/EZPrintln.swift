@@ -22,8 +22,9 @@ This functional also augments the original function with the filename, function 
 public func EZPrintln<T>(object: T, _ file: String = __FILE__, _ function: String = __FUNCTION__, _ line: Int = __LINE__)
 {
     if EZ_DEBUG_MODE {
-        let filename = file.lastPathComponent.stringByDeletingPathExtension
-        print("\(filename).\(function)[\(line)]: \(object)\n")
+        //TODO
+//        let filename = file.lastPathComponent.URLByDeletingPathExtension
+//        print("\(filename).\(function)[\(line)]: \(object)\n")
     }
 }
 
