@@ -181,7 +181,7 @@ extension UIView {
     // MARK: Anchor Extensions
     
     public func setAnchorPosition (anchorPosition: AnchorPosition) {
-        println(anchorPosition.rawValue)
+        print(anchorPosition.rawValue)
         self.layer.anchorPoint = anchorPosition.rawValue
     }
     
@@ -309,14 +309,14 @@ extension UIView {
     
     public func whenTap(number:NSInteger = 1,block:()->Void){
         self.userInteractionEnabled = true
-        TapGestureDynamic<NSInteger>(view: self,number:number) **->> Bond<NSInteger>{ value in
+        bnd_tapGestureEvent(number).observe { (_) -> () in
             block()
         }
     }
     
     public func whenSwipe(number:NSInteger = 1,direction:UISwipeGestureRecognizerDirection,block:()->Void){
         self.userInteractionEnabled = true
-        SwipeGestureDynamic<NSInteger>(view: self,number:number,direction:direction) **->> Bond<NSInteger>{ value in
+        bnd_swipeGestureEvent(number).observe { (_) -> () in
             block()
         }
     }

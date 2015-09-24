@@ -24,7 +24,7 @@ class ButtonProperty:ViewProperty{
     var onEvent:SelectorAction?
     
     override func view() -> UIButton{
-        var view = UIButton()
+        let view = UIButton()
         view.tagProperty = self
         
         if self.style != "" {

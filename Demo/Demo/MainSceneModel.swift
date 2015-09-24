@@ -35,8 +35,8 @@ class MainSectionViewModel: EZViewModel {
 
 class MainSceneModel: EZSceneModel {
     
-    var dataArray =  DynamicArray<MainCellViewModel>(Array<MainCellViewModel>())
-    var sectionArray = DynamicArray<MainSectionViewModel>(Array<MainSectionViewModel>())
+    var dataArray =  ObservableArray<MainCellViewModel>(Array<MainCellViewModel>())
+    var sectionArray = ObservableArray<MainSectionViewModel>(Array<MainSectionViewModel>())
     override init (){
         super.init()
         

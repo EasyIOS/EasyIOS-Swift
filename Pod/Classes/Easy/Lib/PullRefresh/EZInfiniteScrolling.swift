@@ -25,13 +25,13 @@ public class Footer:UIView {
         
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public func resetScrollViewContentInset(scrollView:UIScrollView){
         var currentInsets = scrollView.contentInset
-        var newBottom = scrollView.infiniteScrollingView!.originalBottomInset + scrollView.infiniteScrollingView!.extendBottom;
+        let newBottom = scrollView.infiniteScrollingView!.originalBottomInset + scrollView.infiniteScrollingView!.extendBottom;
         if newBottom != currentInsets.bottom {
             currentInsets.bottom = newBottom
             self.setScrollViewContentInset(currentInsets, scrollView: scrollView)
@@ -40,7 +40,7 @@ public class Footer:UIView {
     
     public func setScrollViewContentInsetForLoading(scrollView:UIScrollView){
         var currentInsets = scrollView.contentInset
-        var newBottom  = scrollView.infiniteScrollingView!.originalBottomInset + scrollView.infiniteScrollingView!.extendBottom + EZInfiniteScrollingViewHeight;
+        let newBottom  = scrollView.infiniteScrollingView!.originalBottomInset + scrollView.infiniteScrollingView!.extendBottom + EZInfiniteScrollingViewHeight;
         if newBottom != currentInsets.bottom {
             currentInsets.bottom = newBottom
             self.setScrollViewContentInset(currentInsets, scrollView: scrollView)
@@ -57,7 +57,7 @@ public class Footer:UIView {
 }
 
 public class EZInfiniteScrollingView :UIView {
-    public var state = InternalDynamic<EZInfiniteScrollingState>(.Stopped)
+    public var state = Observable<EZInfiniteScrollingState>(.Stopped)
     public var extendBottom:CGFloat = 0.0
     public var originalBottomInset:CGFloat = 0.0
     private var infiniteScrollingHandler:(Void -> ())?
@@ -65,7 +65,8 @@ public class EZInfiniteScrollingView :UIView {
     
     private func commonInit(){
         self.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        self.state *->> Bond<EZInfiniteScrollingState>{[unowned self] state in
+        
+        self.state.observe{ [unowned self] state in
             if state == .Loading && self.oldState == .Triggered {
                 self.infiniteScrollingHandler?()
             }
@@ -78,7 +79,7 @@ public class EZInfiniteScrollingView :UIView {
         self.commonInit()
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.commonInit()
     }
@@ -89,8 +90,8 @@ public class EZInfiniteScrollingView :UIView {
                 view.removeFromSuperview()
             }
             self.addSubview(customView)
-            var viewBounds = customView.bounds;
-            var origin = CGPointMake(
+            let viewBounds = customView.bounds;
+            let origin = CGPointMake(
                 CGFloat(roundf(Float(self.bounds.size.width-viewBounds.size.width)/2)),
                 CGFloat(roundf(Float(self.bounds.size.height-viewBounds.size.height)/2)))
             customView.frame =  CGRectMake(origin.x, origin.y, viewBounds.size.width, viewBounds.size.height)
@@ -114,12 +115,12 @@ public class EZInfiniteScrollingView :UIView {
     }
     
     
-    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        var scrollView = object as! UIScrollView
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        let scrollView = object as! UIScrollView
         if keyPath == "contentOffset" && scrollView.showsInfiniteScrolling {
             if self.state.value != .Loading && self.state.value != .Ended  && scrollView.contentSize.height > 0{
-                var scrollViewContentHeight = scrollView.contentSize.height;
-                var scrollOffsetThreshold =  scrollViewContentHeight - scrollView.bounds.size.height + self.extendBottom
+                let scrollViewContentHeight = scrollView.contentSize.height;
+                let scrollOffsetThreshold =  scrollViewContentHeight - scrollView.bounds.size.height + self.extendBottom
                 
                 if !scrollView.dragging && self.state.value == .Triggered {
                     self.state.value = .Loading
@@ -148,7 +149,7 @@ extension UIScrollView {
                 return nil
             }
         }set (value){
-            objc_setAssociatedObject(self, &InfiniteScrollingViewHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &InfiniteScrollingViewHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
@@ -168,7 +169,7 @@ extension UIScrollView {
     
     public func addInfiniteScrollingWithActionHandler(customer:UIView? = nil,actionHandler:Void -> ()){
         if self.infiniteScrollingView == nil {
-            var view = EZInfiniteScrollingView(frame: CGRectZero)
+            let view = EZInfiniteScrollingView(frame: CGRectZero)
             view.infiniteScrollingHandler = actionHandler
             view.originalBottomInset = self.contentInset.bottom
             view.hidden = true

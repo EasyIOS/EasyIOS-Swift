@@ -25,7 +25,7 @@ public class Header : UIView {
 
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -36,7 +36,7 @@ public class Header : UIView {
     }
     
     public func setScrollViewContentInsetForLoading(scrollView:UIScrollView){
-        var offset = max(EZPullToRefreshViewHeight, 0)
+        let offset = max(EZPullToRefreshViewHeight, 0)
         var currentInsets = scrollView.contentInset
         currentInsets.top = max(offset, scrollView.pullToRefreshView!.originalTopInset + scrollView.pullToRefreshView!.bounds.size.height)
         self.setScrollViewContentInset(currentInsets, scrollView: scrollView)
@@ -56,7 +56,7 @@ public class Header : UIView {
 
 public class EZPullToRefreshView : UIView {
     
-    public var state = InternalDynamic<EZPullToRefreshState>(.Stopped)
+    public var state = Observable<EZPullToRefreshState>(.Stopped)
     public var originalTopInset:CGFloat = 0.0
     public var originalBottomInset:CGFloat = 0.0
     public var originalOffset:CGFloat = 0.0
@@ -65,7 +65,7 @@ public class EZPullToRefreshView : UIView {
     
     private func commonInit(){
         self.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        self.state *->> Bond<EZPullToRefreshState>{[unowned self] state in
+        self.state.observe{ [unowned self] state in
             if state == .Loading && self.oldState == .Triggered {
                 self.pullToRefreshActionHandler?()
             }
@@ -78,7 +78,7 @@ public class EZPullToRefreshView : UIView {
         self.commonInit()
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.commonInit()
     }
@@ -89,8 +89,8 @@ public class EZPullToRefreshView : UIView {
                 view.removeFromSuperview()
             }
             self.addSubview(customView)
-            var viewBounds = customView.bounds;
-            var origin = CGPointMake(
+            let viewBounds = customView.bounds;
+            let origin = CGPointMake(
                 CGFloat(roundf(Float(self.bounds.size.width-viewBounds.size.width)/2)),
                 CGFloat(roundf(Float(self.bounds.size.height-viewBounds.size.height)/2)))
             customView.frame =  CGRectMake(origin.x, origin.y, viewBounds.size.width, viewBounds.size.height)
@@ -105,11 +105,11 @@ public class EZPullToRefreshView : UIView {
         self.state.value = .Stopped
     }
     
-    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        var scrollView = object as! UIScrollView
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        let scrollView = object as! UIScrollView
         if keyPath == "contentOffset" && scrollView.showsPullToRefresh {
             if self.state.value != .Loading{
-                var pullNum = scrollView.contentOffset.y + self.originalTopInset
+                let pullNum = scrollView.contentOffset.y + self.originalTopInset
                 if !scrollView.dragging && self.state.value == .Triggered {
                     self.state.value = .Loading
                 }else if scrollView.dragging && self.state.value == .Pulling && pullNum < -EZPullToRefreshViewHeight {
@@ -135,7 +135,7 @@ extension UIScrollView {
                 return nil
             }
         }set (value){
-            objc_setAssociatedObject(self, &PullToRefreshViewHandle, value, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &PullToRefreshViewHandle, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
@@ -155,7 +155,7 @@ extension UIScrollView {
 
     public func addPullToRefreshWithActionHandler(customer:UIView? = nil,actionHandler:Void -> ()){
         if self.pullToRefreshView == nil {
-            var view = EZPullToRefreshView(frame: CGRectZero)
+            let view = EZPullToRefreshView(frame: CGRectZero)
             view.pullToRefreshActionHandler = actionHandler
             view.originalTopInset = self.contentInset.top;
             view.originalBottomInset = self.contentInset.bottom;

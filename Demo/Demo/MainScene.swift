@@ -44,13 +44,14 @@ class MainScene: EUScene,UITableViewDelegate{
                 tableView?.pullToRefreshView?.stopAnimating()
             }
         }
-        
-        let section1 = self.sceneModel.dataArray.map{ (data:NSObject) -> UITableViewCell in
-            let cell = tableView!.dequeueReusableCell("cell", target: self,bind:data) as UITableViewCell
+        ObservableArray([self.sceneModel.dataArray,self.sceneModel.dataArray,self.sceneModel.dataArray])
+            .bindTo(tableView!) { (indexPath, dataArray, tableView) -> UITableViewCell in
+            let data = dataArray[indexPath.section][indexPath.row]
+            let cell = tableView.dequeueReusableCell("cell", forIndexPath: indexPath, target: self, bind: data)
             cell.selectionStyle = .None
             return cell
         }
-        DynamicArray([section1,section1,section1]) ->> self.eu_tableViewDataSource!
+
     }
 
     //xml里已经有了tap点击事件，这里就不调用了

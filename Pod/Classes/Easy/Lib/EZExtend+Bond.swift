@@ -9,199 +9,193 @@
 import Bond
 import TTTAttributedLabel
 
-infix operator *->> {}
-infix operator **->> {}
-infix operator <-- {}
 
-public func *->> <T>(left: InternalDynamic<T>, right: Bond<T>) {
-    left.bindTo(right)
-    left.retain(right)
-}
-
-public func **->> <T>(left: InternalDynamic<T>, right: Bond<T>) {
-    left.bindTo(right)
-    left.retainedObjects = [right]
-}
-
-
-@objc class TapGestureDynamicHelper
+@objc class TapGestureDynamicHelper:NSObject
 {
     weak var view: UIView?
-    var listener:  (NSInteger -> Void)?
-    var number:NSInteger = 1
-    init(view: UIView,number:NSInteger) {
+    let sink:  (UITapGestureRecognizer) -> Void
+    init(view: UIView,number:NSInteger,sink:((UITapGestureRecognizer) -> Void)) {
         self.view = view
-        self.number = number
+        self.sink = sink
+        super.init()
         view.addTapGesture(number, target: self, action: Selector("tapHandle:"))
     }
+
     
-    func tapHandle(view: UIView) {
-        self.listener?(self.number)
+    func tapHandle(gesture: UITapGestureRecognizer) {
+        sink(gesture)
     }
 }
 
-public class TapGestureDynamic<T>: InternalDynamic<NSInteger>
-{
-    let helper: TapGestureDynamicHelper
-    
-    public init(view: UIView,number:NSInteger = 1) {
-        self.helper = TapGestureDynamicHelper(view: view,number:number)
+@objc class PanGestureDynamicHelper:NSObject{
+    weak var view: UIView?
+    let sink:  (UIPanGestureRecognizer) -> Void
+    init(view: UIView,number:NSInteger,sink:((UIPanGestureRecognizer) -> Void)) {
+        self.view = view
+        self.sink = sink
         super.init()
-        self.helper.listener =  { [unowned self] in
-            self.value = $0
-        }
+        view.addPanGesture(self, action: Selector("panHandle:"))
+    }
+    func panHandle(gestureRecognizer:UIPanGestureRecognizer) {
+        sink(gestureRecognizer)
     }
 }
 
-@objc class SwipeGestureDynamicHelper
+@objc class SwipeGestureDynamicHelper:NSObject
 {
     weak var view: UIView?
-    var listener:  ((NSInteger,UISwipeGestureRecognizerDirection) -> Void)?
+    let sink:  ((UISwipeGestureRecognizer) -> Void)
     var number:NSInteger = 1
-    var direction:UISwipeGestureRecognizerDirection
-    init(view: UIView,number:NSInteger,direction:UISwipeGestureRecognizerDirection) {
+    init(view: UIView,number:NSInteger,sink:((UISwipeGestureRecognizer) -> Void)) {
         self.view = view
         self.number = number
-        self.direction = direction
-        view.addSwipeGesture(direction, numberOfTouches: number, target: self, action: Selector("swipeHandle:"))
+        self.sink = sink
+        super.init()
+        view.addSwipeGesture(UISwipeGestureRecognizerDirection.Right, numberOfTouches: number, target: self, action: Selector("swipeRightHandle:"))
+        view.addSwipeGesture(UISwipeGestureRecognizerDirection.Up, numberOfTouches: number, target: self, action: Selector("swipeUpHandle:"))
+        view.addSwipeGesture(UISwipeGestureRecognizerDirection.Down, numberOfTouches: number, target: self, action: Selector("swipeDownHandle:"))
+        view.addSwipeGesture(UISwipeGestureRecognizerDirection.Left, numberOfTouches: number, target: self, action: Selector("swipeLeftHandle:"))
     }
     
-    func swipeHandle(view: UIView) {
-        self.listener?(self.number,self.direction)
+    func swipeRightHandle(gestureRecognizer:UISwipeGestureRecognizer) {
+        sink(gestureRecognizer)
+    }
+    func swipeUpHandle(gestureRecognizer:UISwipeGestureRecognizer) {
+        sink(gestureRecognizer)
+    }
+    func swipeDownHandle(gestureRecognizer:UISwipeGestureRecognizer) {
+        sink(gestureRecognizer)
+    }
+    func swipeLeftHandle(gestureRecognizer:UISwipeGestureRecognizer) {
+        sink(gestureRecognizer)
     }
 }
 
-public class SwipeGestureDynamic<T>: InternalDynamic<NSInteger>
-{
-    let helper: SwipeGestureDynamicHelper
-    public init(view: UIView,number:NSInteger,direction:UISwipeGestureRecognizerDirection) {
-        self.helper = SwipeGestureDynamicHelper(view: view,number:number,direction:direction)
-        super.init()
-        self.helper.listener =  { number,direction in
-            self.value = number
-        }
-    }
-}
-
-
-@objc class PanGestureDynamicHelper
-{
-    weak var view: UIView?
-    var listener:  ((NSInteger,UISwipeGestureRecognizerDirection) -> Void)?
-    var number:NSInteger = 1
-    var direction:UISwipeGestureRecognizerDirection
-    init(view: UIView,number:NSInteger,direction:UISwipeGestureRecognizerDirection) {
-        self.view = view
-        self.number = number
-        self.direction = direction
-        view.addSwipeGesture(direction, numberOfTouches: number, target: self, action: Selector("swipeHandle:"))
+extension UIView{
+    private struct AssociatedKeys {
+        static var PanGestureEventKey = "bnd_PanGestureEventKey"
+        static var PanGestureEventHelperKey = "bnd_PanGestureEventHelperKey"
+        static var SwipeGestureEventKey = "bnd_SwipeGestureEventKey"
+        static var SwipeGestureEventHelperKey = "bnd_SwipeGestureEventHelperKey"
+        static var TapGestureEventKey = "bnd_TapGestureEventKey"
+        static var TapGestureEventHelperKey = "bnd_TapGestureEventHelperKey"
+        
     }
     
-    func swipeHandle(view: UIView) {
-        self.listener?(self.number,self.direction)
-    }
-}
-
-public class PanGestureDynamic<T>: InternalDynamic<NSInteger>
-{
-    let helper: PanGestureDynamicHelper
-    public init(view: UIView,number:NSInteger,direction:UISwipeGestureRecognizerDirection) {
-        self.helper = PanGestureDynamicHelper(view: view,number:number,direction:direction)
-        super.init()
-        self.helper.listener =  { number,direction in
-            self.value = number
-        }
-    }
-}
-
-
-
-private var urlImageDynamicHandleUIImageView: UInt8 = 0
-extension UIImageView {
-    public var dynURLImage: Dynamic<NSURL?> {
-        if let d: AnyObject = objc_getAssociatedObject(self, &urlImageDynamicHandleUIImageView) {
-            return (d as? Dynamic<NSURL?>)!
+    public func bnd_swipeGestureEvent(number:NSInteger) ->EventProducer<UISwipeGestureRecognizer> {
+        if let bnd_swipeGestureEvent: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.SwipeGestureEventKey) {
+            return bnd_swipeGestureEvent as! EventProducer<UISwipeGestureRecognizer>
         } else {
-            let d = InternalDynamic<NSURL?>()
-            let bond = Bond<NSURL?>() { [weak self] v in if let s = self {
+            var capturedSink: (UISwipeGestureRecognizer -> ())! = nil
+            let bnd_swipeGestureEvent = EventProducer<UISwipeGestureRecognizer> { sink in
+                capturedSink = sink
+                return nil
+            }
+            let controlHelper =  SwipeGestureDynamicHelper(view: self, number: number, sink: capturedSink)
+            objc_setAssociatedObject(self, &AssociatedKeys.SwipeGestureEventHelperKey, controlHelper, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.SwipeGestureEventKey, bnd_swipeGestureEvent, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            return bnd_swipeGestureEvent
+        }
+    }
+    
+    public func bnd_tapGestureEvent(number:NSInteger) ->EventProducer<UITapGestureRecognizer> {
+        if let bnd_tapGestureEvent: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.TapGestureEventKey) {
+            return bnd_tapGestureEvent as! EventProducer<UITapGestureRecognizer>
+        } else {
+            var capturedSink: (UITapGestureRecognizer -> ())! = nil
+            let bnd_tapGestureEvent = EventProducer<UITapGestureRecognizer> { sink in
+                capturedSink = sink
+                return nil
+            }
+            let controlHelper =  TapGestureDynamicHelper(view: self, number: number, sink: capturedSink)
+            objc_setAssociatedObject(self, &AssociatedKeys.TapGestureEventHelperKey, controlHelper, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.TapGestureEventKey, bnd_tapGestureEvent, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            return bnd_tapGestureEvent
+        }
+    }
+    
+    public var bnd_panGestureEvent:EventProducer<UIPanGestureRecognizer> {
+        if let bnd_panGestureEvent: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.PanGestureEventKey) {
+            return bnd_panGestureEvent as! EventProducer<UIPanGestureRecognizer>
+        } else {
+            var capturedSink: (UIPanGestureRecognizer -> ())! = nil
+            let bnd_panGestureEvent = EventProducer<UIPanGestureRecognizer> { sink in
+                capturedSink = sink
+                return nil
+            }
+            let controlHelper =  PanGestureDynamicHelper(view: self, number: 1, sink: capturedSink)
+            objc_setAssociatedObject(self, &AssociatedKeys.PanGestureEventHelperKey, controlHelper, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.PanGestureEventKey, bnd_panGestureEvent, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            return bnd_panGestureEvent
+        }
+    }
+}
+
+
+
+extension UIImageView {
+    private struct AssociatedKeys {
+        static var UrlImageDynamicHandleUIImageView = "UrlImageDynamicHandleUIImageView"
+    }
+    public var bnd_URLImage: Observable<NSURL?> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.UrlImageDynamicHandleUIImageView) {
+            return (d as? Observable<NSURL?>)!
+        } else {
+            let d = Observable<NSURL?>(NSURL())
+            d.observe { [weak self] v in if let s = self {
                 if v != nil {
                     s.kf_setImageWithURL(v!)
                 }
             } }
-            d.bindTo(bond, fire: false, strongly: false)
-            d.retain(bond)
-            objc_setAssociatedObject(self, &urlImageDynamicHandleUIImageView, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &AssociatedKeys.UrlImageDynamicHandleUIImageView, d, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return d
         }
     }
 }
 
-private var textColorDynamicHandleUILabel: UInt8 = 0
-extension UILabel {
-    public var dynTextColor: Dynamic<UIColor> {
-        if let d: AnyObject = objc_getAssociatedObject(self, &textColorDynamicHandleUILabel) {
-            return (d as? Dynamic<UIColor>)!
-        } else {
-            let d = InternalDynamic<UIColor>(self.textColor ?? UIColor.clearColor())
-            let bond = Bond<UIColor>() { [weak self] v in if let s = self { s.textColor = v } }
-            d.bindTo(bond, fire: false, strongly: false)
-            d.retain(bond)
-            objc_setAssociatedObject(self, &textColorDynamicHandleUILabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
-            return d
-        }
+extension TTTAttributedLabel {
+    private struct AssociatedKeys {
+        static var textDynamicHandleTTTAttributeLabel = "textDynamicHandleTTTAttributeLabel"
+        static var attributedTextDynamicHandleTTTAttributeLabel = "attributedTextDynamicHandleTTTAttributeLabel"
+        static var dataDynamicHandleTTTAttributeLabel = "dataDynamicHandleTTTAttributeLabel"
     }
-}
-
-private var textDynamicHandleTTTAttributeLabel: UInt8 = 0
-private var attributedTextDynamicHandleTTTAttributeLabel: UInt8 = 0
-private var dataDynamicHandleTTTAttributeLabel: UInt8 = 0
-
-extension TTTAttributedLabel: Bondable {
-     public var dynTTText: Dynamic<String> {
-        if let d: AnyObject = objc_getAssociatedObject(self, &textDynamicHandleTTTAttributeLabel) {
-            return (d as? Dynamic<String>)!
+    
+     public var dynTTText: Observable<String> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.textDynamicHandleTTTAttributeLabel) {
+            return (d as? Observable<String>)!
         } else {
-            let d = InternalDynamic<String>(self.text ?? "")
-            let bond = Bond<String>() { [weak self] v in if let s = self {
+            let d = Observable<String>(self.text ?? "")
+            d.observe { [weak self] v in if let s = self {
                 s.setText(v)
             } }
-            d.bindTo(bond, fire: false, strongly: false)
-            d.retain(bond)
-            objc_setAssociatedObject(self, &textDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &AssociatedKeys.textDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return d
         }
     }
     
-    public var dynTTTData: Dynamic<NSData> {
-        if let d: AnyObject = objc_getAssociatedObject(self, &dataDynamicHandleTTTAttributeLabel) {
-            return (d as? Dynamic<NSData>)!
+    public var dynTTTData: Observable<NSData> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.dataDynamicHandleTTTAttributeLabel) {
+            return (d as? Observable<NSData>)!
         } else {
-            let d = InternalDynamic<NSData>()
-            let bond = Bond<NSData>() { [weak self] v in if let s = self {
+            let d = Observable<NSData>(NSData())
+            d.observe{ [weak self] v in if let s = self {
                 s.setText(NSAttributedString(fromHTMLData: v, attributes: ["dict":s.tagProperty.style]))
             }}
-            d.bindTo(bond, fire: false, strongly: false)
-            d.retain(bond)
-            objc_setAssociatedObject(self, &dataDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &AssociatedKeys.dataDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return d
         }
     }
     
-    public var dynTTTAttributedText: Dynamic<NSAttributedString> {
-        if let d: AnyObject = objc_getAssociatedObject(self, &attributedTextDynamicHandleTTTAttributeLabel) {
-            return (d as? Dynamic<NSAttributedString>)!
+    public var dynTTTAttributedText: Observable<NSAttributedString> {
+        if let d: AnyObject = objc_getAssociatedObject(self, &AssociatedKeys.attributedTextDynamicHandleTTTAttributeLabel) {
+            return (d as? Observable<NSAttributedString>)!
         } else {
-            let d = InternalDynamic<NSAttributedString>(self.attributedText ?? NSAttributedString(string: ""))
-            let bond = Bond<NSAttributedString>() { [weak self] v in if let s = self {
+            let d = Observable<NSAttributedString>(self.attributedText ?? NSAttributedString(string: ""))
+            d.observe { [weak self] v in if let s = self {
                 s.setText(v) } }
-            d.bindTo(bond, fire: false, strongly: false)
-            d.retain(bond)
-            objc_setAssociatedObject(self, &attributedTextDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &AssociatedKeys.attributedTextDynamicHandleTTTAttributeLabel, d, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             return d
         }
     }
-    
-    public var designatedTTTBond: Bond<String> {
-        return self.dynTTText.valueBond
-    }
+
 }

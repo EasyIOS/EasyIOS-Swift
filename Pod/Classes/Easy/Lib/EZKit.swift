@@ -122,7 +122,7 @@ public class BlockButton: UIButton {
         super.init(frame: frame)
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -143,9 +143,9 @@ public class BlockButton: UIButton {
 
 public class BlockWebView: UIWebView, UIWebViewDelegate {
     
-    var didStartLoad: ((NSURLRequest) -> ())?
-    var didFinishLoad: ((NSURLRequest) -> ())?
-    var didFailLoad: ((NSURLRequest, NSError) -> ())?
+    var didStartLoad: ((NSURLRequest?) -> ())?
+    var didFinishLoad: ((NSURLRequest?) -> ())?
+    var didFailLoad: ((NSURLRequest?, NSError?) -> ())?
     
     var shouldStartLoadingRequest: ((NSURLRequest) -> (Bool))?
     
@@ -154,24 +154,23 @@ public class BlockWebView: UIWebView, UIWebViewDelegate {
         delegate = self
     }
     
-    public required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     
-    private func webViewDidStartLoad(webView: UIWebView) {
-        didStartLoad? (webView.request!)
+    @objc public func webViewDidStartLoad(webView: UIWebView) {
+        didStartLoad? (webView.request)
     }
     
-    private func webViewDidFinishLoad(webView: UIWebView) {
-        didFinishLoad? (webView.request!)
+    @objc public func webViewDidFinishLoad(webView: UIWebView) {
+        didFinishLoad? (webView.request)
+    }
+    @objc  public func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+        didFailLoad? (webView.request, error)
     }
     
-    private func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-        didFailLoad? (webView.request!, error)
-    }
-    
-    private func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    @objc public func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let should = shouldStartLoadingRequest {
             return should (request)
         } else {
@@ -208,15 +207,12 @@ extension NSObject{
 
     
     public func listProperties() -> Dictionary<String,AnyObject>{
-        var mirror=reflect(self)
+
         var modelDictionary = Dictionary<String,AnyObject>()
-        
-        for (var i=0;i<mirror.count;i++)
-        {
-            if (mirror[i].0 != "super")
-            {
-                if let nsValue = nsValueForAny(mirror[i].1.value) {
-                    modelDictionary.updateValue(nsValue, forKey: mirror[i].0)
+        Mirror(reflecting: self).children.forEach { (element) -> () in
+            if  element.label != "super" {
+                if let nsValue = nsValueForAny(element.value) {
+                    modelDictionary.updateValue(nsValue, forKey: element.label!)
                 }
             }
         }

@@ -16,6 +16,6 @@ extension Dictionary {
         for (key,value) in self {
            array.append("\(key)=\(value)")
         }
-        return "&".join(array)
+        return array.joinWithSeparator("&")
     }
 }

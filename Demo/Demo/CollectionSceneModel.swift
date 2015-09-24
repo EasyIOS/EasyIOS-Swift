@@ -15,8 +15,8 @@ class FeedModel :Mappable{
     var url:String?
     var name:String?
     
-    static func newInstance(map: Map) -> Mappable? {
-        return FeedModel()
+    required init?(_ map: Map){
+        
     }
 
     func mapping(map: Map) {
@@ -28,8 +28,8 @@ class FeedModel :Mappable{
 class FeedList:Mappable {
     var list:[FeedModel]?
     
-    static func newInstance(map: Map) -> Mappable? {
-        return FeedList()
+    required init?(_ map: Map){
+        
     }
 
     func mapping(map: Map) {
@@ -41,28 +41,25 @@ class CollectionSceneModel: EZSceneModel {
     var req = FeedRequest()
     var modelList:FeedList?
     
-    var viewModelList =  DynamicArray<CollectionCellViewModel>(Array<CollectionCellViewModel>())
+    var viewModelList =  ObservableArray<CollectionCellViewModel>([CollectionCellViewModel]())
     override init (){
         super.init()
-        
-        let configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-
+    
         self.req.requestBlock = {
             EZAction.SEND_IQ_CACHE(self.req)
         }
-        self.req.state *->> Bond<RequestState>(){[unowned self] value in
+        self.req.state.observe{[unowned self] value in
             switch value {
             case .Success,.SuccessFromCache :
                 if let theData: AnyObject = self.req.output["data"] {
                     
                     self.modelList = Mapper<FeedList>().map(theData)
-                    
                     if let array = self.modelList?.list?.map({
                         (model) -> CollectionCellViewModel in
                         return CollectionCellViewModel(url: model.url, name: model.name)
                     }) {
-                        self.viewModelList.removeAll(true)
-                        self.viewModelList.append(array)
+                        self.viewModelList.removeAll()
+                        self.viewModelList.extend(array)
                     }
                 }
             default :

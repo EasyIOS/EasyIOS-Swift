@@ -24,7 +24,7 @@ public class PullHeader : Header {
         
         scrollView.pullToRefreshView!.frame = CGRectMake(0, -EZPullToRefreshViewHeight, scrollView.superview!.size.width, EZPullToRefreshViewHeight)
         
-        scrollView.pullToRefreshView!.state *->> Bond<EZPullToRefreshState>{state in
+        scrollView.pullToRefreshView!.state.observe{state in
                 switch (state){
                 case .Stopped:
                     UIView.animateWithDuration(0.25){ [unowned self] in
@@ -60,23 +60,23 @@ public class PullHeader : Header {
         }
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.commonInit()
     }
     
     func commonInit(){
         
-        var bundle = NSBundle(forClass: self.dynamicType)
-        var url = bundle.URLForResource("EasyIOS-Swift", withExtension: "bundle")
-        var imageBundle = NSBundle(URL: url!)
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let url = bundle.URLForResource("EasyIOS-Swift", withExtension: "bundle")
+        let imageBundle = NSBundle(URL: url!)
         if imageBundle?.loaded == false {
             imageBundle?.load()
         }
-        var arrow = UIImage(contentsOfFile: imageBundle!.pathForResource("arrow-down@2x", ofType: "png")!)
+        let arrow = UIImage(contentsOfFile: imageBundle!.pathForResource("arrow-down@2x", ofType: "png")!)
         
         arrowImage = UIImageView(image: arrow)
-        arrowImage.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin
+        arrowImage.autoresizingMask = [UIViewAutoresizing.FlexibleLeftMargin, UIViewAutoresizing.FlexibleRightMargin]
         self.addSubview(arrowImage)
         
         activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
@@ -121,14 +121,14 @@ public class PullHeader : Header {
     func updateTimeLabel(date:NSDate?){
         if let aDate = date {
             // 1.获得年月日
-            var calendar = NSCalendar.currentCalendar()
-            var unitFlags = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute
+            let calendar = NSCalendar.currentCalendar()
+            let unitFlags: NSCalendarUnit = [NSCalendarUnit.Year, NSCalendarUnit.Month, NSCalendarUnit.Day, NSCalendarUnit.Hour, NSCalendarUnit.Minute]
             
-            var cmp1 = calendar.components(unitFlags, fromDate: aDate)
-            var now = calendar.components(unitFlags, fromDate: NSDate())
+            let cmp1 = calendar.components(unitFlags, fromDate: aDate)
+            let now = calendar.components(unitFlags, fromDate: NSDate())
             
             // 2.格式化日期
-            var formatter = NSDateFormatter()
+            let formatter = NSDateFormatter()
             if (cmp1.day == now.day) { // 今天
                 formatter.dateFormat = "今天 HH:mm";
             } else if (cmp1.year == now.year) { // 今年

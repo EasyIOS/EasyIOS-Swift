@@ -21,7 +21,7 @@ class CollectionScene: EUScene,UICollectionViewDelegate {
         self.showBarButton(.LEFT, title: "返回", fontColor: UIColor.greenColor())
         self.sceneModel.req.requestNeedActive.value = true
         
-        self.sceneModel.req.state *->> Bond<RequestState>(){
+        self.sceneModel.req.state.observe{
             switch $0 {
             case .Sending :
                 SVProgressHUD.show()
@@ -61,12 +61,9 @@ class CollectionScene: EUScene,UICollectionViewDelegate {
             }
         }
         
-        self.sceneModel.viewModelList.map { (data:CollectionCellViewModel,index:Int) -> UICollectionViewCell in
-            return collectionView!.dequeueReusableCell(
-                "cell",
-                forIndexPath:NSIndexPath(forItem: index, inSection: 0),
-                target: self,bind:data) as UICollectionViewCell
-        } ->> self.eu_collectionViewDataSource!
+        self.sceneModel.viewModelList.lift().bindTo(collectionView!) { (indexPath, dataArray, collectionView) -> UICollectionViewCell in
+            collectionView.dequeueReusableCell("cell", forIndexPath: indexPath, target: self, bind: dataArray[indexPath.section][indexPath.row])
+        }
     }
 
     override func leftButtonTouch() {

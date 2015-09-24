@@ -24,15 +24,15 @@ public class EZNavigationController: UINavigationController,UINavigationControll
     }
     
     public func configGestureRecognizer() {
-        if let target = self.interactivePopGestureRecognizer.delegate {
-            var pan = UIPanGestureRecognizer(target: target, action: Selector("handleNavigationTransition:"))
+        if let target = self.interactivePopGestureRecognizer?.delegate {
+            let pan = UIPanGestureRecognizer(target: target, action: Selector("handleNavigationTransition:"))
             pan.delegate = self
             self.view.addGestureRecognizer(pan)
         }
         //禁掉系统的侧滑手势
          weak var weekSelf = self
-        self.interactivePopGestureRecognizer.enabled = false;
-        self.interactivePopGestureRecognizer.delegate = weekSelf;
+        self.interactivePopGestureRecognizer?.enabled = false;
+        self.interactivePopGestureRecognizer?.delegate = weekSelf;
         
     }
 

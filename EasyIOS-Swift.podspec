@@ -34,6 +34,7 @@ Pod::Spec.new do |s|
     s.dependency 'Kingfisher'
     s.dependency 'ObjectMapper'
     s.dependency 'TTTAttributedLabel'
+    s.dependency 'ReachabilitySwift'
 s.public_header_files = 'Pod/Classes/Easy/**/*.h','Pod/Classes/Extend/**/*.h','Pod/Classes/Private/**/*.h'
 s.frameworks = 'UIKit','JavaScriptCore'
 end

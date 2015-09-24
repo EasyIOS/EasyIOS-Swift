@@ -16,14 +16,14 @@ extension UILabel {
         get {
             return objc_getAssociatedObject(self, &UILabelAttributedStringArray) as? [NSAttributedString]
         } set (value) {
-            objc_setAssociatedObject(self, &UILabelAttributedStringArray, value, UInt(OBJC_ASSOCIATION_RETAIN_NONATOMIC))
+            objc_setAssociatedObject(self, &UILabelAttributedStringArray, value, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
     public  func addAttributedString (text: String,
         color: UIColor,
         font: UIFont) {
-            var att = NSAttributedString (string: text,
+            let att = NSAttributedString (string: text,
                 attributes: [NSFontAttributeName: font,
                     NSForegroundColorAttributeName: color])
             self.addAttributedString(att)
@@ -48,7 +48,7 @@ extension UILabel {
     public func updateAttributedStringAtIndex (index: Int,
         attributedString: NSAttributedString) {
             
-            if let att = attributedStrings?[index] {
+            if (attributedStrings?[index] != nil) {
                 attributedStrings?.removeAtIndex(index)
                 attributedStrings?.insert(attributedString, atIndex: index)
                 
@@ -66,11 +66,11 @@ extension UILabel {
             if let att = attributedStrings?[index] {
                 let newAtt = NSMutableAttributedString (string: newText)
                 
-                att.enumerateAttributesInRange(NSMakeRange(0, count(att.string)-1),
+                att.enumerateAttributesInRange(NSMakeRange(0, att.string.characters.count-1),
                     options: NSAttributedStringEnumerationOptions.LongestEffectiveRangeNotRequired,
                     usingBlock: { (attribute, range, stop) -> Void in
                         for (key, value) in attribute {
-                            newAtt.addAttribute(key as! String, value: value, range: range)
+                            newAtt.addAttribute(key , value: value, range: range)
                         }
                 })
                 
@@ -80,7 +80,7 @@ extension UILabel {
     
     
     public func getEstimatedHeight () -> CGFloat {
-        let att = NSAttributedString (string: self.text!, attributes: NSDictionary (object: font, forKey: NSFontAttributeName) as [NSObject : AnyObject])
+        let att = NSAttributedString(string: self.text!, attributes: [NSFontAttributeName:font])
         let rect = att.boundingRectWithSize(CGSize (width: w, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
         return rect.height
     }

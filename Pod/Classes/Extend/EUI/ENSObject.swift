@@ -28,31 +28,31 @@ public extension NSObject{
     }
     
     public func attr(key:String,_ value:AnyObject?) {
-        SwiftTryCatch.try({
+        SwiftTryCatch.`try`({
             if let str = value as? String {
                 self.setValue(str.anyValue(key.toKeyPath), forKeyPath: key.toKeyPath)
             }else{
                 self.setValue(value, forKeyPath: key.toKeyPath)
             }
-        }, catch: { (error) in
-            println("JS Error:\(error.description)")
+        }, `catch`: { (error) in
+            print("JS Error:\(error.description)")
         }, finally: nil)
     }
     
-    public func attrs(dict:[NSObject : AnyObject]!){
-        SwiftTryCatch.try({
+    public func attrs(dict:[String : AnyObject]!){
+        SwiftTryCatch.`try`({
             self.setValuesForKeysWithDictionary(dict)
-        }, catch: { (error) in
-            println("JS Error:\(error.description)")
+        }, `catch`: { (error) in
+            print("JS Error:\(error.description)")
         }, finally: nil)
     }
     
     public func val(key:String) -> AnyObject? {
         var result:AnyObject?
-        SwiftTryCatch.try({
+        SwiftTryCatch.`try`({
             result = self.valueForKeyPath(key.toKeyPath)
-            }, catch: { (error) in
-                println("JS Error:\(error.description)")
+            }, `catch`: { (error) in
+                print("JS Error:\(error.description)")
             }, finally: nil)
         return result
     }

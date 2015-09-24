@@ -7,13 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B3F48851B8DB0F300FA30DD /* EncodeLoginScene.crypto in Resources */ = {isa = PBXBuildFile; fileRef = 5B3F48841B8DB0F300FA30DD /* EncodeLoginScene.crypto */; };
 		5B5950DF1B1478D10013A406 /* Chinese.md in Sources */ = {isa = PBXBuildFile; fileRef = 5B5950DE1B1478D10013A406 /* Chinese.md */; };
-		5B6512AC1B1414CF00B1BA89 /* LabelHtml.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5B6512AB1B1414CF00B1BA89 /* LabelHtml.xml */; };
 		5B6512B11B141A9E00B1BA89 /* EncodeLoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6512B01B141A9E00B1BA89 /* EncodeLoginScene.swift */; };
 		5B7B80C51B08D8E00059CAEF /* MainLabelDeleage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */; };
 		5B7B80DB1B0A0B2A0059CAEF /* LabelScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B80DA1B0A0B2A0059CAEF /* LabelScene.swift */; };
-		5B7B80DD1B0A0B3F0059CAEF /* LabelScene.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5B7B80DC1B0A0B3F0059CAEF /* LabelScene.xml */; };
 		5B8240C01B03715600D58574 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8240BF1B03715600D58574 /* AppDelegate.swift */; };
 		5B8240C21B03715600D58574 /* LoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8240C11B03715600D58574 /* LoginScene.swift */; };
 		5B8240C71B03715600D58574 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B8240C61B03715600D58574 /* Images.xcassets */; };
@@ -23,16 +20,14 @@
 		5B8240EA1B0377FC00D58574 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5B8240E71B0377FC00D58574 /* LICENSE */; };
 		5B8240EB1B0377FC00D58574 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 5B8240E81B0377FC00D58574 /* README.md */; };
 		5B90B5CD1B04BFF8000C848D /* FeedRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B90B5CC1B04BFF8000C848D /* FeedRequest.swift */; };
+		5BBC33DA1BB3DFE00030B054 /* xml.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5BBC33D91BB3DFE00030B054 /* xml.bundle */; settings = {ASSET_TAGS = (); }; };
 		5BDBF0CE1B038B7300E95ACF /* login-logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5BDBF0CD1B038B7300E95ACF /* login-logo@2x.png */; };
 		5BDBF0D01B038C1700E95ACF /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDBF0CF1B038C1700E95ACF /* MainScene.swift */; };
-		5BDBF0D21B038C3000E95ACF /* MainScene.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5BDBF0D11B038C3000E95ACF /* MainScene.xml */; };
 		5BDBF0D51B038C7800E95ACF /* MainSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDBF0D41B038C7800E95ACF /* MainSceneModel.swift */; };
 		5BDBF0D91B038F0D00E95ACF /* url.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BDBF0D81B038F0D00E95ACF /* url.plist */; };
 		5BDC06BB1B0394C200C486E0 /* CollectionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC06BA1B0394C200C486E0 /* CollectionScene.swift */; };
 		5BDC06BD1B03950500C486E0 /* CollectionSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC06BC1B03950500C486E0 /* CollectionSceneModel.swift */; };
 		5BDC06BF1B03955A00C486E0 /* CollectionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC06BE1B03955A00C486E0 /* CollectionCellViewModel.swift */; };
-		5BDC06C31B03960400C486E0 /* CollectionScene.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5BDC06C21B03960400C486E0 /* CollectionScene.xml */; };
-		5BE27D481B03815A00418220 /* LoginScene.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5BE27D471B03815A00418220 /* LoginScene.xml */; };
 		87D67298D115B9D5014DB706 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CB89BDD03972BB5036E6DF /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -49,13 +44,10 @@
 /* Begin PBXFileReference section */
 		0BAFEE4C5E077414790C2042 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		55CB89BDD03972BB5036E6DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B3F48841B8DB0F300FA30DD /* EncodeLoginScene.crypto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EncodeLoginScene.crypto; sourceTree = "<group>"; };
 		5B5950DE1B1478D10013A406 /* Chinese.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Chinese.md; sourceTree = "<group>"; };
-		5B6512AB1B1414CF00B1BA89 /* LabelHtml.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LabelHtml.xml; sourceTree = "<group>"; };
 		5B6512B01B141A9E00B1BA89 /* EncodeLoginScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncodeLoginScene.swift; sourceTree = "<group>"; };
 		5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLabelDeleage.swift; sourceTree = "<group>"; };
 		5B7B80DA1B0A0B2A0059CAEF /* LabelScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelScene.swift; sourceTree = "<group>"; };
-		5B7B80DC1B0A0B3F0059CAEF /* LabelScene.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LabelScene.xml; sourceTree = "<group>"; };
 		5B8240BA1B03715600D58574 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B8240BE1B03715600D58574 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B8240BF1B03715600D58574 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,16 +61,14 @@
 		5B8240E71B0377FC00D58574 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		5B8240E81B0377FC00D58574 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		5B90B5CC1B04BFF8000C848D /* FeedRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedRequest.swift; sourceTree = "<group>"; };
+		5BBC33D91BB3DFE00030B054 /* xml.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = xml.bundle; sourceTree = "<group>"; };
 		5BDBF0CD1B038B7300E95ACF /* login-logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-logo@2x.png"; sourceTree = "<group>"; };
 		5BDBF0CF1B038C1700E95ACF /* MainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
-		5BDBF0D11B038C3000E95ACF /* MainScene.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MainScene.xml; sourceTree = "<group>"; };
 		5BDBF0D41B038C7800E95ACF /* MainSceneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainSceneModel.swift; sourceTree = "<group>"; };
 		5BDBF0D81B038F0D00E95ACF /* url.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = url.plist; sourceTree = "<group>"; };
 		5BDC06BA1B0394C200C486E0 /* CollectionScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionScene.swift; sourceTree = "<group>"; };
 		5BDC06BC1B03950500C486E0 /* CollectionSceneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionSceneModel.swift; sourceTree = "<group>"; };
 		5BDC06BE1B03955A00C486E0 /* CollectionCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionCellViewModel.swift; sourceTree = "<group>"; };
-		5BDC06C21B03960400C486E0 /* CollectionScene.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CollectionScene.xml; sourceTree = "<group>"; };
-		5BE27D471B03815A00418220 /* LoginScene.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LoginScene.xml; sourceTree = "<group>"; };
 		6FA5AECAF1463C83BB66DE59 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,14 +108,6 @@
 			path = README;
 			sourceTree = "<group>";
 		};
-		5B6512AD1B141A1E00B1BA89 /* crypto */ = {
-			isa = PBXGroup;
-			children = (
-				5B3F48841B8DB0F300FA30DD /* EncodeLoginScene.crypto */,
-			);
-			name = crypto;
-			sourceTree = "<group>";
-		};
 		5B7B80D91B0A0B0F0059CAEF /* LabelScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,8 +140,6 @@
 		5B8240BC1B03715600D58574 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				5BAE1D631B0379910002DD5E /* xml */,
-				5B6512AD1B141A1E00B1BA89 /* crypto */,
 				5B7B80D91B0A0B0F0059CAEF /* LabelScene */,
 				5B90B5C11B043889000C848D /* LoginScene */,
 				5BDC06B91B03949900C486E0 /* CollectionScene */,
@@ -169,6 +149,7 @@
 				5B8240C61B03715600D58574 /* Images.xcassets */,
 				5B8240C81B03715600D58574 /* LaunchScreen.xib */,
 				5B8240BD1B03715600D58574 /* Supporting Files */,
+				5BBC33D91BB3DFE00030B054 /* xml.bundle */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -218,22 +199,10 @@
 			name = LoginScene;
 			sourceTree = "<group>";
 		};
-		5BAE1D631B0379910002DD5E /* xml */ = {
-			isa = PBXGroup;
-			children = (
-				5B6512AB1B1414CF00B1BA89 /* LabelHtml.xml */,
-				5B7B80DC1B0A0B3F0059CAEF /* LabelScene.xml */,
-				5BE27D471B03815A00418220 /* LoginScene.xml */,
-				5BDBF0D11B038C3000E95ACF /* MainScene.xml */,
-				5BDC06C21B03960400C486E0 /* CollectionScene.xml */,
-				5BDBF0D81B038F0D00E95ACF /* url.plist */,
-			);
-			name = xml;
-			sourceTree = "<group>";
-		};
 		5BDBF0CC1B038B6800E95ACF /* Rescource */ = {
 			isa = PBXGroup;
 			children = (
+				5BDBF0D81B038F0D00E95ACF /* url.plist */,
 				5BDBF0CD1B038B7300E95ACF /* login-logo@2x.png */,
 			);
 			name = Rescource;
@@ -315,6 +284,8 @@
 		5B8240B21B03715600D58574 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = zhuchao;
 				TargetAttributes = {
@@ -351,18 +322,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BE27D481B03815A00418220 /* LoginScene.xml in Resources */,
+				5BBC33DA1BB3DFE00030B054 /* xml.bundle in Resources */,
 				5B8240CA1B03715600D58574 /* LaunchScreen.xib in Resources */,
 				5B8240E91B0377FC00D58574 /* EasyIOS-Swift.podspec in Resources */,
-				5BDBF0D21B038C3000E95ACF /* MainScene.xml in Resources */,
 				5BDBF0CE1B038B7300E95ACF /* login-logo@2x.png in Resources */,
-				5B7B80DD1B0A0B3F0059CAEF /* LabelScene.xml in Resources */,
-				5BDC06C31B03960400C486E0 /* CollectionScene.xml in Resources */,
 				5B8240C71B03715600D58574 /* Images.xcassets in Resources */,
-				5B6512AC1B1414CF00B1BA89 /* LabelHtml.xml in Resources */,
 				5BDBF0D91B038F0D00E95ACF /* url.plist in Resources */,
 				5B8240EA1B0377FC00D58574 /* LICENSE in Resources */,
-				5B3F48851B8DB0F300FA30DD /* EncodeLoginScene.crypto in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

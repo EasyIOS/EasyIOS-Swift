@@ -48,14 +48,14 @@ extension UIFont {
     public class func PrintFontFamily (font: FontName) {
         let arr = UIFont.fontNamesForFamilyName(font.rawValue)
         for name in arr {
-            println(name)
+            print(name)
         }
     }
     
     public class func Font (str:String) -> UIFont?  {
         var array = str.trimArray
         if array.count >= 2{
-            var font = array[1] as String
+            let font = array[1] as String
             if font == "system" {
                 return UIFont.systemFontOfSize(array[0].floatValue)
             }else{

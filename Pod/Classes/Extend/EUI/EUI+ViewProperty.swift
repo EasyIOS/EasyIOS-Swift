@@ -39,7 +39,7 @@ class ViewProperty :NSObject{
     }
     
     func view() -> UIView{
-        var view = UIView()
+        let view = UIView()
         view.tagProperty = self
         self.renderViewStyle(view)
         for subTag in self.subTags {
@@ -74,14 +74,14 @@ class ViewProperty :NSObject{
             if values.count == 1 {
                 if values[0].hasSuffix("%") {
                     var val = values[0]
-                    val.removeAtIndex(advance(val.startIndex, count(val) - 1))
+                    val.removeAtIndex(val.startIndex.advancedBy(val.characters.count - 1))
                     self.width = Constrain(name:.Width,value: CGFloat(val.floatValue/100))
                 }else{
                     self.width = Constrain(name:.Width,value: CGFloat(values[0].trim.floatValue),target:"")
                 }
             }else if values.count >= 2 && values[0].trim.hasSuffix("%"){
                 var val = values[0].trim
-                val.removeAtIndex(advance(val.startIndex, count(val) - 1))
+                val.removeAtIndex(val.startIndex.advancedBy(val.characters.count - 1))
                 self.width = Constrain(name:.Width,value: CGFloat(val.floatValue/100),target:values[1].trim)
             }
         }
@@ -91,14 +91,14 @@ class ViewProperty :NSObject{
             if values.count == 1 {
                 if values[0].hasSuffix("%") {
                     var val = values[0]
-                    val.removeAtIndex(advance(val.startIndex, count(val) - 1))
+                    val.removeAtIndex(val.startIndex.advancedBy(val.characters.count - 1))
                     self.height = Constrain(name:.Height,value: CGFloat(val.floatValue/100))
                 }else{
                     self.height = Constrain(name:.Height,value: CGFloat(values[0].trim.floatValue),target:"")
                 }
             }else if values.count >= 2 && values[0].trim.hasSuffix("%"){
                 var val = values[0].trim
-                val.removeAtIndex(advance(val.startIndex, count(val) - 1))
+                val.removeAtIndex(val.startIndex.advancedBy(val.characters.count - 1))
                 self.height = Constrain(name:.Height,value: CGFloat(val.floatValue/100),target:values[1].trim)
             }
         }
@@ -154,7 +154,7 @@ class ViewProperty :NSObject{
         
         
         for (key,value) in pelement.attributes {
-            if contains(self.tagOut, key as! String) == false {
+            if self.tagOut.contains((key as! String)) == false {
                 self.otherProperty[key as! String] = value
             }
         }
@@ -228,7 +228,7 @@ class ViewProperty :NSObject{
     
     func bindTheKeyPath(str:String,key:String) -> String?{
         let value =  Regex("\\{\\{(\\w+)\\}\\}").replace(str, withBlock: { (regx) -> String in
-            var keyPath = regx.subgroupMatchAtIndex(0)?.trim
+            let keyPath = regx.subgroupMatchAtIndex(0)?.trim
             self.bind[key] = keyPath
             return ""
         })

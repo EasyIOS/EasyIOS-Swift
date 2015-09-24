@@ -9,8 +9,8 @@
 import Foundation
 
 private func convertRange(range: NSRange, relativeToString string: String) -> Range<String.Index> {
-    let start = advance(string.startIndex, range.location)
-    let end = advance(string.startIndex, NSMaxRange(range))
+    let start = string.startIndex.advancedBy(range.location)
+    let end = string.startIndex.advancedBy(NSMaxRange(range))
     return Range(start: start, end: end)
 }
 
@@ -39,25 +39,25 @@ public struct Regex {
     
     private var matcherOptions: NSRegularExpressionOptions {
         get {
-            var opts: NSRegularExpressionOptions = nil
+            var opts: NSRegularExpressionOptions = NSRegularExpressionOptions.CaseInsensitive
             
             if options.contains(.CaseInsensitive) {
-                opts |= .CaseInsensitive
+                opts = NSRegularExpressionOptions.CaseInsensitive
             }
             if options.contains(.AllowCommentsAndWhitespace) {
-                opts |= .AllowCommentsAndWhitespace
+                opts = NSRegularExpressionOptions.AllowCommentsAndWhitespace
             }
             if options.contains(.IgnoreMetacharacters) {
-                opts |= .IgnoreMetacharacters
+                opts = NSRegularExpressionOptions.IgnoreMetacharacters
             }
             if options.contains(.DotMatchesLineSeparators) {
-                opts |= .DotMatchesLineSeparators
+                opts = NSRegularExpressionOptions.DotMatchesLineSeparators
             }
             if options.contains(.AnchorsMatchLines) {
-                opts |= .AnchorsMatchLines
+                opts = NSRegularExpressionOptions.AnchorsMatchLines
             }
             if options.contains(.UseUnicodeWordBoundaries) {
-                opts |= .UseUnicodeWordBoundaries
+                opts = NSRegularExpressionOptions.UseUnicodeWordBoundaries
             }
             
             return opts
@@ -66,31 +66,31 @@ public struct Regex {
     
     private var matcher: NSRegularExpression? {
         get {
-            return NSRegularExpression(pattern: self.pattern, options: self.matcherOptions, error: nil)
+            return try? NSRegularExpression(pattern: self.pattern, options: self.matcherOptions)
         }
     }
     
     public func test(string: String) -> Bool? {
-        return test(string, options: nil)
+        return test(string, options: [])
     }
     
     public func test(string: String, options: NSMatchingOptions) -> Bool? {
         // This function returns true if the regex matches, false if the regex does
         // not match, or nil if there is a syntax error in the regex itself.
         if let matcher = matcher {
-            return matcher.numberOfMatchesInString(string, options: options, range: NSMakeRange(0, count(string))) != 0
+            return matcher.numberOfMatchesInString(string, options: options, range: NSMakeRange(0, string.characters.count)) != 0
         } else {
             return nil
         }
     }
     
     public func match(string: String) -> [RegexMatch]? {
-        return match(string, options: nil)
+        return match(string, options: [])
     }
     
     public func match(string: String, options: NSMatchingOptions) -> [RegexMatch]? {
         if let matcher = matcher {
-            let cocoaMatches = matcher.matchesInString(string, options: options, range: NSMakeRange(0, count(string)))
+            let cocoaMatches = matcher.matchesInString(string, options: options, range: NSMakeRange(0, string.characters.count))
             var retval = [RegexMatch]()
             
             for match: AnyObject in cocoaMatches {
@@ -107,7 +107,7 @@ public struct Regex {
     
     public func match(string: String, options: NSMatchingOptions, startPosition: Int) -> [RegexMatch]? {
         if let matcher = matcher {
-            let cocoaMatches = matcher.matchesInString(string, options: options, range: NSMakeRange(startPosition, count(string) - startPosition))
+            let cocoaMatches = matcher.matchesInString(string, options: options, range: NSMakeRange(startPosition, string.characters.count - startPosition))
             var retval = [RegexMatch]()
             
             for match: AnyObject in cocoaMatches {
@@ -123,12 +123,12 @@ public struct Regex {
     }
     
     public func replace(string: String, withTemplate template: String) -> String? {
-        return replace(string, options: nil, withTemplate: template)
+        return replace(string, options: [], withTemplate: template)
     }
     
     public func replace(string: String, options: NSMatchingOptions, withTemplate template: String) -> String? {
         if let matcher = matcher {
-            var workString = NSMutableString(string: string)
+            let workString = NSMutableString(string: string)
             matcher.replaceMatchesInString(workString, options: options, range: NSMakeRange(0, workString.length), withTemplate: template)
             let retval = workString as NSString
             return String(retval)
@@ -138,7 +138,7 @@ public struct Regex {
     }
     
     public func replace(string: String, withBlock block: (RegexMatch) -> String) -> String? {
-        return replace(string, options: nil, withBlock: block)
+        return replace(string, options: [], withBlock: block)
     }
     
     public func replace(string: String, options: NSMatchingOptions, withBlock block: (RegexMatch) -> String) -> String? {
@@ -154,14 +154,14 @@ public struct Regex {
             // By applying the replacements in right-to-left order, I avoid having
             // to recalculate all the indices when a replacement changes the length
             // of the replaced substring.
-            sort(&replacements, {
+            replacements.sortInPlace({
                 (lhs, rhs) -> Bool in
                 let (leftRange, _) = lhs
                 let (rightRange, _) = rhs
                 
                 return leftRange.location < rightRange.location
             })
-            replacements = reverse(replacements)
+            replacements = Array(replacements.reverse())
             
             var retval = string
             for pair in replacements {

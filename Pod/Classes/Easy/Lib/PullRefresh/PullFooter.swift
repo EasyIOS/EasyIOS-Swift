@@ -23,7 +23,8 @@ public class PullFooter : Footer {
         scrollView.infiniteScrollingView!.frame = CGRectMake(0,scrollView.contentSize.height, scrollView.superview!.size.width, EZInfiniteScrollingViewHeight)
         scrollView.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.New, context: nil)
         
-        scrollView.infiniteScrollingView!.state *->> Bond<EZInfiniteScrollingState>{state in
+        
+        scrollView.infiniteScrollingView!.state.observe{state in
             switch (state){
             case .Ended:
                 self.arrowImage.hidden = true
@@ -62,30 +63,30 @@ public class PullFooter : Footer {
         }
     }
     
-    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
-        var scrollView = object as! UIScrollView
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        let scrollView = object as! UIScrollView
         if keyPath == "contentSize" && scrollView.contentSize.height > scrollView.bounds.size.height && scrollView.bounds.size.height > 0  {
             scrollView.infiniteScrollingView!.frame = CGRectMake(0, scrollView.contentSize.height, scrollView.superview!.size.width,EZInfiniteScrollingViewHeight)
         }
     }
     
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.commonInit()
     }
     
     func commonInit(){
-        var bundle = NSBundle(forClass: self.dynamicType)
-        var url = bundle.URLForResource("EasyIOS-Swift", withExtension: "bundle")
-        var imageBundle = NSBundle(URL: url!)
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let url = bundle.URLForResource("EasyIOS-Swift", withExtension: "bundle")
+        let imageBundle = NSBundle(URL: url!)
         if imageBundle?.loaded == false {
             imageBundle?.load()
         }
-        var arrow = UIImage(contentsOfFile: imageBundle!.pathForResource("arrow-down@2x", ofType: "png")!)
+        let arrow = UIImage(contentsOfFile: imageBundle!.pathForResource("arrow-down@2x", ofType: "png")!)
         
         arrowImage = UIImageView(image: arrow)
-        arrowImage.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin
+        arrowImage.autoresizingMask = [UIViewAutoresizing.FlexibleLeftMargin, UIViewAutoresizing.FlexibleRightMargin]
         self.addSubview(arrowImage)
         
         activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)

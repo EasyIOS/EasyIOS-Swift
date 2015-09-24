@@ -121,7 +121,6 @@ public extension NSManagedObject{
         if (properties.count == 0) {
             return
         }
-        let context = self.defaultContext()
         let transformed = self.dynamicType.transformProperties(properties)
         //Finish
         for (key, value) in transformed {
@@ -132,7 +131,7 @@ public extension NSManagedObject{
     }
     
     public func save() -> Bool {
-        return self.defaultContext().save()
+        return self.defaultContext().saveData()
     }
     
     public func delete() -> NSManagedObjectContext {
@@ -149,7 +148,7 @@ public extension NSManagedObject{
     }
     
     public static func create() -> NSManagedObject {
-        let o = NSEntityDescription.insertNewObjectForEntityForName(self.entityName(), inManagedObjectContext: self.defaultContext()) as! NSManagedObject
+        let o = NSEntityDescription.insertNewObjectForEntityForName(self.entityName(), inManagedObjectContext: self.defaultContext()) 
         if let idprop = self.autoIncrementingId() {
             o.setPrimitiveValue(NSNumber(integer: self.nextId()), forKey: idprop)
         }
@@ -173,7 +172,7 @@ public extension NSManagedObject{
     
     public static func nextId() -> Int {
         let key = "SwiftRecord-" + self.entityName() + "-ID"
-        if let idprop = self.autoIncrementingId() {
+        if self.autoIncrementingId() != nil {
             let id = NSUserDefaults.standardUserDefaults().integerForKey(key)
             NSUserDefaults.standardUserDefaults().setInteger(id + 1, forKey: key)
             return id
@@ -198,7 +197,7 @@ public extension NSManagedObject{
             let localKey = self.keyForRemoteKey(key)
             if attrs[localKey] != nil {
                 transformed[localKey] = value
-            } else if let rel = rels[localKey] as? NSRelationshipDescription {
+            } else if let rel = rels[localKey]  {
                 if EasyORM.generateRelationships {
                     if rel.toMany {
                         if let array = value as? [[String:AnyObject]] {
@@ -230,7 +229,7 @@ public extension NSManagedObject{
             return
         }
         let val: AnyObject = value!
-        if let attr = self.entity.attributesByName[key] as? NSAttributeDescription {
+        if let attr = self.entity.attributesByName[key] {
             let attrType = attr.attributeType
             if attrType == NSAttributeType.StringAttributeType && value is NSNumber {
                 self.setPrimitiveValue((val as! NSNumber).stringValue, forKey: key)
@@ -277,7 +276,7 @@ public extension NSManagedObject{
         }
         let entity = NSEntityDescription.entityForName(self.entityName(), inManagedObjectContext: self.defaultContext())!
         let properties = entity.propertiesByName
-        if properties[entity.propertiesByName] != nil {
+        if properties[remote] != nil {
             _cachedMappings![remote] = remote
             return remote
         }
@@ -312,9 +311,9 @@ public extension NSManagedObject{
         if cls == nil {
             cls = (NSClassFromString(rel.destinationEntity!.managedObjectClassName) as! NSManagedObject.Type)
         } else {
-            println("Got class name from entity setup")
+            print("Got class name from entity setup")
         }
-        var set = NSMutableSet()
+        let set = NSMutableSet()
         for d in array {
             set.addObject(cls!.findOrCreate(d))
         }
@@ -322,9 +321,9 @@ public extension NSManagedObject{
     }
     
     private static func generateObject(rel: NSRelationshipDescription, dict: [String:AnyObject]) -> NSManagedObject {
-        var entity = rel.destinationEntity!
+        let entity = rel.destinationEntity!
         
-        var cls: NSManagedObject.Type = NSClassFromString(entity.managedObjectClassName) as! NSManagedObject.Type
+        let cls: NSManagedObject.Type = NSClassFromString(entity.managedObjectClassName) as! NSManagedObject.Type
         return cls.findOrCreate(dict)
     }
     
@@ -336,16 +335,16 @@ public extension NSManagedObject{
     private static func entityName() -> String {
         var name = NSStringFromClass(self)
         if name.rangeOfString(".") != nil {
-            let comp = split(name) {$0 == "."}
+            let comp = name.characters.split {$0 == "."}.map { String($0) }
             if comp.count > 1 {
                 name = comp.last!
             }
         }
         if name.rangeOfString("_") != nil {
-            var comp = split(name) {$0 == "_"}
+            var comp = name.characters.split {$0 == "_"}.map { String($0) }
             var last: String = ""
             var remove = -1
-            for (i,s) in enumerate(comp.reverse()) {
+            for (i,s) in Array(comp.reverse()).enumerate() {
                 if last == s {
                     remove = i
                 }
@@ -353,7 +352,7 @@ public extension NSManagedObject{
             }
             if remove > -1 {
                 comp.removeAtIndex(remove)
-                name = "_".join(comp)
+                name = comp.joinWithSeparator("_")
             }
         }
         return name
@@ -362,9 +361,9 @@ public extension NSManagedObject{
 
 public extension String {
     var camelCase: String {
-        let spaced = self.stringByReplacingOccurrencesOfString("_", withString: " ", options: nil, range:Range<String.Index>(start: self.startIndex, end: self.endIndex))
+        let spaced = self.stringByReplacingOccurrencesOfString("_", withString: " ", options: [], range:Range<String.Index>(start: self.startIndex, end: self.endIndex))
         let capitalized = spaced.capitalizedString
-        let spaceless = capitalized.stringByReplacingOccurrencesOfString(" ", withString: "", options:nil, range:Range<String.Index>(start:self.startIndex, end:self.endIndex))
+        let spaceless = capitalized.stringByReplacingOccurrencesOfString(" ", withString: "", options:[], range:Range<String.Index>(start:self.startIndex, end:self.endIndex))
         return spaceless.stringByReplacingCharactersInRange(Range<String.Index>(start:spaceless.startIndex, end:spaceless.startIndex.successor()), withString: "\(spaceless[spaceless.startIndex])".lowercaseString)
     }
 }

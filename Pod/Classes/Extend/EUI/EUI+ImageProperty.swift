@@ -11,9 +11,9 @@ import Foundation
 class ImageProperty:ViewProperty{
     var src = ""
     override func view() -> UIImageView{
-        var view = UIImageView()
+        let view = UIImageView()
         view.tagProperty = self
-        if !isEmpty(self.src) {
+        if !self.src.characters.isEmpty {
             if self.src.hasPrefix("http") {
                 view.kf_setImageWithURL(NSURL(string: self.src)!)
             }else{
