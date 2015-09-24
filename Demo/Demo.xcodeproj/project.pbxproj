@@ -284,10 +284,7 @@
 		5B8240B21B03715600D58574 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-<<<<<<< HEAD
 				LastSwiftMigration = 0700;
-=======
->>>>>>> 36dc28535720c6e2c087370b9fdc96d0f15253a8
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = zhuchao;

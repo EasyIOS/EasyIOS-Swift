@@ -1,7 +1,7 @@
 
 ![image](https://raw.githubusercontent.com/zhuchaowe/EasyIOS/gh-pages/images/logo.png)
 
-EasyIOS Swift版本新鲜出炉！ 
+EasyIOS Swift 2.0版本新鲜出炉！ 
 =======
 
 [![Version](https://img.shields.io/cocoapods/v/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
@@ -144,7 +144,7 @@ it, simply add the following line to your Podfile:
 ```ruby
 platform :ios, '8.0'
 use_frameworks!
-pod "EasyIOS-Swift"
+pod "EasyIOS-Swift" :git => 'https://github.com/EasyIOS/EasyIOS-Swift'
 ```
 
 import the EasyIOS
