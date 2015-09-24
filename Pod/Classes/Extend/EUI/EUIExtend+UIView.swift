@@ -16,7 +16,7 @@ private var UIViewTagIdHandle :UInt8 = 1
 private var UIViewViewPropertyHandle :UInt8 = 2
 private var UIViewConstraintGroupHandle :UInt8 = 3
 private var UIViewWatchHandle :UInt8 = 4
-//private var TableViewDataSourceBond :UInt8 = 5
+private var UIViewDisposeBag :UInt8 = 5
 //private var CollectionViewDataSourceBond :UInt8 = 6
 private var attributedLabelDelegateHandle :UInt8 = 7
 
@@ -69,6 +69,19 @@ extension EUScene{
 }
 
 extension UIView {
+    
+    public var disposeBag:DisposeBag?{
+        get{
+            if let d: AnyObject = objc_getAssociatedObject(self, &UIViewDisposeBag) {
+                return d as? DisposeBag
+            }else{
+                return nil
+            }
+        }set(b){
+            objc_setAssociatedObject(self, &UIViewDisposeBag, b, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    
     public class func formTag(tag:String) -> UIView {
         if let scene = URLNavigation.currentViewController() as? EUScene {
             if let view = scene.eu_viewByTag(tag) {
@@ -171,8 +184,12 @@ extension UIView {
             }
         }
         
+        self.disposeBag?.dispose()
         if let selector = property.onTapBind {
-            self.whenTap(selector.tapNumber){
+            if self.disposeBag == nil {
+                self.disposeBag = DisposeBag()
+            }
+            self.disposeBag?.addDisposable(self.whenTap(selector.tapNumber){
                 let script = Regex("\\{\\{(\\w+)\\}\\}").replace(selector.selector, withBlock: { (regx) -> String in
                     let bindKey = regx.subgroupMatchAtIndex(0)?.trim
                     if let value = bind!.valueForKey(bindKey!) as? String{
@@ -185,11 +202,14 @@ extension UIView {
                     return ""
                 })
                 scene.eval(script)
-            }
+            })
         }
         
         if let selector = property.onSwipeBind {
-            self.whenSwipe(selector.numberOfTouches, direction: selector.direction){
+            if self.disposeBag == nil {
+                self.disposeBag = DisposeBag()
+            }
+            self.disposeBag?.addDisposable(self.whenSwipe(selector.numberOfTouches, direction: selector.direction){
                 let script = Regex("\\{\\{(\\w+)\\}\\}").replace(selector.selector, withBlock: { (regx) -> String in
                     let bindKey = regx.subgroupMatchAtIndex(0)?.trim
                     if let value = bind!.valueForKey(bindKey!) as? String{
@@ -202,7 +222,7 @@ extension UIView {
                     return ""
                 })
                 scene.eval(script)
-            }
+            })
         }
         
     }
@@ -211,18 +231,24 @@ extension UIView {
     func renderGesture(scene:EUScene){
         let property =  self.tagProperty as ViewProperty
         
+        self.disposeBag?.dispose()
         if let selector = property.onTap {
-            self.whenTap(selector.tapNumber){
-                scene.eval(selector.selector)
+            if self.disposeBag == nil {
+                self.disposeBag = DisposeBag()
             }
+            self.disposeBag?.addDisposable(self.whenTap(selector.tapNumber){
+                scene.eval(selector.selector)
+            })
         }
         
         if let selector = property.onSwipe {
-            self.whenSwipe(selector.numberOfTouches, direction: selector.direction){
-                scene.eval(selector.selector)
+            if self.disposeBag == nil {
+                self.disposeBag = DisposeBag()
             }
+            self.disposeBag?.addDisposable(self.whenSwipe(selector.numberOfTouches, direction: selector.direction){
+                scene.eval(selector.selector)
+            })
         }
-        
     }
     
     func renderSelector(scene:EUScene){

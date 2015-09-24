@@ -62,7 +62,10 @@ class CollectionScene: EUScene,UICollectionViewDelegate {
         }
         
         self.sceneModel.viewModelList.lift().bindTo(collectionView!) { (indexPath, dataArray, collectionView) -> UICollectionViewCell in
-            collectionView.dequeueReusableCell("cell", forIndexPath: indexPath, target: self, bind: dataArray[indexPath.section][indexPath.row])
+            collectionView.dequeueReusableCell("cell",
+                forIndexPath: indexPath,
+                target: self,
+                bind: dataArray[indexPath.section][indexPath.row])
         }
     }
 
