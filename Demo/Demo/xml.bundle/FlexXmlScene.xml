@@ -36,8 +36,7 @@
             flex-direction="column"
             align-items="flex-end"
             background-color="gray"
-            id="second"
-            >
+            id="second">
             <span
                 text-alignment="center"
                 flex-padding="{10,10,10,10}"
@@ -74,14 +73,28 @@
                 flex-margin="{8,8,8,8}"
                 flex="1"
                 background-color="blue"
-                >3</span>
+                >1</span>
             <span
                 text-alignment="center"
                 flex="1"
                 flex-padding="{10,10,10,10}"
                 flex-margin="{8,8,8,8}"
                 background-color="blue"
-                >2</span>
+                >1</span>
+            <span
+                text-alignment="center"
+                flex="1"
+                flex-padding="{10,10,10,10}"
+                flex-margin="{8,8,8,8}"
+                background-color="blue"
+                >1</span>
+            <span
+                text-alignment="center"
+                flex="1"
+                flex-padding="{10,10,10,10}"
+                flex-margin="{8,8,8,8}"
+                background-color="blue"
+                >1</span>
             <span
                 text-alignment="center"
                 flex="1"

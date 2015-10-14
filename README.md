@@ -23,7 +23,10 @@ EasyIOS For Swift 2.0
 ## Features
 
 * MVVM : `Model-View-ViewModel` inspired by [Functional Reactive Programming](http://en.wikipedia.org/wiki/Functional_reactive_programming) 
-* HTML To Native : Transform HTML&CSS to Native Control,
+* HTML To Native : Transform HTML&CSS to Native Control.
+* FlexBox Support:It can uses Facebook's [flexbox implementation](https://github.com/facebook/css-layout) ，and work well with AutoLayout。
+![flexBox](README/flexbox.png)
+
 * JavaScript and Native Bridge: We can declare the js function in native and call the js function in html
 * DataBinding : We can use the SwiftBond to Bind the data via swift,and use the EZViewModel to Bind the data via html.example `{{title}}`
 * Reflect Cocoa Touch : Reflect all the Cocoa Touch Api ,we can use the Cocoa Touch Api via HTML 
