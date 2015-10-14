@@ -26,6 +26,7 @@ EasyIOS Swift 2.0版本新鲜出炉！
 
 ![flexBox](flexbox.png)
 
+
 * DataBinding : 采用了第三方库`SwiftBond`,可以实现数据绑定操作，同样HTML里也可以进行数据绑定操作，识别标签是双大括号比如`{{title}}`
 * Reflect Cocoa Touch : 可以反射所有Cocoa Touch中UIKit的所有属性，目前实现了一部分，后面大家一起来维护，增加更多API
 * AutoLayout : 在HTML进行`Autolayout`布局，真的很简单！
