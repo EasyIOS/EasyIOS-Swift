@@ -138,7 +138,7 @@ public class EUI: NSObject {
             }
             if let newHtml = Regex("@import\\(([^\\)]*)\\)").replace(finalHtml,withBlock: { (regx) -> String in
                 let subFile = regx.subgroupMatchAtIndex(0)?.trim
-                let subPath = NSBundle.mainBundle().pathForResource(subFile, ofType: suffix)!
+                let subPath = NSBundle(path: BUNDLE_PATH)!.pathForResource(subFile, ofType: suffix)!
                 
                 if NSFileManager.defaultManager().fileExistsAtPath(subPath) {
                     return try! String(contentsOfFile:subPath, encoding: NSUTF8StringEncoding)

@@ -4,6 +4,10 @@
 <dict>
 	<key>demo</key>
 	<dict>
+		<key>demo://flexml</key>
+		<string>FlexXmlScene</string>
+		<key>demo://flex</key>
+		<string>FlexScene</string>
 		<key>demo://encodelogin</key>
 		<string>EncodeLoginScene</string>
 		<key>demo://collection</key>

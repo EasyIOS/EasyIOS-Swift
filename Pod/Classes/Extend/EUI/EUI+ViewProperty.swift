@@ -30,6 +30,18 @@ class ViewProperty :NSObject{
     var frame:CGRect?
     var bind = Dictionary<String,String>()
     var contentText:String?
+    var flexEnable = false
+    
+    var flexDirection:FLEXBOXFlexDirection = .Column
+    var flexContentDirection:FLEXBOXContentDirection = .LeftToRight
+    var flexJustifyContent:FLEXBOXJustification = .FlexStart
+    var flexAlignSelf:FLEXBOXAlignment = .Auto
+    var flexAlignItems:FLEXBOXAlignment = .Stretch
+    
+    var flexMargin = UIEdgeInsetsZero
+    var flexPadding = UIEdgeInsetsZero
+    var flexWrap = false
+    var flex:CGFloat = 0.0
     
     func getView() -> UIView{
         if self.tag == nil {
@@ -39,19 +51,67 @@ class ViewProperty :NSObject{
     }
     
     func view() -> UIView{
-        let view = UIView()
-        view.tagProperty = self
-        self.renderViewStyle(view)
-        for subTag in self.subTags {
-            view.addSubview(subTag.getView())
+        if(flexEnable){
+            let view = FLEXBOXContainerView()
+            view.tagProperty = self
+            self.renderViewStyle(view)
+            for subTag in self.subTags {
+                view.addSubview(subTag.getView())
+            }
+            return view
+        }else{
+            let view = UIView()
+            view.tagProperty = self
+            self.renderViewStyle(view)
+            for subTag in self.subTags {
+                view.addSubview(subTag.getView())
+            }
+            return view
         }
-        return view
     }
     
     func renderTag(pelement:OGElement){
-        self.tagOut += ["id","style","align","margin","type","image-mode","name","width","height","class","ontap","onswipe","ontap-bind","onswipe-bind","frame","reuseid","push","present"]
+        self.tagOut += ["id","style","align","margin","type","image-mode","name","width","height","class","ontap","onswipe","ontap-bind","onswipe-bind","frame","reuseid","push","present","align-self","align-items","justify-content","flex-direction","content-direction","flex-margin","flex-padding","flex-wrap","flex"]
         
         self.tag = pelement.tag
+        
+        if let flexMargin = EUIParse.string(pelement, key: "flex-margin"){
+            self.flexEnable = true
+            self.flexMargin = UIEdgeInsetsFromString(flexMargin)
+        }
+        if let flexPadding = EUIParse.string(pelement, key: "flex-padding"){
+            self.flexEnable = true
+            self.flexPadding = UIEdgeInsetsFromString(flexPadding)
+        }
+        if let flexWrap = EUIParse.string(pelement, key: "flex-wrap"){
+            self.flexEnable = true
+            self.flexWrap = flexWrap.boolValue
+        }
+        if let flex = EUIParse.string(pelement, key: "flex"){
+            self.flexEnable = true
+            self.flex = flex.floatValue
+        }
+        
+        if let alignSelf = EUIParse.string(pelement, key: "align-self"){
+            self.flexEnable = true
+            self.flexAlignSelf = ViewProperty.alignItemsFormat(alignSelf)
+        }
+        if let alignItems = EUIParse.string(pelement, key: "align-items"){
+            self.flexEnable = true
+            self.flexAlignItems = ViewProperty.alignItemsFormat(alignItems)
+        }
+        if let justifyContent = EUIParse.string(pelement, key: "justify-content"){
+            self.flexEnable = true
+            self.flexJustifyContent = ViewProperty.justifyContentFormat(justifyContent)
+        }
+        if let flexDirection = EUIParse.string(pelement, key: "flex-direction"){
+            self.flexEnable = true
+            self.flexDirection = ViewProperty.flexDirectionFormat(flexDirection)
+        }
+        if let contentDirection = EUIParse.string(pelement, key: "content-direction"){
+            self.flexEnable = true
+            self.flexContentDirection = ViewProperty.flexContentDirectionFormat(contentDirection)
+        }
         
         if let tagId = EUIParse.string(pelement,key:"id") {
             self.tagId = tagId
@@ -152,7 +212,6 @@ class ViewProperty :NSObject{
             }
         }
         
-        
         for (key,value) in pelement.attributes {
             if self.tagOut.contains((key as! String)) == false {
                 self.otherProperty[key as! String] = value
@@ -163,6 +222,17 @@ class ViewProperty :NSObject{
     
     func renderViewStyle(view:UIView){
         view.contentMode = self.imageMode;
+        if(self.flexEnable){
+            view.flexDirection = self.flexDirection
+            view.flexContentDirection = self.flexContentDirection
+            view.flexAlignItems = self.flexAlignItems
+            view.flexAlignSelf = self.flexAlignSelf
+            view.flexJustifyContent = self.flexJustifyContent
+            view.flexMargin = self.flexMargin
+            view.flexPadding = self.flexPadding
+            view.flexWrap = self.flexWrap
+            view.flex = self.flex
+        }
         
         if let frame = self.frame {
             view.frame = frame
@@ -196,36 +266,99 @@ class ViewProperty :NSObject{
     class func imageModeFormat(str:String) -> UIViewContentMode{
         switch str.trim {
         case "ScaleToFill":
-            return UIViewContentMode.ScaleToFill
+            return .ScaleToFill
         case "ScaleAspectFit":
-            return UIViewContentMode.ScaleAspectFit
+            return .ScaleAspectFit
         case "ScaleAspectFill":
-            return UIViewContentMode.ScaleAspectFill
+            return .ScaleAspectFill
         case "Redraw":
-            return UIViewContentMode.Redraw
+            return .Redraw
         case "Center":
-            return UIViewContentMode.Center
+            return .Center
         case "Top":
-            return UIViewContentMode.Top
+            return .Top
         case "Bottom":
-            return UIViewContentMode.Bottom
+            return .Bottom
         case "Left":
-            return UIViewContentMode.Left
+            return .Left
         case "Right":
-            return UIViewContentMode.Right
+            return .Right
         case "TopLeft":
-            return UIViewContentMode.TopLeft
+            return .TopLeft
         case "TopRight":
-            return UIViewContentMode.TopRight
+            return .TopRight
         case "BottomLeft":
-            return UIViewContentMode.BottomLeft
+            return .BottomLeft
         case "BottomRight":
-            return UIViewContentMode.BottomRight
+            return .BottomRight
         default:
-            return UIViewContentMode.ScaleToFill
+            return .ScaleToFill
         }
     }
     
+    
+    class func justifyContentFormat(str:String) -> FLEXBOXJustification{
+        switch str.trim {
+        case "center":
+            return .Center
+        case "flex-start":
+            return .FlexStart
+        case "flex-end":
+            return .FlexEnd
+        case "space-between":
+            return .SpaceBetween
+        case "space-around":
+            return .SpaceAround
+        default:
+            return .FlexStart
+        }
+    }
+    
+    class func alignItemsFormat(str:String) -> FLEXBOXAlignment{
+        switch str.trim {
+        case "center":
+            return .Center
+        case "flex-start":
+            return .FlexStart
+        case "flex-end":
+            return .FlexEnd
+        case "stretch":
+            return .Stretch
+        case "auto":
+            return .Auto
+        default:
+            return .Auto
+        }
+    }
+    
+    class func flexDirectionFormat(str:String) -> FLEXBOXFlexDirection{
+        switch str.trim {
+        case "column":
+            return .Column
+        case "row":
+            return .Row
+        case "row-reverse":
+            return .RowReverse
+        case "column-reverse":
+            return .ColumnReverse
+        default:
+            return .Row
+        }
+    }
+    
+    class func flexContentDirectionFormat(str:String) -> FLEXBOXContentDirection{
+        switch str.trim {
+        case "ltr":
+            return .LeftToRight
+        case "rtl":
+            return .RightToLeft
+        case "inherit":
+            return .Inherit
+        default:
+            return .LeftToRight
+        }
+    }
+
     func bindTheKeyPath(str:String,key:String) -> String?{
         let value =  Regex("\\{\\{(\\w+)\\}\\}").replace(str, withBlock: { (regx) -> String in
             let keyPath = regx.subgroupMatchAtIndex(0)?.trim

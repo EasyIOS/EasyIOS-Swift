@@ -39,8 +39,13 @@ public extension NSObject{
         }, finally: nil)
     }
     
-    public func attrs(dict:[String : AnyObject]!){
+    public func attrs(var dict:[String : AnyObject]!){
         SwiftTryCatch.`try`({
+            for (key, value) in dict {
+                if let str = value as? String {
+                    dict[key.toKeyPath] = str.anyValue(key.toKeyPath)
+                }
+            }
             self.setValuesForKeysWithDictionary(dict)
         }, `catch`: { (error) in
             print("JS Error:\(error.description)")

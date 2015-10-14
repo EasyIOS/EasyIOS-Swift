@@ -19,6 +19,9 @@ class MainScene: EUScene,UITableViewDelegate{
         super.viewDidLoad()
         self.title = "EasyIOS"
 
+//        let label = UILabel()
+//        label.flexAlignItems = FLEXBOXAlignment.Center
+        
         // Do any additional setup after loading the view.
     }
     
@@ -44,12 +47,16 @@ class MainScene: EUScene,UITableViewDelegate{
                 tableView?.pullToRefreshView?.stopAnimating()
             }
         }
-        ObservableArray([self.sceneModel.dataArray,self.sceneModel.dataArray,self.sceneModel.dataArray])
+        
+        ObservableArray([
+            self.sceneModel.dataArray,
+            self.sceneModel.dataArray,
+            self.sceneModel.dataArray])
             .bindTo(tableView!) { (indexPath, dataArray, tableView) -> UITableViewCell in
-            let data = dataArray[indexPath.section][indexPath.row]
-            let cell = tableView.dequeueReusableCell("cell", forIndexPath: indexPath, target: self, bind: data)
-            cell.selectionStyle = .None
-            return cell
+                let data = dataArray[indexPath.section][indexPath.row]
+                let cell = tableView.dequeueReusableCell("cell", forIndexPath: indexPath, target: self, bind: data)
+                cell.selectionStyle = .None
+                return cell
         }
 
     }

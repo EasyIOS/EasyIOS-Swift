@@ -1,7 +1,7 @@
 <style>
     .contentAlign{
         edge:0 0 0 0;
-    left:0 root;
+        left:0 root;
         right:0 root;
     }
     .inputStyle{
@@ -34,7 +34,7 @@
             placeholder:"hello",
             secureTextEntry:"NO"
         });
-        
+
 <!--        var logo = document.getElementById("logo")-->
 <!--        password.callWithObject("test:",logo);-->
 

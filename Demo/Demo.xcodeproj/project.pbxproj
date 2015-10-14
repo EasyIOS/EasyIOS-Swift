@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B3FCA9A1BCDF6AB00AF20CD /* FlexScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FCA991BCDF6AB00AF20CD /* FlexScene.swift */; settings = {ASSET_TAGS = (); }; };
+		5B4C52211BCE2E91003E0016 /* FlexXmlScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4C52201BCE2E91003E0016 /* FlexXmlScene.swift */; settings = {ASSET_TAGS = (); }; };
 		5B5950DF1B1478D10013A406 /* Chinese.md in Sources */ = {isa = PBXBuildFile; fileRef = 5B5950DE1B1478D10013A406 /* Chinese.md */; };
 		5B6512B11B141A9E00B1BA89 /* EncodeLoginScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6512B01B141A9E00B1BA89 /* EncodeLoginScene.swift */; };
 		5B7B80C51B08D8E00059CAEF /* MainLabelDeleage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		0BAFEE4C5E077414790C2042 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		55CB89BDD03972BB5036E6DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B3FCA991BCDF6AB00AF20CD /* FlexScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlexScene.swift; sourceTree = "<group>"; };
+		5B4C52201BCE2E91003E0016 /* FlexXmlScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlexXmlScene.swift; sourceTree = "<group>"; };
 		5B5950DE1B1478D10013A406 /* Chinese.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Chinese.md; sourceTree = "<group>"; };
 		5B6512B01B141A9E00B1BA89 /* EncodeLoginScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncodeLoginScene.swift; sourceTree = "<group>"; };
 		5B7B80C41B08D8E00059CAEF /* MainLabelDeleage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainLabelDeleage.swift; sourceTree = "<group>"; };
@@ -100,6 +104,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5B3FCA981BCDF68B00AF20CD /* FlexScene */ = {
+			isa = PBXGroup;
+			children = (
+				5B3FCA991BCDF6AB00AF20CD /* FlexScene.swift */,
+				5B4C52201BCE2E91003E0016 /* FlexXmlScene.swift */,
+			);
+			name = FlexScene;
+			sourceTree = "<group>";
+		};
 		5B5950DD1B1478D10013A406 /* README */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +153,7 @@
 		5B8240BC1B03715600D58574 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				5B3FCA981BCDF68B00AF20CD /* FlexScene */,
 				5B7B80D91B0A0B0F0059CAEF /* LabelScene */,
 				5B90B5C11B043889000C848D /* LoginScene */,
 				5BDC06B91B03949900C486E0 /* CollectionScene */,
@@ -286,7 +300,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = zhuchao;
 				TargetAttributes = {
 					5B8240B91B03715600D58574 = {
@@ -397,8 +411,10 @@
 				5BDC06BD1B03950500C486E0 /* CollectionSceneModel.swift in Sources */,
 				5B90B5CD1B04BFF8000C848D /* FeedRequest.swift in Sources */,
 				5B6512B11B141A9E00B1BA89 /* EncodeLoginScene.swift in Sources */,
+				5B4C52211BCE2E91003E0016 /* FlexXmlScene.swift in Sources */,
 				5BDBF0D51B038C7800E95ACF /* MainSceneModel.swift in Sources */,
 				5BDC06BF1B03955A00C486E0 /* CollectionCellViewModel.swift in Sources */,
+				5B3FCA9A1BCDF6AB00AF20CD /* FlexScene.swift in Sources */,
 				5BDC06BB1B0394C200C486E0 /* CollectionScene.swift in Sources */,
 				5B7B80DB1B0A0B2A0059CAEF /* LabelScene.swift in Sources */,
 				5B5950DF1B1478D10013A406 /* Chinese.md in Sources */,
@@ -461,6 +477,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -530,6 +547,7 @@
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.iosx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -546,6 +564,7 @@
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.iosx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -566,6 +585,7 @@
 				);
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.iosx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
 			};
@@ -581,6 +601,7 @@
 				);
 				INFOPLIST_FILE = DemoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "me.iosx.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Demo.app/Demo";
 			};

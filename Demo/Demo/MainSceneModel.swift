@@ -61,6 +61,18 @@ class MainSceneModel: EZSceneModel {
             subTitle: "<p>Hello <a href='demo://login'>World!</a></p>",
             srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
             link:"demo://LabelScene"))
+        self.dataArray.append(MainCellViewModel(
+            title: "native版本的flex模型演示",
+            subTitle: "native版本的flex模型演示",
+            srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
+            link:"demo://flex"))
+        self.dataArray.append(MainCellViewModel(
+            title: "xml版本的flex模型演示",
+            subTitle: "xml版本的flex模型演示",
+            srcUrl: "http://d.hiphotos.baidu.com/zhidao/pic/item/562c11dfa9ec8a13e028c4c0f603918fa0ecc0e4.jpg",
+            link:"demo://flexml"))
+    
+        
         self.sectionArray.append(MainSectionViewModel(
             title: "section 1"))
         self.sectionArray.append(MainSectionViewModel(

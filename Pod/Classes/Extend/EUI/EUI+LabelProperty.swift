@@ -15,6 +15,7 @@ import JavaScriptCore
 class LabelProperty:ViewProperty{
     var linkStyle = Dictionary<NSObject,AnyObject>()
     var activeLinkStyle = Dictionary<NSObject,AnyObject>()
+    var textAlignment:NSTextAlignment = .Left
     
     override func view() -> UIView{
         if self.style.characters.isEmpty {
@@ -40,15 +41,19 @@ class LabelProperty:ViewProperty{
     
     override func renderTag(pelement: OGElement) {
         
-        self.tagOut += ["link-style","active-link-style"]
+        self.tagOut += ["link-style","active-link-style","text-alignment"]
         super.renderTag(pelement)
         
+        if let textAlignment = EUIParse.string(pelement,key:"text-alignment") {
+            self.textAlignment = LabelProperty.textAlignmentFormat(textAlignment)
+        }
+        
         if let linkStyle = EUIParse.string(pelement,key:"link-style") {
-            self.linkStyle = self.formatLink(linkStyle)
+            self.linkStyle = LabelProperty.formatLink(linkStyle)
         }
         
         if let linkStyle = EUIParse.string(pelement,key:"active-link-style") {
-            self.activeLinkStyle = self.formatLink(linkStyle)
+            self.activeLinkStyle = LabelProperty.formatLink(linkStyle)
         }
         
         var html = ""
@@ -70,7 +75,31 @@ class LabelProperty:ViewProperty{
         
     }
     
-    func formatLink(linkStyle:String) -> [NSObject:AnyObject]{
+    override func renderViewStyle(view:UIView){
+        super.renderViewStyle(view)
+        let sview = view as! UILabel
+        sview.textAlignment = self.textAlignment
+
+    }
+    
+    class func textAlignmentFormat(align:String) ->NSTextAlignment {
+        switch(align.trim){
+            case "center":
+                return NSTextAlignment.Center
+            case "left":
+                return NSTextAlignment.Left
+            case "right":
+                return NSTextAlignment.Right
+            case "justified":
+                return NSTextAlignment.Justified
+            case "natural":
+                return NSTextAlignment.Natural
+            default:
+                return NSTextAlignment.Natural
+        }
+    }
+    
+    class func formatLink(linkStyle:String) -> [NSObject:AnyObject]{
         let linkArray = linkStyle.trimArrayBy(";")
         var dict = Dictionary<NSObject,AnyObject>()
         for str in linkArray {

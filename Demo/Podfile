@@ -1,6 +1,4 @@
 platform :ios, '8.0'
 use_frameworks!
 pod "EasyIOS-Swift", :path => "../"
-pod 'HanekeSwift', :git => 'https://github.com/meteochu/HanekeSwift', :branch => 'swift-2.0'
-pod 'Bond', '~> 4.0.0-beta3'
 pod 'SVProgressHUD', '~> 1.1.3'
