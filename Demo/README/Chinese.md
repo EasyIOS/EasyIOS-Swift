@@ -23,6 +23,7 @@ EasyIOS Swift 2.0版本新鲜出炉！
 * MVVM : `Model-View-ViewModel` 实现代码分离，分离ViewController中的大量逻辑代码，解决ViewController承担了过多角色而造成的代码质量低下。增加视图与模型的绑定特性。 
 * HTML To Native : 利用类似HTML的语言来对UI进行布局，简单易学，可重用
 * FlexBox Support:支持facebook的[flexbox实现](https://github.com/facebook/css-layout) ，可以很好的配合AutoLayout进行布局。
+
 ![flexBox](flexbox.png)
 
 * DataBinding : 采用了第三方库`SwiftBond`,可以实现数据绑定操作，同样HTML里也可以进行数据绑定操作，识别标签是双大括号比如`{{title}}`
