@@ -28,7 +28,7 @@ private var managerHandle: UInt8 = 2
 public class EZRequest: NSObject {
     public var output = Dictionary<String,AnyObject>() // 序列化后的数据
     public var params = Dictionary<String,AnyObject>() //使用字典参数
-    public var responseString:String? // 获取的字符串数据
+    public var responseString:String? // 获取字符串数据
     public var error:ErrorType? //请求的错误
     public var state = Observable<RequestState>(.Default) //Request状态
     public var url:NSURL? //请求的链接
