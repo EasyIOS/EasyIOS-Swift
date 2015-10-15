@@ -39,9 +39,7 @@ class CollectionViewProperty: ScrollViewProperty {
                 self.flowLayout[key.toKeyPath] = val
             }
         }
-        
         self.layout = EUIParse.string(pelement, key: "layout")
-        
     }
 
     func getLayout() -> UICollectionViewLayout{
@@ -76,14 +74,12 @@ class CollectionViewProperty: ScrollViewProperty {
     
     override func childLoop(pelement: OGElement) {
         for element in pelement.children {
-            if element.isKindOfClass(OGElement) {
-                let ele = element as! OGElement
-                if let type = EUIParse.string(ele, key: "type"),
-                    let tagId = EUIParse.string(ele, key: "id"),
-                    let property = EUIParse.loopElement(ele){
-                    if type.lowercaseString == "cell"  {
-                        self.reuseCell[tagId] = property
-                    }
+            if let ele = element as? OGElement,
+                let type = EUIParse.string(ele, key: "type"),
+                let tagId = EUIParse.string(ele, key: "id"),
+                let property = EUIParse.loopElement(ele){
+                if type.lowercaseString == "cell"  {
+                    self.reuseCell[tagId] = property
                 }
             }
         }

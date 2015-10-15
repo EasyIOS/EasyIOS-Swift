@@ -49,16 +49,15 @@ class ScrollViewProperty:ViewProperty{
         if let contentOffset = EUIParse.string(pelement,key:"content-offset") {
             self.contentOffset = CGPointFromString(contentOffset)
         }
+        
         if let contentSize = EUIParse.string(pelement,key:"content-size") {
             self.contentSize = CGSizeFromString(contentSize)
         }
+        
         if let indicatorStyle = EUIParse.string(pelement,key:"indicator-style") {
-            if indicatorStyle == "white" {
-                self.indicatorStyle = .White
-            }else if indicatorStyle == "Black"{
-                self.indicatorStyle = .Black
-            }
+            self.indicatorStyle = indicatorStyle.scrollViewIndicatorStyle
         }
+        
         if let scrollIndicatorInsets = EUIParse.string(pelement,key:"scroll-indicator-insets") {
             self.scrollIndicatorInsets = UIEdgeInsetsFromString(scrollIndicatorInsets)
         }

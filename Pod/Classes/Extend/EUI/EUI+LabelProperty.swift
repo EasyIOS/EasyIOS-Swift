@@ -45,15 +45,15 @@ class LabelProperty:ViewProperty{
         super.renderTag(pelement)
         
         if let textAlignment = EUIParse.string(pelement,key:"text-alignment") {
-            self.textAlignment = LabelProperty.textAlignmentFormat(textAlignment)
+            self.textAlignment = textAlignment.textAlignment
         }
         
         if let linkStyle = EUIParse.string(pelement,key:"link-style") {
-            self.linkStyle = LabelProperty.formatLink(linkStyle)
+            self.linkStyle = linkStyle.linkStyleDict
         }
         
         if let linkStyle = EUIParse.string(pelement,key:"active-link-style") {
-            self.activeLinkStyle = LabelProperty.formatLink(linkStyle)
+            self.activeLinkStyle = linkStyle.linkStyleDict
         }
         
         var html = ""
@@ -79,43 +79,6 @@ class LabelProperty:ViewProperty{
         super.renderViewStyle(view)
         let sview = view as! UILabel
         sview.textAlignment = self.textAlignment
-
-    }
-    
-    class func textAlignmentFormat(align:String) ->NSTextAlignment {
-        switch(align.trim){
-            case "center":
-                return NSTextAlignment.Center
-            case "left":
-                return NSTextAlignment.Left
-            case "right":
-                return NSTextAlignment.Right
-            case "justified":
-                return NSTextAlignment.Justified
-            case "natural":
-                return NSTextAlignment.Natural
-            default:
-                return NSTextAlignment.Natural
-        }
-    }
-    
-    class func formatLink(linkStyle:String) -> [NSObject:AnyObject]{
-        let linkArray = linkStyle.trimArrayBy(";")
-        var dict = Dictionary<NSObject,AnyObject>()
-        for str in linkArray {
-            var strArray = str.trimArrayBy(":")
-            if strArray.count == 2 {
-                switch strArray[0] {
-                case "color":
-                    dict[kCTForegroundColorAttributeName] = UIColor(CSS: strArray[1].trim)
-                case "text-decoration":
-                    dict[NSUnderlineStyleAttributeName] = underlineStyleFromString(strArray[1].trim).rawValue
-                default :
-                    dict[NSUnderlineStyleAttributeName] = NSUnderlineStyle.StyleSingle.rawValue
-                }
-            }
-        }
-        return dict
     }
 
 }

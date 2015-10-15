@@ -181,12 +181,12 @@ public class EUI: NSObject {
             }
             
             SwiftTryCatch.`try`({
-                let body = EUIParse.ParseHtml(finalHtml)
-                var views = [UIView]()
-                for aview in body {
-                    views.append(aview.getView())
-                }
-                controller.eu_subViews = views
+                    let body = EUIParse.ParseHtml(finalHtml)
+                    var views = [UIView]()
+                    for aview in body {
+                        views.append(aview.getView())
+                    }
+                    controller.eu_subViews = views
                 }, `catch`: { (error) in
                     print(controller.nameOfClass + "Error:\(error.description)")
                 }, finally: nil)

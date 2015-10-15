@@ -41,11 +41,7 @@ class TableViewProperty:ScrollViewProperty{
         
         super.renderTag(pelement)
         if let style = EUIParse.string(pelement,key:"table-view-style") {
-            if style == "plain" {
-                self.tableViewStyle = .Plain
-            }else if style == "grouped" {
-                self.tableViewStyle = .Grouped
-            }
+            self.tableViewStyle = style.tableViewStyle
         }
 
         if let rowHeight = EUIParse.string(pelement, key: "row-height") {
@@ -57,32 +53,21 @@ class TableViewProperty:ScrollViewProperty{
         }
         
         if let separatorStyle = EUIParse.string(pelement, key: "separator-style") {
-            switch separatorStyle{
-            case "None" :
-                self.separatorStyle = .None
-            case "SingleLine":
-                self.separatorStyle = .SingleLine
-            case "SingleLineEtched":
-                self.separatorStyle = .SingleLineEtched
-            default:
-                self.separatorStyle = .SingleLine
-            }
+            self.separatorStyle = separatorStyle.separatorStyle
         }
     }
     
     override func childLoop(pelement: OGElement) {
         for element in pelement.children {
-            if element.isKindOfClass(OGElement) {
-                let ele = element as! OGElement
-                if let type = EUIParse.string(ele, key: "type"),
-                    let tagId = EUIParse.string(ele, key: "id"),
-                    let property = EUIParse.loopElement(ele){
-                        
-                    if type.lowercaseString == "cell" || type.lowercaseString == "UITableViewCell" {
-                        self.reuseCell[tagId] = property
-                    }else if type.lowercaseString == "section" || type.lowercaseString == "UITableViewSection"{
-                        self.sectionView[tagId] = property
-                    }
+            if let ele = element as? OGElement,
+                let type = EUIParse.string(ele, key: "type"),
+                let tagId = EUIParse.string(ele, key: "id"),
+                let property = EUIParse.loopElement(ele){
+                    
+                if type.lowercaseString == "cell" || type.lowercaseString == "UITableViewCell" {
+                    self.reuseCell[tagId] = property
+                }else if type.lowercaseString == "section" || type.lowercaseString == "UITableViewSection"{
+                    self.sectionView[tagId] = property
                 }
             }
         }

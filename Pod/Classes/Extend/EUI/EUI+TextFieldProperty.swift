@@ -50,7 +50,7 @@ class TextFieldProperty:ViewProperty{
         }
         
         if let keyboardType = EUIParse.string(pelement, key: "keyboard-type") {
-            self.keyboardType = keyboardTypeFromString(keyboardType)
+            self.keyboardType = keyboardType.keyboardType
         }
     }
 }

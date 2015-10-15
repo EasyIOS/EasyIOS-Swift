@@ -50,7 +50,7 @@ struct SelectorAction{
     
     init(selector:String,event:String = "TouchUpInside"){
         self.selector = selector
-        self.event = controlEventFromString(event)
+        self.event = event.controlEvent
     }
 }
 
@@ -108,104 +108,4 @@ struct SwipeGestureAction {
 }
 
 
-func keyboardTypeFromString(type:String) -> UIKeyboardType {
-    
-    switch type.lowercaseString {
-    case "Default".lowercaseString:
-        return UIKeyboardType.Default
-    case "ASCIICapable".lowercaseString:
-        return UIKeyboardType.ASCIICapable
-    case "NumbersAndPunctuation".lowercaseString:
-        return UIKeyboardType.NumbersAndPunctuation
-    case "URL".lowercaseString:
-        return UIKeyboardType.URL
-    case "NumberPad".lowercaseString:
-        return UIKeyboardType.NumberPad
-    case "PhonePad".lowercaseString:
-        return UIKeyboardType.PhonePad
-    case "NamePhonePad".lowercaseString:
-        return UIKeyboardType.NamePhonePad
-    case "EmailAddress".lowercaseString:
-        return UIKeyboardType.EmailAddress
-    case "DecimalPad".lowercaseString:
-        return UIKeyboardType.DecimalPad
-    case "Twitter".lowercaseString:
-        return UIKeyboardType.Twitter
-    case "Twitter".lowercaseString:
-        return UIKeyboardType.WebSearch
-    default:
-        return UIKeyboardType.Default
-    }
-}
-
-
-func underlineStyleFromString(style:String) -> NSUnderlineStyle{
-    switch style.lowercaseString {
-    case "None".lowercaseString :
-        return NSUnderlineStyle.StyleNone
-    case "StyleSingle".lowercaseString :
-        return NSUnderlineStyle.StyleSingle
-    case "StyleThick".lowercaseString :
-        return NSUnderlineStyle.StyleThick
-    case "StyleDouble".lowercaseString :
-        return NSUnderlineStyle.StyleDouble
-    case "PatternDot".lowercaseString :
-        return NSUnderlineStyle.PatternDot
-    case "PatternDash".lowercaseString :
-        return NSUnderlineStyle.PatternDash
-    case "PatternDashDot".lowercaseString :
-        return NSUnderlineStyle.PatternDashDot
-    case "PatternDashDotDot".lowercaseString :
-        return NSUnderlineStyle.PatternDashDotDot
-    case "ByWord".lowercaseString :
-        return NSUnderlineStyle.ByWord
-    default :
-        return NSUnderlineStyle.StyleSingle
-    }
-}
-
-func controlEventFromString(event:String) -> UIControlEvents{
-    switch event.lowercaseString {
-    case "TouchDown".lowercaseString :
-        return UIControlEvents.TouchDown
-    case "TouchDownRepeat".lowercaseString :
-        return UIControlEvents.TouchDownRepeat
-    case "TouchDragInside".lowercaseString :
-        return UIControlEvents.TouchDragInside
-    case "TouchDragOutside".lowercaseString :
-        return UIControlEvents.TouchDragOutside
-    case "TouchDragEnter".lowercaseString :
-        return UIControlEvents.TouchDragEnter
-    case "TouchDragExit".lowercaseString :
-        return UIControlEvents.TouchDragExit
-    case "TouchUpInside".lowercaseString :
-        return UIControlEvents.TouchUpInside
-    case "TouchUpOutside".lowercaseString :
-        return UIControlEvents.TouchUpOutside
-    case "ValueChanged".lowercaseString :
-        return UIControlEvents.ValueChanged
-    case "TouchCancel".lowercaseString :
-        return UIControlEvents.TouchCancel
-    case "EditingDidBegin".lowercaseString :
-        return UIControlEvents.EditingDidBegin
-    case "EditingChanged".lowercaseString :
-        return UIControlEvents.EditingChanged
-    case "EditingDidEnd".lowercaseString :
-        return UIControlEvents.EditingDidEnd
-    case "EditingDidEndOnExit".lowercaseString :
-        return UIControlEvents.EditingDidEndOnExit
-    case "AllTouchEvents".lowercaseString :
-        return UIControlEvents.AllTouchEvents
-    case "AllEditingEvents".lowercaseString :
-        return UIControlEvents.AllEditingEvents
-    case "ApplicationReserved".lowercaseString :
-        return UIControlEvents.ApplicationReserved
-    case "SystemReserved".lowercaseString :
-        return UIControlEvents.SystemReserved
-    case "AllEvents".lowercaseString :
-        return UIControlEvents.AllEvents
-    default :
-        return UIControlEvents.TouchUpInside
-    }
-}
 
