@@ -70,7 +70,7 @@ public class EZAction: NSObject {
             .request(req.method, url, parameters: requestParams, encoding: req.parameterEncoding)
             .validate(statusCode: 200..<300)
             .validate(contentType: req.acceptableContentTypes)
-            .responseString { (_, _, string) in
+            .responseString(encoding: NSUTF8StringEncoding){ (_, _, string) -> Void in
                 req.responseString = string.value
             }.responseJSON { (_, _, json)  in
                 if json.isFailure{
@@ -96,7 +96,7 @@ public class EZAction: NSObject {
                 req.totalBytesExpectedToWrite = Double(totalBytesExpectedToWrite)
                 req.progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
             }
-            .responseString { (_, _, string) in
+            .responseString(encoding: NSUTF8StringEncoding){ (_, _, string) -> Void in
                 req.responseString = string.value
             }.responseJSON { (_, _, json) in
                 if json.isFailure{
