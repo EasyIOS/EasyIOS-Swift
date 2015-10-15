@@ -70,14 +70,13 @@ public class EZAction: NSObject {
             .request(req.method, url, parameters: requestParams, encoding: req.parameterEncoding)
             .validate(statusCode: 200..<300)
             .validate(contentType: req.acceptableContentTypes)
-            .responseString(encoding: NSUTF8StringEncoding){ (_, _, string) -> Void in
-                req.responseString = string.value
-            }.responseJSON { (_, _, json)  in
-                if json.isFailure{
-                    req.error = json.error
+            .responseJSON { response  in
+                 req.response = response
+                if response.result.isFailure{
+                    req.error = response.result.error
                     self.failed(req)
                 }else{
-                    req.output = json.value as! Dictionary<String, AnyObject>
+                    req.output = response.result.value as! Dictionary<String, AnyObject>
                     self.checkCode(req)
                 }
             }
@@ -95,15 +94,13 @@ public class EZAction: NSObject {
                 req.totalBytesWritten = Double(totalBytesWritten)
                 req.totalBytesExpectedToWrite = Double(totalBytesExpectedToWrite)
                 req.progress = Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)
-            }
-            .responseString(encoding: NSUTF8StringEncoding){ (_, _, string) -> Void in
-                req.responseString = string.value
-            }.responseJSON { (_, _, json) in
-                if json.isFailure{
-                    req.error = json.error
+            }.responseJSON { response in
+                req.response = response
+                if response.result.isFailure{
+                    req.error = response.result.error
                     self.failed(req)
                 }else{
-                    req.output = json.value as! Dictionary<String, AnyObject>
+                    req.output = response.result.value as! Dictionary<String, AnyObject>
                     self.checkCode(req)
                 }
             }

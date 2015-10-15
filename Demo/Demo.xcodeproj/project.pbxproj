@@ -31,7 +31,7 @@
 		5BDC06BB1B0394C200C486E0 /* CollectionScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC06BA1B0394C200C486E0 /* CollectionScene.swift */; };
 		5BDC06BD1B03950500C486E0 /* CollectionSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC06BC1B03950500C486E0 /* CollectionSceneModel.swift */; };
 		5BDC06BF1B03955A00C486E0 /* CollectionCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDC06BE1B03955A00C486E0 /* CollectionCellViewModel.swift */; };
-		87D67298D115B9D5014DB706 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CB89BDD03972BB5036E6DF /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		87D67298D115B9D5014DB706 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CB89BDD03972BB5036E6DF /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
