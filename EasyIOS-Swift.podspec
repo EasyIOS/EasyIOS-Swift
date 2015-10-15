@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.version          = "2.0"
   s.summary          = "The Swift version of EasyIOS"
   s.description      = <<-DESC
-                      EasyIOS is a new generation of development framework based on `Model-View-ViewModel` ,`HTML To Native`,`Live Load`.
+                      EasyIOS is a new generation of development framework based on `Model-View-ViewModel`,`HTML To Native`,`Live Load`,`FlexBox`.
                        DESC
   s.homepage         = "https://github.com/EasyIOS/EasyIOS-Swift"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
