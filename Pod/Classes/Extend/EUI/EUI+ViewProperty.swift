@@ -42,6 +42,10 @@ class ViewProperty :NSObject{
     var flexPadding = UIEdgeInsetsZero
     var flexWrap = false
     var flex:CGFloat = 0.0
+    var flexFixedSize = CGSizeZero
+    var flexMinimumSize = CGSizeZero
+    var flexMaximumSize = CGSizeMake(CGFloat.max, CGFloat.max)
+    
     
     func getView() -> UIView{
         if self.tag == nil {
@@ -71,9 +75,24 @@ class ViewProperty :NSObject{
     }
     
     func renderTag(pelement:OGElement){
-        self.tagOut += ["id","style","align","margin","type","image-mode","name","width","height","class","ontap","onswipe","ontap-bind","onswipe-bind","frame","reuseid","push","present","align-self","align-items","justify-content","flex-direction","content-direction","flex-margin","flex-padding","flex-wrap","flex"]
+        self.tagOut += ["id","style","align","margin","type","image-mode","name","width","height","class","ontap","onswipe","ontap-bind","onswipe-bind","frame","reuseid","push","present","align-self","align-items","justify-content","flex-direction","content-direction","flex-margin","flex-padding","flex-wrap","flex","flex-minimum-size"]
         
         self.tag = pelement.tag
+        
+        if let flexMinimumSize = EUIParse.string(pelement, key: "flex-minimum-size"){
+            self.flexEnable = true
+            self.flexMinimumSize = CGSizeFromString(flexMinimumSize)
+        }
+        
+        if let flexMaximumSize = EUIParse.string(pelement, key: "flex-maximum-size"){
+            self.flexEnable = true
+            self.flexMaximumSize = CGSizeFromString(flexMaximumSize)
+        }
+        
+        if let flexFixedSize = EUIParse.string(pelement, key: "flex-fixed-size"){
+            self.flexEnable = true
+            self.flexFixedSize = CGSizeFromString(flexFixedSize)
+        }
         
         if let flexMargin = EUIParse.string(pelement, key: "flex-margin"){
             self.flexEnable = true
@@ -232,6 +251,9 @@ class ViewProperty :NSObject{
             view.flexPadding = self.flexPadding
             view.flexWrap = self.flexWrap
             view.flex = self.flex
+            view.flexFixedSize = self.flexFixedSize
+            view.flexMinimumSize = self.flexMinimumSize
+            view.flexMaximumSize = self.flexMaximumSize
         }
         
         if let frame = self.frame {
