@@ -12,7 +12,6 @@ import EasyIOS
 class FlexScene: EZScene {
     var container:FLEXBOXContainerView!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,7 +20,6 @@ class FlexScene: EZScene {
         container.flexAlignItems = FLEXBOXAlignment.Center
         container.flexDirection = FLEXBOXFlexDirection.Column
         container.backgroundColor = UIColor.grayColor()
-        
         
         let v1 = UILabel()
         v1.text = "123123"
@@ -40,9 +38,6 @@ class FlexScene: EZScene {
         v2.flexPadding = UIEdgeInsetsMake(10, 10, 10, 10)
         v2.flex = 0
         container.addSubview(v2)
-        
-        
         self.view.addSubview(container)
-        
     }
 }
