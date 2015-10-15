@@ -1,7 +1,6 @@
 <body>
     <div align="0 0 0 0">
         <div align="64 0 * 0" height="100"
-            flex-container="YES"
             justify-content="center"
             flex-direction="row"
             align-items="flex-end"
@@ -30,8 +29,7 @@
                 background-color="blue"
                 >1</span>
         </div>
-        <div align="left:0;right:0" margin="top:10 first" height="200" height="100"
-            flex-container="YES"
+        <div align="left:0;right:0" margin="top:10 first" height="200"
             justify-content="center"
             flex-direction="column"
             align-items="flex-end"
@@ -59,8 +57,7 @@
                 background-color="blue"
                 >1</span>
         </div>
-        <div align="left:0;right:0" margin="top:10 second" height="100" height="100"
-            flex-container="YES"
+        <div align="left:0;right:0" margin="top:10 second" height="100"
             justify-content="center"
             flex-direction="row"
             align-items="center"
