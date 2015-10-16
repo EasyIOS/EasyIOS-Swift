@@ -9,7 +9,6 @@
 import Bond
 import TTTAttributedLabel
 
-
 @objc class TapGestureDynamicHelper:NSObject
 {
     weak var view: UIView?

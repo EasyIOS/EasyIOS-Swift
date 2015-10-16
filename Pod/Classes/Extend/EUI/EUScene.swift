@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TTTAttributedLabel
 import JavaScriptCore
 
 public var LIVE_LOAD_PATH = NSBundle.mainBundle().pathForResource("xml", ofType: "bundle")!

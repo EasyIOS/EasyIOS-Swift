@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import TTTAttributedLabel
 import JavaScriptCore
-
+import TTTAttributedLabel
 
 
 class LabelProperty:ViewProperty{
