@@ -186,7 +186,7 @@ it, simply add the following line to your Podfile:
 ```ruby
 platform :ios, '8.0'
 use_frameworks!
-pod "EasyIOS-Swift" '~> 2.0'
+pod 'EasyIOS-Swift', '~> 2.0'
 ```
 
 import the EasyIOS
