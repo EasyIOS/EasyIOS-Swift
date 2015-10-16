@@ -11,7 +11,7 @@ EasyIOS For Swift 2.0
 
 * [中文README](/README/Chinese.md)
 * [IOSX - EasyIOS Official Forum](https://www.iosx.me)
-* [EasyIOS-ObjC](https://github.com/EasyIOS/EasyIOS)
+* [EasyIOS-ObjC](https://github.com/zhuchaowe/EasyIOS)
 * [EasyIOS-Swift-Doc](http://swift.easyios.iosx.me)
 
 QQ群:340906744
