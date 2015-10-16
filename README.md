@@ -9,12 +9,12 @@ EasyIOS For Swift 2.0
 [![Platform](https://img.shields.io/cocoapods/p/EasyIOS-Swift.svg?style=flat)](http://cocoapods.org/pods/EasyIOS-Swift)
 [![qq](http://img.shields.io/badge/QQ%E7%BE%A4-340906744-green.svg)](http://shang.qq.com/wpa/qunwpa?idkey=562d002e275a8199081313b00580fb7111a4faf694216a239064d29f5238bc91)
 
-* [On Github](https://github.com/EasyIOS/EasyIOS-Swift)
-* [On OSChina](http://git.oschina.net/zhuchaowe/EasyIOS-Swift)
 * [中文README](/README/Chinese.md)
 * [IOSX - EasyIOS Official Forum](https://www.iosx.me)
 * [EasyIOS-ObjC](https://github.com/EasyIOS/EasyIOS)
 * [EasyIOS-Swift-Doc](http://swift.easyios.iosx.me)
+
+QQ群:340906744
 
 ## DEMO Video
 [![ScreenShot](http://g3.tdimg.com/0d239f40817111df0dfe941cbc6f9d5e/b0_2.jpg)](http://www.tudou.com/v/aWwPwUhdt5E/&rpid=6059352&resourceId=6059352_04_05_99/v.swf)

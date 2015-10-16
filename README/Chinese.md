@@ -13,6 +13,8 @@ EasyIOS Swift 2.0版本新鲜出炉！
 * [EasyIOS-ObjC版本](https://github.com/EasyIOS/EasyIOS)
 * [EasyIOS-Swift教程](http://zhuchaowe.gitbooks.io/easyios-swift/content/)
 
+QQ群:340906744
+
 ## DEMO Video
 [![ScreenShot](http://g3.tdimg.com/0d239f40817111df0dfe941cbc6f9d5e/b0_2.jpg)](http://www.tudou.com/v/aWwPwUhdt5E/&rpid=6059352&resourceId=6059352_04_05_99/v.swf)
 
