@@ -10,7 +10,6 @@ import Foundation
 import JavaScriptCore
 import TTTAttributedLabel
 
-
 class LabelProperty:ViewProperty{
     var linkStyle = Dictionary<NSObject,AnyObject>()
     var activeLinkStyle = Dictionary<NSObject,AnyObject>()
