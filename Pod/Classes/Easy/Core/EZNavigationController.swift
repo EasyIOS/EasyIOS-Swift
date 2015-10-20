@@ -30,10 +30,9 @@ public class EZNavigationController: UINavigationController,UINavigationControll
             self.view.addGestureRecognizer(pan)
         }
         //禁掉系统的侧滑手势
-         weak var weekSelf = self
+        weak var weekSelf = self
         self.interactivePopGestureRecognizer?.enabled = false;
         self.interactivePopGestureRecognizer?.delegate = weekSelf;
-        
     }
 
     public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -55,6 +54,4 @@ public class EZNavigationController: UINavigationController,UINavigationControll
             self.interactivePopGestureRecognizer?.enabled = true
         }
     }
-    
-    
 }
