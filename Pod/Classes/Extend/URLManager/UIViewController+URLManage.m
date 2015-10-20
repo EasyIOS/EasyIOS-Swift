@@ -114,7 +114,6 @@ static char URLdictQuery;
         }
         if(class !=nil){
             scene = [[class alloc]init];
-            scene.hidesBottomBarWhenPushed = YES;
             if([scene  respondsToSelector:@selector(open:withQuery:)]){
                 [scene open:url withQuery:query];
             }
