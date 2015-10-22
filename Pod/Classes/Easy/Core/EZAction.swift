@@ -227,26 +227,29 @@ public class EZAction: NSObject {
     public class var networkReachability: Observable<Reachability.NetworkStatus>? {
         if let d: AnyObject = objc_getAssociatedObject(self, &networkReachabilityHandle) {
             return d as? Observable<Reachability.NetworkStatus>
-        } else if let reachability = Reachability.reachabilityForInternetConnection() {
-            let d = Observable<Reachability.NetworkStatus>(reachability.currentReachabilityStatus)
-            reachability.whenReachable = { reachability in
-                dispatch_async(dispatch_get_main_queue()) {
-                    d.value = reachability.currentReachabilityStatus
+        } else {
+            do {
+                let reachability = try Reachability.reachabilityForInternetConnection()
+                let d = Observable<Reachability.NetworkStatus>(reachability.currentReachabilityStatus)
+                reachability.whenReachable = { reachability in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        d.value = reachability.currentReachabilityStatus
+                    }
                 }
-            }
-            reachability.whenUnreachable = { reachability in
-                dispatch_async(dispatch_get_main_queue()) {
-                    d.value = reachability.currentReachabilityStatus
+                reachability.whenUnreachable = { reachability in
+                    dispatch_async(dispatch_get_main_queue()) {
+                        d.value = reachability.currentReachabilityStatus
+                    }
                 }
+                try reachability.startNotifier()
+                objc_setAssociatedObject(self, &networkReachabilityHandle, d, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                return d
+            } catch {
+                print("Unable to create Reachability")
+                return nil
             }
-            reachability.startNotifier()
-            objc_setAssociatedObject(self, &networkReachabilityHandle, d, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            return d
-        }else{
-            return nil
         }
     }
-    
 }
 
 
