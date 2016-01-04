@@ -14,7 +14,8 @@ EasyIOS For Swift 2.0
 * [EasyIOS-ObjC](https://github.com/zhuchaowe/EasyIOS)
 * [EasyIOS-Swift-Doc](http://swift.easyios.iosx.me)
 
-QQ群:340906744
+* EasyIOS官方qq群1群 :340906744(已满)
+* EasyIOS官方qq群2群 :495121980
 
 
 ## DEMO Video

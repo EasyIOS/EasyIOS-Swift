@@ -11,7 +11,7 @@
     <div align="0 0 0 0" type="UIScrollView" background-color="#F3F3F3">
         <div align="@contentAlign">
             <!--span标签设置了style属性则启用富文本模式，span内部可以支持原生HTML的所有属性，具体请看LabelHtml.xml文件-->
-            <span align="64 0 0 0" style="color:#ACACAC;font-size:18px;" link-style="color:green;" number-of-lines="0">
+            <span align="64 0 0 0" id="labelId" style="color:#ACACAC;font-size:18px;" link-style="color:green;" number-of-lines="0">
                 <!--导入XML模板文件-->
                     @import(LabelHtml)
             </span>

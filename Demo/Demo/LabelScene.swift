@@ -8,6 +8,7 @@
 
 import Foundation
 import EasyIOS
+import TTTAttributedLabel
 
 class LabelScene: EUScene {
     
@@ -15,6 +16,12 @@ class LabelScene: EUScene {
         super.viewDidLoad()
         self.showBarButton(.LEFT, title: "返回", fontColor: UIColor.greenColor())
         self.title = "界面里只有1个Label"
+        
+        
+        if let label = getElementById("labelId") as? TTTAttributedLabel {
+            //do someting
+        }
+       
         // Do any additional setup after loading the view, typically from a nib.
     }
     
